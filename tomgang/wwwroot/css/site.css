@@ -2,11 +2,9 @@ body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
-
-#myCanvas {
-  background-color: white; 
-  width: 100%;
-  height: auto;
+.transparentinput {
+    border: none;
+    background-color: transparent;
 }
 
 .noselect {
@@ -24,6 +22,7 @@ body {
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    padding-top: 15px;
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */

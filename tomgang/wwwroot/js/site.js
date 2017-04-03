@@ -1,55 +1,84 @@
-var canvas = document.getElementById('myCanvas');
-var context = canvas.getContext("2d");
-var gainNum = 1;
-var yPos = 380;
+var gainCount;
+var autoClick;
+var labCount;
+var multiplier;
 
-$(document).ready(function () {
-    drawStickman(yPos);
+function timer(){
+    if((autoClick + labCount) >= 1){
+        if($('#benkmann').attr('src') == "images/benk.png"){
+            $('#benkmann').attr('src','images/benkOpp.png');
+        }else{
+            $('#benkmann').attr('src','images/benk.png');
+        }
+    }
 
-    $("#myCanvas").mousedown(function(){
-        yPos = 300;
-        drawStickman(yPos);
-    })
-    $("#myCanvas").mouseup(function(){
-        yPos = 380;
-        drawStickman(yPos);    
-        updateGains();
-    })
+    gainCount += autoClick;
+    gainCount += labCount*2;
+    update();
+}
 
+function update(){
+    $('#gainNumber').html(gainCount); 
+    $('#amountAutoClick').html("You Own " + autoClick + " Auto Clickers");
+    $('#costAutoClick').html("Cost: " + ((autoClick+1) * 12));
+    $('#amountLab').html("You Own " + labCount + " Lab(s)");
+    $('#costLab').html("Cost: " + ((labCount+1) * 20));
+    $('#gainspersecond').html((((autoClick)+(labCount*2))*multiplier) + " Gains/s");
+}
+
+
+function add(){
+    gainCount += 1;
+     $('#gainNumber').html(gainCount); 
+}
+
+function save(){
+    localStorage.setItem("gaincount", gainCount);
+    localStorage.setItem("autoclick", autoClick);
+    localStorage.setItem("lab", labCount);
+}
+
+function load(){
+    gainCount = localStorage.getItem("gaincount");
+    gainCount = parseInt(gainCount);
+    autoClick = localStorage.getItem("autoclick");
+    autoClick = parseInt(autoClick);
+    labCount = localStorage.getItem("lab");
+    labCount = parseInt(labCount);
+    update();
+}
+
+//UPGRADES
+
+function buyAutoClick() {
+    if(gainCount >= ((autoClick + 1) * 12)){
+        gainCount -= ((autoClick+1) * 12);
+        autoClick += 1;
+        update();
+    }
+}
+
+function buyLab() {
+    if(gainCount >= ((labCount + 1) * 20)){
+        gainCount -= ((labCount+1) * 20);
+        labCount += 1;
+        update();
+    }
+}
+
+$(document).ready(function() {
+  gainCount = 0;
+  autoClick = 0;
+  labCount = 0;
+  multiplier = 1;
+  setInterval(timer, 1000);
+
+  $('#benkmann').on({
+    'mousedown': function(){
+        $('#benkmann').attr('src','images/benkOpp.png');
+    },
+    'mouseup': function(){
+        $('#benkmann').attr('src','images/benk.png');
+    }
 });
-
-function drawStickman(yPos){
-    //Clear canvas for next frame
-    context.clearRect(0, 0, canvas.width, canvas.height);
-
-    //HEAD
-    context.beginPath();
-    context.fillStyle = "black"; // #ffe4c4
-    context.arc(300, 350, 20, 0, Math.PI * 2, true); 
-    context.fill();
-
-    //BODY
-    context.beginPath();
-    context.moveTo(300,330);
-    context.lineTo(280,430);
-    context.lineTo(320,430);
-
-    context.lineWidth = 1;
-    context.fillStyle = "black";
-    context.fill();
-    context.strokeStyle = "black";
-    context.stroke();
-
-    //BAR
-    context.beginPath();
-    context.moveTo(200,yPos);
-    context.lineTo(400,yPos);
-    context.lineWidth = 7;
-    context.strokeStyle = "gray";
-    context.stroke();
-
-}
-
-function updateGains(){
-    $('#gainCount').val(gainNum++); 
-}
+});

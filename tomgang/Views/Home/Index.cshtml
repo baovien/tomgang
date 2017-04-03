@@ -4,15 +4,79 @@
 
 <div class="container">
     <div class="row">
+        <!-- UPGRADES -->
         <div class="col-xs-6 col-sm-4">
-            <h3 class="noselect" >GAINS</h3>
-            <input type="text" id="gainCount">
+            <!-- GAIN COUNT -->
+                <div class="panel panel-info">
+            
+                <div class="panel-body text-center" >
+                    <div id="gainNumber" style="font-size: 34px;">0</div>
+                    <h5>gains</h5>
+                </div>
+            </div>
+            
+            <!-- Upgrade panels wrapper-->
+
+            <div class="panel panel-danger">
+                <div class="panel-heading">UPGRADES</div>
+                
+                <div class="panel-body">
+
+                    <!-- Upgrade 1 -->
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                                Steroids
+                                <button  style="float: right;" onclick="buyAutoClick()">Buy</button>
+                        </div>
+                        <div class="panel-body">
+                            1 lift/s
+                            <p  style="float: right;" id="costAutoClick">Cost: 12</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Upgrade 2 -->
+                    <div class="panel panel-danger">
+                        <div class="panel-heading">
+                                Anabolic Lab
+                                <button  style="float: right;" onclick="buyLab()">Buy</button>
+                        </div>
+                        <div class="panel-body">
+                            2 lift/s
+                            <p  style="float: right;" id="costLab">Cost: 20</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
         </div>
+
+        <!-- CLICK AREA -->
         <div class="col-xs-6 col-sm-4">
-            <canvas class="noselect" id="myCanvas" width="600" height="600" style="border:1px solid #000000;"></canvas>
+            <img id="benkmann" class="img-responsive" src="images/benk.png" onclick="add()">
         </div>
+
+        <!-- INFORMATION AREA -->
         <div class="col-xs-6 col-sm-4">
-            <h1 class="noselect" >lorem ipsum </h1>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="noselect">Information</h4>
+                </div>
+                <div class="panel-body">
+                    <p id="gainspersecond">0 Gains/s</p>
+                    <p id="amountAutoClick"> You Own 0 Auto Clickers</p>
+                    <p id="amountLab"> You Own 0 Lab(s)</p>
+                </div>
+            </div>
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h4 class="noselect">Save/Load progress</h4>
+                </div>
+                <div class="panel-body">
+                    <button onclick="save()">Save</button>
+                    <button onclick="load()">Load</button>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
