@@ -1,12 +1,12 @@
 var gainCount;
-var autoClick;
+var carb;
 var proteins;
 var stringlet;
-var labCount;
+var grunt;
 var multiplier;
 
 function timer(){
-    if((autoClick + labCount) >= 1){
+    if((carb + grunt) >= 1){
         if($('#benkmann').attr('src') == "images/benk.png"){
             $('#benkmann').attr('src','images/benkOpp.png');
         }else{
@@ -14,17 +14,17 @@ function timer(){
         }
     }
 
-    gainCount += autoClick/5;
+    gainCount += carb/5;
     gainCount += protein/2;
     gainCount += stringlet;
-    gainCount += labCount*2;
+    gainCount += grunt*2;
     update();
 }
 
 function update(){
     $('#gainNumber').html(gainCount.toFixed(2)); 
-    $('#amountAutoClick').html("You Own " + autoClick + " Carb snack(s)");
-    $('#costAutoClick').html("Cost: " + ((autoClick+1) * 12));
+    $('#amountCarb').html("You Own " + carb + " Carb snack(s)");
+    $('#costCarb').html("Cost: " + ((carb + 1) * 12));
 
     $('#amountProtein').html("You Own " + protein + " Protein shake(s)");
     $('#costProtein').html("Cost: " + ((protein+1) * 30));
@@ -32,10 +32,10 @@ function update(){
     $('#amountStringlet').html("You Own " + stringlet + " Stringlet(s)");
     $('#costStringlet').html("Cost: " + ((stringlet+1) * 60));
 
-    $('#amountLab').html("You Own " + labCount + " Grunt(s)");
-    $('#costLab').html("Cost: " + ((labCount+1) * 120));
+    $('#amountGrunt').html("You Own " + grunt + " Grunt(s)");
+    $('#costGrunt').html("Cost: " + ((grunt+1) * 120));
 
-    $('#gainspersecond').html((((autoClick/5)+(protein/2)+(stringlet)+(labCount*2))*multiplier).toFixed(2) + " Gains/s");
+    $('#gainspersecond').html((((carb/5)+(protein/2)+(stringlet)+(grunt*2))*multiplier).toFixed(2) + " Gains/s");
 }
 
 
@@ -46,36 +46,36 @@ function add(){
 
 function save(){
     localStorage.setItem("gaincount", gainCount);
-    localStorage.setItem("autoclick", autoClick);
-    localStorage.setItem("protein", autoClick);
-    localStorage.setItem("stringlet", autoClick);
-    localStorage.setItem("lab", labCount);
+    localStorage.setItem("carb", carb);
+    localStorage.setItem("protein", protein);
+    localStorage.setItem("stringlet", stringlet);
+    localStorage.setItem("grunt", grunt);
 }
 
 function load(){
     gainCount = localStorage.getItem("gaincount");
-    gainCount = parseDouble(gainCount);
+    gainCount = parseInt(gainCount);
 
-    autoClick = localStorage.getItem("autoclick");
-    autoClick = parseDouble(autoClick);
+    carb = localStorage.getItem("carb");
+    carb = ParseInt(carb);
 
     protein = localStorage.getItem("protein");
-    protein = parseDouble(protein);
+    protein = ParseInt(protein);
 
     stringlet = localStorage.getItem("stringlet");
-    stringlet = parseDouble(stringlet);
+    stringlet = ParseInt(stringlet);
 
-    labCount = localStorage.getItem("lab");
-    labCount = parseInt(labCount);
+    grunt = localStorage.getItem("grunt");
+    grunt = ParseInt(grunt);
     update();
 }
 
 //UPGRADES
 //Carbs, value per = 0.2
-function buyCarbs() {
-    if(gainCount >= ((autoClick + 1) * 12)){
-        gainCount -= ((autoClick + 1) * 12);
-        autoClick += 1;
+function buyCarb() {
+    if(gainCount >= ((carb + 1) * 12)){
+        gainCount -= ((carb + 1) * 12);
+        carb += 1;
         update();
     }
 }
@@ -95,19 +95,19 @@ function buyStringlet() {
         update();
     }
 }
-//Labs "Grunts på view", value per = 2
-function buyLab() {
-    if(gainCount >= ((labCount + 1) * 120)){
-        gainCount -= ((labCount+1) * 120);
-        labCount += 1;
+//Grunts, value per = 2
+function buyGrunt() {
+    if(gainCount >= ((grunt + 1) * 120)){
+        gainCount -= ((grunt+1) * 120);
+        grunt += 1;
         update();
     }
 }
 
 $(document).ready(function() {
   gainCount = 0;
-  autoClick = 0;
-  labCount = 0;
+  carb = 0;
+  grunt = 0;
   protein = 0;
   stringlet = 0;
   multiplier = 1;
