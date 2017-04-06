@@ -17,6 +17,15 @@ body {
                                   supported by Chrome and Opera */
 }
 
+.nondraggable {
+    user-drag: none; 
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+}
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {

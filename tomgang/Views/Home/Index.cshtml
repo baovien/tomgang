@@ -1,89 +1,24 @@
-@{
-    ViewData["Title"] = "Home Page";
-}
+@{ ViewData["Title"] = "Home Page"; }
 
 <div class="container">
     <div class="row">
-        <!-- UPGRADES -->
-        <div class="col-xs-6 col-sm-4">
-            <!-- GAIN COUNT -->
-                <div class="panel panel-info">
-            
-                <div class="panel-body text-center" >
-                    <div id="gainNumber" style="font-size: 34px;">0</div>
-                    <h5>gains</h5>
-                </div>
-            </div>
-            
-            <!-- Upgrade panels wrapper-->
-
-            <div class="panel panel-danger">
-                <div class="panel-heading">UPGRADES</div>
-                
-                <div class="panel-body">
-
-                    <!-- Upgrade 1 -->
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                                Carb snack
-                                <button  style="float: right;" onclick="buyCarb()">Buy</button>
-                        </div>
-                        <div class="panel-body">
-                            0.2 Gains/s
-                            <p  style="float: right;" id="costCarb">Cost: 12</p>
-                        </div>
-                    </div>
-
-                    <!-- Upgrade 2 -->
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                                Protein shake 
-                                <button  style="float: right;" onclick="buyProtein()">Buy</button>
-                        </div>
-                        <div class="panel-body">
-                            0.5 Gains/s
-                            <p  style="float: right;" id="costProtein">Cost: 30</p>
-                        </div>
-                    </div>
-
-                    <!-- Upgrade 3 -->
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                                Stringlet
-                                <button  style="float: right;" onclick="buyStringlet()">Buy</button>
-                        </div>
-                        <div class="panel-body">
-                            1 Gains/s
-                            <p  style="float: right;" id="costStringlet">Cost: 60</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Upgrade 4 -->
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                                Learn to grunt
-                                <button  style="float: right;" onclick="buyGrunt()">Buy</button>
-                        </div>
-                        <div class="panel-body">
-                            2 Gains/s
-                            <p  style="float: right;" id="costGrunt">Cost: 120</p>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-
-        <!-- CLICK AREA -->
-        <div class="col-xs-6 col-sm-4">
-            <img id="benkmann" class="img-responsive" src="images/benk.png" onclick="add()">
-        </div>
 
         <!-- INFORMATION AREA -->
-        <div class="col-xs-6 col-sm-4">
+
+        <div class="col-xs-6 col-sm-4 well">
+
+            <!-- GAIN COUNT -->
+            <div class="panel panel-info ">
+
+                <div class="panel-body text-center">
+                    <div id="gainNumber" style="font-size: 34px;">0</div>
+                    <p>gains</p>
+                </div>
+            </div>
+
             <div class="panel panel-info">
                 <div class="panel-heading">
-                    <h4 class="noselect">Information</h4>
+                    <h5><b>Information</b></h5>
                 </div>
                 <div class="panel-body">
                     <p id="gainspersecond">0 Gains/s</p>
@@ -93,16 +28,72 @@
                     <p id="amountGrunt"> You Own 0 Grunt(s)</p>
                 </div>
             </div>
+
+            <!-- SAVE LOAD -->
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h4 class="noselect">Save/Load progress</h4>
                 </div>
                 <div class="panel-body">
-                    <button onclick="save()">Save</button>
-                    <button onclick="load()">Load</button>
+                    <button class="btn btn-warning" data-toggle="modal" data-target="#saveModal">Save</button>
+                    <button class="btn btn-primary" onclick="load()">Load</button>
                 </div>
             </div>
 
+            <!-- SAVE MODAL -->
+            <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="saveModalLabel">Warning</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            Save current progress?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="save()" data-dismiss="modal">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <!-- CLICK AREA -->
+        <div class="col-xs-6 col-sm-4">
+            <img id="benkmann" class="img-responsive nondraggable" src="images/benk.png" onclick="add()">
+        </div>
+
+        <!-- PROGRESS -->
+        <div class="col-xs-6 col-sm-4 well">
+
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h5><b>Progress</b></h5>
+                </div>
+                <div class="panel-body">
+                    <img id="progressmann" class="img-responsive  center-block" src="images/progressman.jpg" width="70%" height="70%">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <a href="#">Upgrades</a>
+        </div>
+        <div class="col-md-3">
+            <a href="#">Achievements</a>
+        </div>
+        <div class="col-md-3">
+            <a href="#">Leaderboards</a>
+        </div>
+        <div class="col-md-3">
+            <a href="#">Prestige</a>
         </div>
     </div>
 </div>
