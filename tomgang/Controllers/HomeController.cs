@@ -13,10 +13,8 @@ namespace tomgang.Controllers
             return View();
         }
 
-        public IActionResult About()
+        public IActionResult Chat()
         {
-            ViewData["Message"] = "WE GOIN BIG";
-
             return View();
         }
 
