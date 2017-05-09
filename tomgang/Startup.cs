@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using tomgang.Data;
 using tomgang.Models;
 using tomgang.Services;
+using Newtonsoft.Json;
 
 namespace tomgang
 {
@@ -47,8 +48,19 @@ namespace tomgang
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc();
+            var settings = new JsonSerializerSettings();
+            settings.ContractResolver = new SignalRContractResolver();
 
+            var serializer = JsonSerializer.Create(settings);
+
+            services.Add(new ServiceDescriptor(typeof(JsonSerializer),
+                                            provider => serializer,
+                                            ServiceLifetime.Transient));
+
+
+            services.AddSignalR(options => options.Hubs.EnableDetailedErrors = true);
+
+            services.AddMvc();
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
@@ -63,11 +75,8 @@ namespace tomgang
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();   
-                //app.UseSignalR();
-                // Browser Link is not compatible with Kestrel 1.1.0
-                // For details on enabling Browser Link, see https://go.microsoft.com/fwlink/?linkid=840936
-                //app.UseBrowserLink()
+                app.UseDatabaseErrorPage();  
+               // app.UseSignalR();
                 
             }
             else
@@ -87,6 +96,8 @@ namespace tomgang
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseWebSockets();
+            app.UseSignalR();
         }
     }
 }
