@@ -6,11 +6,17 @@
 <script src="http://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.0.min.js"></script>
 <script src="/signalr/hubs"></script>
 
-<input id="textInput" type="text" placeholder="Fook u beo" />
-
-<button class="btn btn-primary" id="publishPostButton">Send</button>
-
-<ul id="postsList"></ul>
+@if (User.Identity.IsAuthenticated)
+            {
+                <p>Logged in as @Html.Raw(User.Identity.Name)</p>
+                <input id="textInput" type="text" placeholder="Fook u beo" />
+                <button class="btn btn-primary" id="publishPostButton">Send</button>
+                <ul id="postsList"></ul>
+            }
+            else
+            {
+                <p>Please log in to chat. </p>
+            }
 
 <script type="text/javascript">
     $.ajax({

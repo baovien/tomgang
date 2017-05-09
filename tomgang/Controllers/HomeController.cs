@@ -18,13 +18,6 @@ namespace tomgang.Controllers
             return View();
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "KONTAKT OSS";
-
-            return View();
-        }
-
         public IActionResult Error()
         {
             return View();
