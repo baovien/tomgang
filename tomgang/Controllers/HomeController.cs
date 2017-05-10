@@ -13,11 +13,6 @@ namespace tomgang.Controllers
             return View();
         }
 
-        public IActionResult Chat()
-        {
-            return View();
-        }
-
         public IActionResult Error()
         {
             return View();
