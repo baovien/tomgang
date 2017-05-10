@@ -1,75 +1,14 @@
-@{
-    ViewData["Title"] = "Home Page";
-}
+@{ ViewData["Title"] = "Home Page"; }
 
 <div class="container">
     <div class="row">
-        <!-- UPGRADES -->
+        <!-- GAIN COUNT -->
         <div class="col-xs-6 col-sm-4">
-            <!-- GAIN COUNT -->
-                <div class="panel panel-info">
-            
-                <div class="panel-body text-center" >
+            <div class="panel panel-info">
+
+                <div class="panel-body text-center">
                     <div id="gainNumber" style="font-size: 34px;">0</div>
                     <h5>gains</h5>
-                </div>
-            </div>
-            
-            <!-- Upgrade panels wrapper-->
-
-            <div class="panel panel-danger">
-                <div class="panel-heading">UPGRADES</div>
-                
-                <div class="panel-body">
-
-                    <!-- Upgrade 1 -->
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                                Carb snack
-                                <button  style="float: right;" onclick="buyCarb()">Buy</button>
-                        </div>
-                        <div class="panel-body">
-                            0.2 Gains/s
-                            <p  style="float: right;" id="costCarb">Cost: 12</p>
-                        </div>
-                    </div>
-
-                    <!-- Upgrade 2 -->
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                                Protein shake 
-                                <button  style="float: right;" onclick="buyProtein()">Buy</button>
-                        </div>
-                        <div class="panel-body">
-                            0.5 Gains/s
-                            <p  style="float: right;" id="costProtein">Cost: 30</p>
-                        </div>
-                    </div>
-
-                    <!-- Upgrade 3 -->
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                                Stringlet
-                                <button  style="float: right;" onclick="buyStringlet()">Buy</button>
-                        </div>
-                        <div class="panel-body">
-                            1 Gains/s
-                            <p  style="float: right;" id="costStringlet">Cost: 60</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Upgrade 4 -->
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                                Learn to grunt
-                                <button  style="float: right;" onclick="buyGrunt()">Buy</button>
-                        </div>
-                        <div class="panel-body">
-                            2 Gains/s
-                            <p  style="float: right;" id="costGrunt">Cost: 120</p>
-                        </div>
-                    </div>
-                    
                 </div>
             </div>
         </div>
@@ -93,16 +32,131 @@
                     <p id="amountGrunt"> You Own 0 Grunt(s)</p>
                 </div>
             </div>
+            <!-- SAVE LOAD -->
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h4 class="noselect">Save/Load progress</h4>
                 </div>
                 <div class="panel-body">
-                    <button onclick="save()">Save</button>
-                    <button onclick="load()">Load</button>
+                    <button class="btn btn-warning" data-toggle="modal" data-target="#saveModal">Save</button>
+                    <button class="btn btn-primary" onclick="load()">Load</button>
                 </div>
             </div>
 
+            <!-- SAVE MODAL -->
+            <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="saveModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="saveModalLabel">Warning</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            Save current progress?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="save()" data-dismiss="modal">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB SELECTION -->
+    <div class="row">
+        <div class="tabselect">
+            <div class="col-md-6">
+                <div class="tab" role="tabpanel">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-tags"></i><span>Upgrades</span></a></li>
+                        <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab"><i class="	glyphicon glyphicon-education"></i><span>Achievements</span></a></li>
+                        <li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-list-alt"></i><span>Leaderboards</span></a></li>
+                        <li role="presentation"><a href="#Section4" aria-controls="messages" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-certificate"></i><span>Ascend</span></a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content tabs">
+                        <div role="tabpanel" class="tab-pane fade in active" id="Section1">
+
+                            <!-- Upgrade 1 -->
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">
+                                    Carb snack
+                                    <button style="float: right;" onclick="buyCarb()">Buy</button>
+                                </div>
+                                <div class="panel-body">
+                                    0.2 Gains/s
+                                    <p style="float: right;" id="costCarb">Cost: 12</p>
+                                </div>
+                            </div>
+
+                            <!-- Upgrade 2 -->
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">
+                                    Protein shake
+                                    <button style="float: right;" onclick="buyProtein()">Buy</button>
+                                </div>
+                                <div class="panel-body">
+                                    0.5 Gains/s
+                                    <p style="float: right;" id="costProtein">Cost: 30</p>
+                                </div>
+                            </div>
+
+                            <!-- Upgrade 3 -->
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">
+                                    Stringlet
+                                    <button style="float: right;" onclick="buyStringlet()">Buy</button>
+                                </div>
+                                <div class="panel-body">
+                                    1 Gains/s
+                                    <p style="float: right;" id="costStringlet">Cost: 60</p>
+                                </div>
+                            </div>
+
+                            <!-- Upgrade 4 -->
+                            <div class="panel panel-danger">
+                                <div class="panel-heading">
+                                    Learn to grunt
+                                    <button style="float: right;" onclick="buyGrunt()">Buy</button>
+                                </div>
+                                <div class="panel-body">
+                                    2 Gains/s
+                                    <p style="float: right;" id="costGrunt">Cost: 120</p>
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="Section2">
+                            <h3>Section 2</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nec urna aliquam, ornare eros vel,
+                                malesuada lorem. Nullam faucibus lorem at eros consectetur lobortis. Maecenas nec nibh congue,
+                                placerat sem id, rutrum velit. Phasellus porta enim at facilisis condimentum. Maecenas pharetra
+                                dolor vel elit tempor pellentesque sed sed eros. Aenean vitae mauris tincidunt, imperdiet
+                                orci semper, rhoncus ligula. Vivamus scelerisque.</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="Section3">
+                            <h3>Section 3</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nec urna aliquam, ornare eros vel,
+                                malesuada lorem. Nullam faucibus lorem at eros consectetur lobortis. Maecenas nec nibh congue,
+                                placerat sem id, rutrum velit. Phasellus porta enim at facilisis condimentum. Maecenas pharetra
+                                dolor vel elit tempor pellentesque sed sed eros. Aenean vitae mauris tincidunt, imperdiet
+                                orci semper, rhoncus ligula. Vivamus scelerisque.</p>
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="Section4">
+                            <h3>Section 4</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nec urna aliquam, ornare eros vel,
+                                malesuada lorem. Nullam faucibus lorem at eros consectetur lobortis. Maecenas nec nibh congue,
+                                placerat sem id, rutrum velit. Phasellus porta enim at facilisis condimentum. Maecenas pharetra
+                                dolor vel elit tempor pellentesque sed sed eros. Aenean vitae mauris tincidunt, imperdiet
+                                orci semper, rhoncus ligula. Vivamus scelerisque.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
