@@ -9,8 +9,7 @@ namespace tomgang.Models.AccountViewModels
     public class LoginViewModel
     {
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        public string BrukerNavn { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
