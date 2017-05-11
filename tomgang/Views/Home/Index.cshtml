@@ -119,10 +119,10 @@
                 </div>
             <div class="panel-collapse collapse" id="collapseOne">
                 <div class="panel-body">
-                    <ul class="chat" id="postsList" aria-setsize="9">
+                    <ul class="chat" id="postsList" style="overflow-y: auto; height:300px; overflow-x:hidden;">
                         @if (User.Identity.IsAuthenticated)
             {
-                <p>Logged in as @Html.Raw(User.Identity.Name)</p>
+                <p>Welcome to the chatroom @Html.Raw(User.Identity.Name)</p>
             }
             else
             {
@@ -132,7 +132,7 @@
                 </div>
                 <div class="panel-footer">
                     <div class="input-group">
-                        <input id="textInput" type="text" class="form-control input-sm" placeholder="Chat with players xd..." />
+                        <input id="textInput" type="text" class="form-control input-sm" placeholder="Kris Vector..." maxlength="150" />
                         <span class="input-group-btn">
                             <button class="btn btn-warning btn-sm" id="publishPostButton">Send</button>
                         </span>
@@ -151,10 +151,10 @@
         dataType: 'JSON',
         success: addPostsList
     });
-
     function addPostsList(posts) {
         $.each(posts, function (index) {
-            var post = posts[index];
+            var post2 = posts[index]
+            var post = posts;
             addPost(post);
         });
     }
@@ -162,6 +162,8 @@
     function addPost(post) {
         console.log('New post from server: ', post);
         $("#postsList").append('<li>' + '(' + post.timestamp.substring(11,16) + ') ' + post.author + ': ' + post.content + '</li>');
+        var posteliste = $("#postsList").get(0);
+        posteliste.scrollTop = posteliste.scrollHeight;
     }
 
     // Connect to the broadcaster on the server
@@ -170,7 +172,30 @@
     // A function we will call from the server
     $.connection.broadcaster.client.addChatMessage = addPost;
 
-    $("#publishPostButton").click(function () {
+// If the User wants to send the message with the "Return" button
+    $("#textInput").keypress(function (e){
+        if(e.keyCode==13){
+        $("#publishPostButton").click();
+        var post = {
+            content: $("#textInput").val()
+        };
+        $.ajax({
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            type: 'POST',
+            url: '/chatroom/',
+            data: JSON.stringify(post),
+            dataType: 'json'
+        }).fail(function(e) {
+            console.log(e);
+        });
+        $("#textInput").val("");
+        }
+    });
+
+// If the User wants to send the message with the button
+    $("#publishPostButton").click(function (){
         var post = {
             content: $("#textInput").val()
         };
@@ -188,10 +213,11 @@
         $("#textInput").val("");
     });
 
-    // This console.logs a lot of helpful debugging info!
+
+    // log for debug
     $.connection.hub.logging = true;
 
-    // Let's connect to the hub!
+    // Connecting to SignalR Hub
     $.connection.hub.start().done(function(signalr) {
         console.log('Connected!');
         console.log('SignalR object: ', signalr);
