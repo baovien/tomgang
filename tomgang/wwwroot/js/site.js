@@ -6,7 +6,6 @@ var grunt;
 var multiplier;
 var plate;
 
-
 function timer() {
 	if ( ( carb + grunt + protein + stringlet ) >= 1 ) {
 		if ( $( '#benkmann' ).attr( 'src' ) == "images/benk.png" ) {
