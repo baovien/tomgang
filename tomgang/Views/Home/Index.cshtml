@@ -36,7 +36,6 @@
                             <p  style="float: right;" id="costCarb">Cost: 12</p>
                         </div>
                     </div>
-
                     <!-- Upgrade 2 -->
                     <div class="panel panel-danger">
                         <div class="panel-heading">
@@ -48,7 +47,6 @@
                             <p  style="float: right;" id="costProtein">Cost: 30</p>
                         </div>
                     </div>
-
                     <!-- Upgrade 3 -->
                     <div class="panel panel-danger">
                         <div class="panel-heading">
@@ -59,8 +57,7 @@
                             1 Gains/s
                             <p  style="float: right;" id="costStringlet">Cost: 60</p>
                         </div>
-                    </div>
-                    
+                    </div>                   
                     <!-- Upgrade 4 -->
                     <div class="panel panel-danger">
                         <div class="panel-heading">
@@ -76,7 +73,6 @@
                 </div>
             </div>
         </div>
-
         <!-- CLICK AREA -->
         <div class="col-xs-6 col-sm-4">
             <img id="benkmann" class="img-responsive" src="images/benk.png" onclick="add()">
@@ -119,7 +115,7 @@
                 </div>
             <div class="panel-collapse collapse" id="collapseOne">
                 <div class="panel-body">
-                    <ul class="chat" id="postsList" style="overflow-y: auto; height:300px; overflow-x:hidden;">
+                    <ul class="chat" id="postsList" style="overflow-y: auto; height:200px; overflow-x:hidden;">
                         @if (User.Identity.IsAuthenticated)
             {
                 <p>Welcome to the chatroom @Html.Raw(User.Identity.Name)</p>
