@@ -76,7 +76,6 @@ namespace tomgang
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();  
-               // app.UseSignalR();
                 
             }
             else

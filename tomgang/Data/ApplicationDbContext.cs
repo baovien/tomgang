@@ -16,7 +16,15 @@ namespace tomgang.Data
         }
 
         public DbSet<Message> Message { get; set; }
-
+        
+        //Tables som holder styr på spillets verdier
+        public DbSet<Upgrade> UpgradeTable { get; set;}
+        public DbSet<Achievement> AchievementTable { get; set;}
+        public DbSet<PlayerGains> PlayerGainsTable { get; set;}
+        public DbSet<PlayerAchievement> PlayerAchievmentTable { get; set;}
+        public DbSet<PlayerUpgrade> PlayerUpgradeTable { get; set;}
+        
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
