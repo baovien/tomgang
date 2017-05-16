@@ -1,13 +1,12 @@
-
-
-
-
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+
 namespace tomgang.Controllers
 {
-    public class GameValuesController : Controller
+    public class GameValues : IGameValues
     {
         public void onAccountCreation(){
+             System.Console.WriteLine("Hello");
             //Setter alle verdiene til ny bruker til startverdier
         }
         public void onLiftClick(){

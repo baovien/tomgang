@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using tomgang.Data;
 using tomgang.Models;
+using tomgang.Controllers;
 using tomgang.Services;
 using Newtonsoft.Json;
 
@@ -27,6 +29,7 @@ namespace tomgang
 
             if (env.IsDevelopment())
             {
+                Debug.WriteLine("Hello");
                 // For more details on using the user secret store see https://go.microsoft.com/fwlink/?LinkID=532709
                 builder.AddUserSecrets<Startup>();
             }
@@ -64,6 +67,7 @@ namespace tomgang
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddTransient<IGameValues, GameValues>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

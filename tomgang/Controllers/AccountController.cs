@@ -23,6 +23,7 @@ namespace tomgang.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private readonly IGameValues _GameValues;
         private readonly string _externalCookieScheme;
 
         public AccountController(
@@ -31,6 +32,7 @@ namespace tomgang.Controllers
             IOptions<IdentityCookieOptions> identityCookieOptions,
             IEmailSender emailSender,
             ISmsSender smsSender,
+            IGameValues gameValues,
             ILoggerFactory loggerFactory)
         {
             _userManager = userManager;
@@ -38,6 +40,7 @@ namespace tomgang.Controllers
             _externalCookieScheme = identityCookieOptions.Value.ExternalCookieAuthenticationScheme;
             _emailSender = emailSender;
             _smsSender = smsSender;
+            _GameValues = gameValues;
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
@@ -53,7 +56,6 @@ namespace tomgang.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
-
         //
         // POST: /Account/Login
         [HttpPost]
@@ -116,6 +118,9 @@ namespace tomgang.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    _GameValues.onAccountCreation();
+
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
                     // Send an email with this link
                     //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
