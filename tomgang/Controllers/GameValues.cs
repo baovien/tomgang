@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using tomgang.Services;
 
 namespace tomgang.Controllers
 {
-    public class GameValues : IGameValues
+    public class GameValues : Services.IGameValues
     {
         public void onAccountCreation(){
              System.Console.WriteLine("Hello");

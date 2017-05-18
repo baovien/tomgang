@@ -1,4 +1,4 @@
-namespace tomgang.Controllers
+namespace tomgang.Services
 {
     public interface IGameValues
     {

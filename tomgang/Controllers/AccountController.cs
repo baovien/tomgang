@@ -23,7 +23,7 @@ namespace tomgang.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
-        private readonly IGameValues _GameValues;
+        private readonly Services.IGameValues _GameValues;
         private readonly string _externalCookieScheme;
 
         public AccountController(
@@ -32,7 +32,7 @@ namespace tomgang.Controllers
             IOptions<IdentityCookieOptions> identityCookieOptions,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            IGameValues gameValues,
+            Services.IGameValues gameValues,
             ILoggerFactory loggerFactory)
         {
             _userManager = userManager;
