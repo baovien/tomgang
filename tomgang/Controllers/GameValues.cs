@@ -31,7 +31,7 @@ namespace tomgang.Controllers
             _upgrade = upgrade;
         }
         public void onAccountCreation(string userid){
-             _dbContext.PlayerGainsTable.Add(new PlayerGains(userid, 0));
+             _dbContext.PlayerGainsTable.Add(new PlayerGains(userid, 0, 0, 0));
             //Setter alle verdiene til ny bruker til startverdier
         }
         public void onLiftClick(){
