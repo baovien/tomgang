@@ -67,7 +67,6 @@
             </div>
         </div>
     </div>
-
     <!-- TAB SELECTION -->
     <div class="row">
         <div class="tabselect">
@@ -159,31 +158,32 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
-            <div class="col-md-5">
-                <div class="panel panel-primary">
-                    <div class="panel-heading" id="accordion" data-toggle="collapse" href="#collapseOne" data-parent="#accordion">
-                        <span class="glyphicon glyphicon-comment"></span> Chat
-                    </div>
-                    <div class="panel-collapse collapse" id="collapseOne">
-                        <div class="panel-body">
-                            <ul class="chat" id="postsList" style="overflow-y: auto; height:200px; overflow-x:hidden;">
-                                @if (User.Identity.IsAuthenticated) {
-                                <p>Welcome to the chatroom @Html.Raw(User.Identity.Name)</p>
-                                } else {
-                                <p>Please log in to chat. </p>
-                                }
-                            </ul>
-                        </div>
-                        <div class="panel-footer">
-                            <div class="input-group">
-                                <input id="textInput" type="text" class="form-control input-sm" placeholder="Kris Vector..." maxlength="150" />
-                                <span class="input-group-btn">
+<!-- CHAT -->
+<div class="col-md-2" id="Chatholder" >
+    <div class="panel panel-primary">
+        <div class="panel-heading" id="accordion" data-toggle="collapse" href="#collapseOne" data-parent="#accordion">
+            <span class="glyphicon glyphicon-comment"></span> Chat
+        </div>
+        <div class="panel-collapse collapse" id="collapseOne">
+            <div class="panel-body">
+                <ul class="chat" id="postsList" style="overflow-y: auto; height:200px; overflow-x:hidden;">
+                    @if (User.Identity.IsAuthenticated) {
+                    <p>Welcome to the chatroom @Html.Raw(User.Identity.Name)</p>
+                    } else {
+                    <p>Please log in to chat. </p>
+                    }
+                </ul>
+            </div>
+            <div class="panel-footer">
+                <div class="input-group">
+                    <input id="textInput" type="text" class="form-control input-sm" placeholder="Kris Vector..." maxlength="150" />
+                    <span class="input-group-btn">
                             <button class="btn btn-warning btn-sm" id="publishPostButton">Send</button>
                         </span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

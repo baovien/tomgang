@@ -27,6 +27,8 @@ body {
 /* Fix scrollbar bump */
 
 html {
+    position: relative; 
+    min-height: 100%;
     margin-left: calc(100vw - 100%);
 }
 
@@ -250,4 +252,10 @@ textarea {
 {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
     background-color: #555;
+}
+#Chatholder{
+    position:fixed;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
 }
