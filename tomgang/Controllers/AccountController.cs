@@ -118,7 +118,7 @@ namespace tomgang.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    _GameValues.onAccountCreation();
+                    _GameValues.onAccountCreation(user.Id);
 
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713

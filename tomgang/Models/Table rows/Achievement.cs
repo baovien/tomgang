@@ -1,13 +1,18 @@
 using System.ComponentModel.DataAnnotations;
-
+using tomgang.Services;
 namespace tomgang.Models
 {
-    public class Achievement
+    public class Achievement : IAchievement
     
     {
+        public Achievement(string id, int typ, int val){
+            Id = id;
+            type = typ;
+            value = val;
+        }
 
         [Key]
-        public int Id{get; set;}
+        public string Id{get; set;}
 
         public int type{get; set;}
         public int value{get; set;}

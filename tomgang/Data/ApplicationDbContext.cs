@@ -21,8 +21,8 @@ namespace tomgang.Data
         public DbSet<Upgrade> UpgradeTable { get; set;}
         public DbSet<Achievement> AchievementTable { get; set;}
         public DbSet<PlayerGains> PlayerGainsTable { get; set;}
-        public DbSet<PlayerAchievement> PlayerAchievmentTable { get; set;}
-        public DbSet<PlayerUpgrade> PlayerUpgradeTable { get; set;}
+        public DbSet<PlayerAchievements> PlayerAchievmentTable { get; set;}
+        public DbSet<PlayerUpgrades> PlayerUpgradeTable { get; set;}
         
         
         protected override void OnModelCreating(ModelBuilder builder)

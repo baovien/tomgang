@@ -2,7 +2,7 @@ namespace tomgang.Services
 {
     public interface IGameValues
     {
-        void onAccountCreation();
+        void onAccountCreation(string userid);
     }
     
 }

@@ -2,15 +2,15 @@ using System.ComponentModel.DataAnnotations;
 using tomgang.Services;
 namespace tomgang.Models
 {
-    public class PlayerGains : IPlayerGains
+    public class PlayerUpgrades : IPlayerUpgrades
     {
-        public PlayerGains(string id, int val){
+        public PlayerUpgrades(string id, int typ){
             Id = id;
-            value = val;
+            type = typ;
         }
         [Key]
         public string Id{get; set;}
 
-        public int value{get; set;}
+        public int type{get; set;} 
     }
 }
