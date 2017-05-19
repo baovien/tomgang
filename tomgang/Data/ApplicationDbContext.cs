@@ -9,7 +9,7 @@ using tomgang.Models;
 namespace tomgang.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
+    {        
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
@@ -34,7 +34,10 @@ namespace tomgang.Data
 
             builder.Entity<Message>()
                 .Property(m => m.DateCreated)
-                .HasDefaultValueSql("strftime('%Y-%m-%d %H:%M:%S')");
+                .HasDefaultValueSql("strftime('%Y-%m-%d %H:%M:%S')"); 
+
+                //Prod mode (SQL server):   GETDATE()
+                //Dev mode (SQLite):        strftime('%Y-%m-%d %H:%M:%S')
         }
     }
 }

@@ -19,8 +19,16 @@ namespace tomgang
 {
     public class Startup
     {
+
+        public IHostingEnvironment _env;
+        public IConfigurationRoot Configuration { get; }
+
         public Startup(IHostingEnvironment env)
         {
+
+            //Setter _env med current hostingenv. Gjør dette for å få tilgang til environment i ConfigureServices
+            _env = env;
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
@@ -35,15 +43,25 @@ namespace tomgang
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
-
-        public IConfigurationRoot Configuration { get; }
+        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {  
             // Add framework services.
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => 
+            {
+                //Development mode, SQLite
+                if(_env.IsDevelopment())
+                {
+                    options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                }
+                else //Staging, Production, SQL server (Azure)
+                {
+                    options.UseSqlServer(Configuration.GetConnectionString("AzureSQL"));
+                }
+            });
+                
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
