@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using tomgang.Services;
 namespace tomgang.Models
 {
-    public class Achievement : IAchievement
+    public class Achievement
     
     {
         public Achievement(string id, int typ, int val){

@@ -18,11 +18,11 @@ namespace tomgang.Data
         public DbSet<Message> Message { get; set; }
         
         //Tables som holder styr på spillets verdier
-        public DbSet<Upgrade> UpgradeTable { get; set;}
-        public DbSet<Achievement> AchievementTable { get; set;}
-        public DbSet<PlayerGains> PlayerGainsTable { get; set;}
-        public DbSet<PlayerAchievements> PlayerAchievmentTable { get; set;}
-        public DbSet<PlayerUpgrades> PlayerUpgradeTable { get; set;}
+        public DbSet<Upgrade> Upgrade { get; set;}
+        public DbSet<Achievement> Achievement { get; set;}
+        public DbSet<PlayerGains> PlayerGains { get; set;}
+        public DbSet<PlayerAchievements> PlayerAchievments { get; set;}
+        public DbSet<PlayerUpgrades> PlayerUpgrades { get; set;}
         
         
         protected override void OnModelCreating(ModelBuilder builder)

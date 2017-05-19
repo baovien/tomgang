@@ -9,29 +9,13 @@ namespace tomgang.Controllers
     public class GameValues : Services.IGameValues
     {
         private readonly ApplicationDbContext _dbContext;
-        private readonly IAchievement _achievement;
-        private readonly IPlayerAchievements _playerAchievments;
-        private readonly IPlayerGains _playerGains;
-        private readonly IPlayerUpgrades _playerUpgrades;
-        private readonly IUpgrade _upgrade;
 
-        public GameValues(
-            ApplicationDbContext dbContext,
-            IAchievement achievement,
-            IPlayerAchievements playerAchievements,
-            IPlayerGains playerGains,
-            IPlayerUpgrades playerUpgrades,
-            IUpgrade upgrade)
-            {
+        public GameValues(ApplicationDbContext dbContext)
+        {
             _dbContext = dbContext;
-            _achievement = achievement;
-            _playerAchievments = playerAchievements;
-            _playerGains = playerGains;
-            _playerUpgrades = playerUpgrades;
-            _upgrade = upgrade;
         }
         public void onAccountCreation(string userid){
-             _dbContext.PlayerGainsTable.Add(new PlayerGains(userid, 0, 0, 0));
+             _dbContext.PlayerGains.Add(new PlayerGains(userid, 0, 0, 1));
             //Setter alle verdiene til ny bruker til startverdier
         }
         public void onLiftClick(){

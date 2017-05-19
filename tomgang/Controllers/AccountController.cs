@@ -118,7 +118,7 @@ namespace tomgang.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    _GameValues.onAccountCreation(user.Id);
+                    
 
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=532713
@@ -129,6 +129,7 @@ namespace tomgang.Controllers
                     //    $"Please confirm your account by clicking this link: <a href='{callbackUrl}'>link</a>");
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
+                    //_GameValues.onAccountCreation(user.Id);
                     return RedirectToLocal(returnUrl);
                 }
                 AddErrors(result);

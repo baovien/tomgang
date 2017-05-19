@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 using tomgang.Services;
 namespace tomgang.Models
 {
-    public class PlayerUpgrades : IPlayerUpgrades
+    public class PlayerUpgrades
     {
         public PlayerUpgrades(string id, int typ){
             Id = id;

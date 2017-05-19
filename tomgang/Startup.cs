@@ -69,11 +69,6 @@ namespace tomgang
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.AddTransient<Services.IGameValues, GameValues>();
-            services.AddTransient<Services.IUpgrade, Upgrade>();
-            services.AddTransient<Services.IPlayerUpgrades, PlayerUpgrades>();
-            services.AddTransient<Services.IPlayerGains, PlayerGains>();
-            services.AddTransient<Services.IPlayerAchievements, PlayerAchievements>();
-            services.AddTransient<Services.IAchievement, Achievement>();
         }
 
         // Called by Configure(). This needs an async function because
