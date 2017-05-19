@@ -11,5 +11,7 @@ namespace tomgang.Models
     public class ApplicationUser : IdentityUser
     {
         public String Brukernavn { get; set;}
+        //public DbSet<PlayerGains> PlayerGains { get; set;}
+
     }
 }

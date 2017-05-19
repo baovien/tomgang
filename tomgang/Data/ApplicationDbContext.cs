@@ -20,6 +20,8 @@ namespace tomgang.Data
         //Tables som holder styr på spillets verdier
         public DbSet<Upgrade> Upgrade { get; set;}
         public DbSet<Achievement> Achievement { get; set;}
+        
+        //Flyttet til Applicationuser (nvm)
         public DbSet<PlayerGains> PlayerGains { get; set;}
         public DbSet<PlayerAchievements> PlayerAchievments { get; set;}
         public DbSet<PlayerUpgrades> PlayerUpgrades { get; set;}
