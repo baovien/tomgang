@@ -40,27 +40,27 @@ namespace tomgang.Controllers
 
 
         //Denne trenger userid, typen upgrade kjøpt og tilhørende value
-        public void buyUpgrade(string userid, int id, double value){
+        public void buyUpgrade(string userid, int id){
             //IDen bestemmer hva upgraden vil påvirke. Om flere typer
             //upgrades er ønsket er det bare å adde en case for typen.
             
             //Henter upgraden som er kjøpt og applyer den til brukeren
             //Setter den som kjøpt
-            switch (id){
+            switch (_dbContext.Upgrade.Find(id).type){
                 case 1:
                     //Multipliser med income
-                    _dbContext.PlayerGains.Find(userid).incomeValue *= value;
+                    _dbContext.PlayerGains.Find(userid).incomeValue *= _dbContext.Upgrade.Find(id).multi;
                     break;
                 case 2:
                     //Add på income
-                    _dbContext.PlayerGains.Find(userid).incomeValue += value;
+                    _dbContext.PlayerGains.Find(userid).incomeValue += _dbContext.Upgrade.Find(id).multi;
                     break;
                 case 3:
-                    _dbContext.PlayerGains.Find(userid).clickValue *= value;
+                    _dbContext.PlayerGains.Find(userid).clickValue *= _dbContext.Upgrade.Find(id).multi;
                     //Multipliser med click
                     break;
                 case 4:
-                    _dbContext.PlayerGains.Find(userid).clickValue += value;
+                    _dbContext.PlayerGains.Find(userid).clickValue += _dbContext.Upgrade.Find(id).multi;
                     //Add på click
                     break;
             }
