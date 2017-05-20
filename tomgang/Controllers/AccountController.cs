@@ -86,12 +86,12 @@ namespace tomgang.Controllers
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return View(model);
+                    return View("Index");
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View("Index");
         }
 
         //
@@ -136,7 +136,7 @@ namespace tomgang.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return View("Index");
         }
 
         //
