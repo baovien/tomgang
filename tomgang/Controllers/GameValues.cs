@@ -63,8 +63,12 @@ namespace tomgang.Controllers
                     _dbContext.PlayerGains.Find(userid).clickValue += _dbContext.Upgrade.Find(id).multi;
                     //Add på click
                     break;
+                default:
+                    break;
             }
-            //_dbContext.PlayerUpgrades.Add(new PlayerUpgrades(userid, id));
+            System.Console.WriteLine("-----------------------------------anus");
+            _dbContext.PlayerUpgrades.Add(new PlayerUpgrades(userid, id));
+            System.Console.WriteLine("-----------------------------------dick");
             _dbContext.SaveChanges();
         }
         public void checkAchievements(string userid){

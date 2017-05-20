@@ -28,7 +28,9 @@ namespace tomgang.Controllers
         [HttpPost]
         public void upgradeClick(string id){
             _GameValues.buyUpgrade(User.FindFirstValue(ClaimTypes.NameIdentifier), id);
-            Console.WriteLine("-----------------------------------dick---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
+        //public void liftClick(){
+        //    _GameValues.onLiftClick(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        //}
     }
 }

@@ -12,6 +12,7 @@ namespace tomgang.Models
             type = typ;
         }
         [Key]
+        public int identifier{get;set;}
         public string Id{get; set;}
 
         public int type{get; set;}
