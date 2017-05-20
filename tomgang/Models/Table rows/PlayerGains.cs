@@ -4,6 +4,9 @@ namespace tomgang.Models
 {
     public class PlayerGains
     {
+
+        public PlayerGains () {}
+
         public PlayerGains(string id){
             Id = id;
             currentGainsValue = 0;

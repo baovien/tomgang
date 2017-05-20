@@ -4,6 +4,9 @@ namespace tomgang.Models
 {
     public class PlayerAchievements
     {
+
+        public PlayerAchievements () {}
+
         public PlayerAchievements(string id, int typ){
             Id = id;
             type = typ;

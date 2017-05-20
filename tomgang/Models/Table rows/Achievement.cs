@@ -5,6 +5,9 @@ namespace tomgang.Models
     public class Achievement
     
     {
+
+        public Achievement () {}
+
         public Achievement(string id, int typ, int val){
             Id = id;
             type = typ;

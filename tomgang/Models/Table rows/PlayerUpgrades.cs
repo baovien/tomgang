@@ -4,6 +4,9 @@ namespace tomgang.Models
 {
     public class PlayerUpgrades
     {
+
+        public PlayerUpgrades () {}
+
         public PlayerUpgrades(string id, int typ){
             Id = id;
             type = typ;
