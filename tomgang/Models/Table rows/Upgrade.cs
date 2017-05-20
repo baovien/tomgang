@@ -14,5 +14,9 @@ namespace tomgang.Models
 
         public int type{get; set;}
         public int multi{get; set;}
+        public int reqType{get; set;}
+        public int reqValue{get; set;}
+        public int cost{get; set;}
+        
     }
 }
