@@ -4,6 +4,9 @@ namespace tomgang.Models
 {
     public class Upgrade
     {
+
+        public Upgrade() {}
+
         public Upgrade(string id, int typ, int mult){
             Id = id;
             type = typ;

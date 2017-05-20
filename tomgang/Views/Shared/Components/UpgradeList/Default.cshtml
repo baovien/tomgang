@@ -1,0 +1,6 @@
+@model IEnumerable<Upgrade>
+
+@foreach (var a in Model)
+{
+    Html.RenderPartial("_Upgrade", a);
+}

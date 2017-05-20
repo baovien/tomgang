@@ -127,4 +127,15 @@ $(document).ready(function () {
 			}
 		});
 	}
+
+
+    for (let i = 1; i < $('.upgradebtn').length + 1; i++) {
+
+		$('[id="' + 'test ' + i + '"]').click(function () {
+            //Hides button on click, shows editbtn
+            //$(this).hide();
+			console.log("button " + i);
+			
+		});
+	}
 });

@@ -130,6 +130,13 @@ namespace tomgang
 
                     db.Database.EnsureDeleted();
                     db.Database.EnsureCreated();
+                    
+                    for (int i = 0; i < 20; i++)
+                    {
+                        db.Upgrade.Add(new Models.Upgrade("test" + i ,1,5));
+                    }
+
+                    db.SaveChanges();
 
                     // Then create the standard users and roles
                     CreateUsersAndRoles(serviceScope).Wait();

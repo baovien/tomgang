@@ -1,3 +1,4 @@
+@model Upgrade
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -83,53 +84,8 @@
                     <div class="tab-content tabs">
                         <div role="tabpanel" class="tab-pane fade in active" id="Section1">
 
-                            <!-- Upgrade 1 -->
-                            <div class="panel panel-danger">
-                                <div class="panel-heading">
-                                    Carb snack
-                                    <button style="float: right;" onclick="buyCarb()">Buy</button>
-                                </div>
-                                <div class="panel-body">
-                                    0.2 Gains/s
-                                    <p style="float: right;" id="costCarb">Cost: 12</p>
-                                </div>
-                            </div>
+                                    @(await Component.InvokeAsync<ViewComponents.UpgradeList>())
 
-                            <!-- Upgrade 2 -->
-                            <div class="panel panel-danger">
-                                <div class="panel-heading">
-                                    Protein shake
-                                    <button style="float: right;" onclick="buyProtein()">Buy</button>
-                                </div>
-                                <div class="panel-body">
-                                    0.5 Gains/s
-                                    <p style="float: right;" id="costProtein">Cost: 30</p>
-                                </div>
-                            </div>
-
-                            <!-- Upgrade 3 -->
-                            <div class="panel panel-danger">
-                                <div class="panel-heading">
-                                    Stringlet
-                                    <button style="float: right;" onclick="buyStringlet()">Buy</button>
-                                </div>
-                                <div class="panel-body">
-                                    1 Gains/s
-                                    <p style="float: right;" id="costStringlet">Cost: 60</p>
-                                </div>
-                            </div>
-
-                            <!-- Upgrade 4 -->
-                            <div class="panel panel-danger">
-                                <div class="panel-heading">
-                                    Learn to grunt
-                                    <button style="float: right;" onclick="buyGrunt()">Buy</button>
-                                </div>
-                                <div class="panel-body">
-                                    2 Gains/s
-                                    <p style="float: right;" id="costGrunt">Cost: 120</p>
-                                </div>
-                            </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="Section2">
                             <h3>Section 2</h3>
