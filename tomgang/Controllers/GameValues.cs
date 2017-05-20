@@ -69,7 +69,7 @@ namespace tomgang.Controllers
         }
         public void checkAchievements(string userid){
                 //Loope igjennom alle achievement reqs og sjekke om brukeren har fått noen
-                //Adde achievments brukeren har fått
+                //Adde achievements brukeren har fått
         
                 for (int i = 0; i < _dbContext.Achievement.Count(); i++)
                 {
@@ -90,8 +90,7 @@ namespace tomgang.Controllers
                     }
                 }
                     
-                }
             _dbContext.SaveChanges();
+                }
         }
-    }
 }
