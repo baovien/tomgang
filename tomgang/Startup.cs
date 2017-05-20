@@ -133,7 +133,7 @@ namespace tomgang
                     
                     for (int i = 0; i < 20; i++)
                     {
-                        db.Upgrade.Add(new Models.Upgrade("test" + i ,1,5));
+                        db.Upgrade.Add(new Models.Upgrade("test" + i , 1, 5));
                     }
 
                     db.SaveChanges();

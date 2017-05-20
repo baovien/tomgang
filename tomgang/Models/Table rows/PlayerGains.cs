@@ -10,7 +10,7 @@ namespace tomgang.Models
         public PlayerGains(string id){
             Id = id;
             currentGainsValue = 0;
-            incomeValue =  0;
+            incomeValue =  5;
             clickValue = 1;
         }
         [Key]

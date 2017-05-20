@@ -128,12 +128,21 @@ $(document).ready(function () {
 		});
 	}
 
-	for (let i = 1; i < $('.upgradebtn').length + 1; i++) {
+	for (let i = 0; i < $('.upgradebtn').length; i++) {
 
-		$('[id="' + 'test ' + i + '"]').click(function () {
+		$('[id="' + 'test' + i + '"]').click(function () {
             //Hides button on click, shows editbtn
-            //$(this).hide();
+            $(this).hide();
 			console.log("button " + i);
+
+			 $.ajax({    
+                type: 'POST',
+                data: {'id':'test'+ i},
+                url: '/Game/upgradeClick',
+                cache:false
+
+            })
+			
 			
 		});
 	}

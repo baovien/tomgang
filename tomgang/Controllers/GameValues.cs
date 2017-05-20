@@ -40,7 +40,7 @@ namespace tomgang.Controllers
 
 
         //Denne trenger userid, typen upgrade kjøpt og tilhørende value
-        public void buyUpgrade(string userid, int id){
+        public void buyUpgrade(string userid, string id){
             //IDen bestemmer hva upgraden vil påvirke. Om flere typer
             //upgrades er ønsket er det bare å adde en case for typen.
             
@@ -64,7 +64,7 @@ namespace tomgang.Controllers
                     //Add på click
                     break;
             }
-            _dbContext.PlayerUpgrades.Add(new PlayerUpgrades(userid, id));
+            //_dbContext.PlayerUpgrades.Add(new PlayerUpgrades(userid, id));
             _dbContext.SaveChanges();
         }
         public void checkAchievements(string userid){

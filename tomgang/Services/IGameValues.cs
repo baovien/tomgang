@@ -6,7 +6,7 @@ namespace tomgang.Services
         void onLiftClick(string userid);
         void increaseGains(string userid,double secondsSinceLastCall);
 
-        void buyUpgrade(string userid, int id);
+        void buyUpgrade(string userid, string id);
 
         void checkAchievements(string userid);
     }

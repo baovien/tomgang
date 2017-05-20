@@ -7,13 +7,13 @@ namespace tomgang.Models
 
         public PlayerUpgrades () {}
 
-        public PlayerUpgrades(string id, int typ){
+        public PlayerUpgrades(string id, string typ){
             Id = id;
             type = typ;
         }
         [Key]
         public string Id{get; set;}
 
-        public int type{get; set;} 
+        public string type{get; set;} 
     }
 }
