@@ -64,7 +64,7 @@ namespace tomgang.Controllers
                     //Add på click
                     break;
             }
-            _dbContext.PlayerAchievments.Add(new PlayerAchievements(userid, id));
+            _dbContext.PlayerUpgrades.Add(new PlayerUpgrades(userid, id));
             _dbContext.SaveChanges();
         }
         public void checkAchievements(string userid){
