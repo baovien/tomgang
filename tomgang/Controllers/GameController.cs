@@ -12,5 +12,6 @@ namespace tomgang.Controllers
         public GameController(Services.IGameValues gameValues){
             _GameValues = gameValues;
         }
+        
     }
 }
