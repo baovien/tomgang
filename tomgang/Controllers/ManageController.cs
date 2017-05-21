@@ -224,7 +224,7 @@ namespace tomgang.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return PartialView("~/Views/Manage/ChangePassword", model);
+                return PartialView("~/Views/Manage/ChangePassword");
             }
             var user = await GetCurrentUserAsync();
             if (user != null)
@@ -237,7 +237,7 @@ namespace tomgang.Controllers
                     return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangePasswordSuccess });
                 }
                 AddErrors(result);
-                return PartialView("~/Views/Manage/ChangePassword", model);
+                return PartialView("~/Views/Manage/ChangePassword");
             }
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }

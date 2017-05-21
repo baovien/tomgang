@@ -175,3 +175,10 @@ $(function() {
 });
 
 //CHANGE PASSWORD
+$("#login-dp").click(function(e){
+  e.stopPropagation(); 
+});
+
+$("#letsgoleft").click( function(){
+      $("#divContent").load('@Url.Action("ChangePassword","Manage")')
+});
