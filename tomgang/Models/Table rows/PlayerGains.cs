@@ -19,5 +19,6 @@ namespace tomgang.Models
         public double clickValue{get; set;}
         public double incomeValue{get; set;}
         public double currentGainsValue{get; set;}
+        public int timesClicked{get;set;}
     }
 }
