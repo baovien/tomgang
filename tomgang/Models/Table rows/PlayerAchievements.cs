@@ -7,7 +7,7 @@ namespace tomgang.Models
 
         public PlayerAchievements () {}
 
-        public PlayerAchievements(string id, int typ){
+        public PlayerAchievements(string id, string typ){
             Id = id;
             type = typ;
         }
@@ -15,7 +15,7 @@ namespace tomgang.Models
         public int identifier{get;set;}
         public string Id{get; set;}
 
-        public int type{get; set;}
+        public string type{get; set;}
 
     }
 }

@@ -78,30 +78,28 @@ namespace tomgang.Controllers
         }
         public void checkAchievements(string userid)
         {
+            var earnedAchievements = _dbContext.PlayerAchievments.Where(m => m.Id == userid).Select(m => m.type).ToList();
             //Loope igjennom alle achievement reqs og sjekke om brukeren har fått noen
             //Adde achievements brukeren har fått
 
-            for (int i = 0; i < _dbContext.Achievement.Count(); i++)
+            foreach (var item in _dbContext.Achievement)
             {
-                switch (_dbContext.Achievement.Find(i).type)
+                switch (item.type)
                 {
                     case 0:
                         //Sjekker user har større verdi enn required og om user har achien fra før
                         if (_dbContext.PlayerGains.Find(userid).currentGainsValue >=
-                        _dbContext.Achievement.Find(i).value &&
-                        _dbContext.PlayerAchievments.Find(userid, i) != null)
+                        item.value && _dbContext.PlayerAchievments.Where(m => m.Id == userid && m.type == item.Id) != null)
                         {
-                            _dbContext.PlayerAchievments.Add(new PlayerAchievements(userid, i));
+                            _dbContext.PlayerAchievments.Add(new PlayerAchievements(userid, item.Id));
                         }
                         break;
                     case 1:
                         break;
                     case 2:
                         break;
-
                 }
             }
-
             _dbContext.SaveChanges();
         }
         public List<Tuple<string, int>> checkEligibleUpgrades(string userid)
