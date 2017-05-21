@@ -323,13 +323,13 @@ textarea {
     min-width: 250px;
     padding: 14px 14px 0;
     overflow:hidden;
-    background-color:rgba(255,255,255,.8);
+    background-color:rgba(220,220,255,.9);
 }
 #login-dp .help-block{
     font-size:12px    
 }
 #login-dp .bottom{
-    background-color:rgba(255,255,255,.8);
+    background-color:rgba(220,220,255,.9);
     border-top:1px solid #ddd;
     clear:both;
     padding:14px;
@@ -368,4 +368,14 @@ textarea {
         background-color: inherit;
         border-top:0 none;
     }
+}
+#testlols{
+    width: 800px;
+    height: 300px;
+}
+#letsgoright{
+    position: absolute;
+    right:    0;
+    bottom:   0;
+    margin: 5px;
 }
