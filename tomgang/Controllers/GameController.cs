@@ -29,8 +29,15 @@ namespace tomgang.Controllers
         public void upgradeClick(string id){
             _GameValues.buyUpgrade(User.FindFirstValue(ClaimTypes.NameIdentifier), id);
         }
-        //public void liftClick(){
-        //    _GameValues.onLiftClick(User.FindFirstValue(ClaimTypes.NameIdentifier));
-        //}
+
+        [HttpPost]
+        public void liftClick(){
+            _GameValues.onLiftClick(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        }
+
+        [HttpGet]
+        public double getCurrentGains(){
+            return _dbContext.PlayerGains.Find(User.FindFirstValue(ClaimTypes.NameIdentifier)).currentGainsValue;
+        }
     }
 }
