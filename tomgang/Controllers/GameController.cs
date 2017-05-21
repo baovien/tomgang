@@ -39,5 +39,8 @@ namespace tomgang.Controllers
         public double getCurrentGains(){
             return _dbContext.PlayerGains.Find(User.FindFirstValue(ClaimTypes.NameIdentifier)).currentGainsValue;
         }
+        public List<Tuple<string, int>> checkUpgrades(string userid){
+            return _GameValues.checkEligibleUpgrades(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        }
     }
 }

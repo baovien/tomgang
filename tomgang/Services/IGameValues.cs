@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 namespace tomgang.Services
 {
     public interface IGameValues
@@ -9,6 +11,7 @@ namespace tomgang.Services
         void buyUpgrade(string userid, string id);
 
         void checkAchievements(string userid);
+        List<Tuple<string, int>> checkEligibleUpgrades(string userid);
     }
     
 }
