@@ -379,3 +379,9 @@ textarea {
     bottom:   0;
     margin: 5px;
 }
+#letsgoleft{
+    position: absolute;
+    left:    0;
+    bottom:   0;
+    margin: 5px;
+}

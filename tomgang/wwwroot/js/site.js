@@ -77,3 +77,5 @@ $(function() {
 	});
 
 });
+
+//CHANGE PASSWORD

@@ -6,7 +6,8 @@
 @using Microsoft.AspNetCore.Http.Authentication
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
-
+<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.2.0.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/signalr/jquery.signalr-2.2.0.min.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,14 +51,17 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>@UserManager.GetUserName(User)</b> <span class="caret"></span></a>
         <ul id="login-dp" class="dropdown-menu">
                 <div class= "row" id="testlols">
-                    <div class="col-lg-12">
+                    <div class="col-lg-12" id="divContent">
                             @await Html.PartialAsync("~/Views/Manage/Index.cshtml")
                     </div>
+                            <a asp-controller="Manage" asp-action="ChangePassword" class="btn btn-info" id="letsgoleft">Change Password</a>
                 </div>
                 <div class= "row">
+                    <div class="col-lg-6 ">
+                    </div>
                     <div class="col-lg-6 col-lg-offset-6">
-                      <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm">  
-                            <button type="submit" class="btn btn-danger" id="letsgoright">Log out</button>
+                      <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm">
+                          <button type="submit" class="btn btn-info" id="letsgoright">Log out</button>
                       </form>
                 </div>
         </ul>

@@ -213,7 +213,7 @@ namespace tomgang.Controllers
         [HttpGet]
         public IActionResult ChangePassword()
         {
-            return View();
+            return PartialView();
         }
 
         //
@@ -224,7 +224,7 @@ namespace tomgang.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return PartialView("~/Views/Manage/ChangePassword", model);
             }
             var user = await GetCurrentUserAsync();
             if (user != null)
@@ -237,7 +237,7 @@ namespace tomgang.Controllers
                     return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangePasswordSuccess });
                 }
                 AddErrors(result);
-                return View(model);
+                return PartialView("~/Views/Manage/ChangePassword", model);
             }
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }
