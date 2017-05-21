@@ -1,13 +1,35 @@
 $(document).ready(function () {
 	//Timer, 1sekund
-	setInterval(timer, 1000);
+	//setInterval(timer, 1000);
 
 	liftClickPost();
 	upgradeBtnsPost();	
+
+	
+
 });
 
 function timer() { //Do shit
 	updateGainsCounter();
+	$.ajax({
+		type: "GET",
+		url: 'Game/checkUpgrades',
+		success: function(data) {
+
+			console.log(data);
+			for (let i = 0; i < $("[id*='click']").length; i++) {
+				if($('[id="' + 'click' + i + '"]').attr('id') == data[i].item1){
+					$('[id="' + 'click' + i + '"]').show();
+				}
+			}		
+			for (let i = 0; i < $("[id*='passive']").length; i++) {
+				if($('[id="' + 'passive' + i + '"]').attr('id') == data[i+5].item1){
+					$('[id="' + 'passive' + i + '"]').show();
+				}
+				
+			}
+		}
+	});
 }
 
 //Update gains counteren
@@ -40,22 +62,39 @@ function liftClickPost(){
 
 function upgradeBtnsPost(){
 	//UPGRADES
-	for (let i = 0; i < $('.upgradebtn').length; i++) {
+	for (let i = 0; i < $("[id*='click']").length; i++) {
 
-		$('[id="' + 'test' + i + '"]').click(function () {
+		$('[id="' + 'click' + i + '"]').click(function () {
             //Hides button on click, shows editbtn
             $(this).hide();
-			console.log("button " + i);
+			console.log("clickbtn " + i);
 
 			 $.ajax({    
                 type: 'POST',
-                data: {'id':'test'+ i},
+                data: {'id':'click'+ i},
                 url: '/Game/upgradeClick',
                 cache:false
 
             });	
 		});
 	}
+	for (let i = 0; i < $("[id*='passive']").length; i++) {
+		$('[id="' + 'passive' + i + '"]').click(function () {
+            //Hides button on click, shows editbtn
+            $(this).hide();
+			console.log("passivebtn " + i);
+
+			 $.ajax({    
+                type: 'POST',
+                data: {'id':'passive'+ i},
+                url: '/Game/upgradeClick',
+                cache:false
+
+            });	
+		});
+	}
+
+	
 }
 
 //INNLOGGING
