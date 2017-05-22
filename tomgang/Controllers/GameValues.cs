@@ -171,7 +171,6 @@ namespace tomgang.Controllers
             foreach(var upgrade in affordableEligibleUpgrades){
                 list.Add(Tuple.Create(upgrade, _dbContext.Upgrade.Find(upgrade).cost));
             }
-            list = list.OrderBy(i => i.Item2).ToList();
             return list;
 
             /*var aflength = affordableEligibleUpgrades.Count;

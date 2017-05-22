@@ -1,35 +1,56 @@
+var _upgrades;
+var _gains;
+
 $(document).ready(function () {
 	//Timer, 1sekund
-	//setInterval(timer, 1000);
+	setInterval(timer, 1000);
 
 	liftClickPost();
 	upgradeBtnsPost();	
 
+	$('.upgradebtn').popover();
 	
 
 });
 
 function timer() { //Do shit
-	updateGainsCounter();
-	$.ajax({
+	//updateGainsCounter();
+
+	$.when(
+		$.get("Game/checkUpgrades", function(upgrades) {
+			_upgrades = upgrades; 
+  		}),
+		$.get("Game/getCurrentGains", function(gains) {
+			_gains = gains;
+  		})
+
+	).then(function(){
+		$('#gainNumber').html(_gains);
+
+		_upgrades.forEach(function(element) {
+			if(_gains <= element.item2){
+				$('[id="' + element.item1 + '"]').css({"background-color":"grey"});
+				$('[id="' + element.item1 + '"]').addClass("disabled");
+			}else{
+				$('[id="' + element.item1 + '"]').css({"background-color":"green"});
+				$('[id="' + element.item1 + '"]').removeClass("disabled");
+			}
+			$('[id="' + element.item1 + '"]').show();
+		}, this);
+
+	});
+
+	/*$.ajax({
 		type: "GET",
 		url: 'Game/checkUpgrades',
 		success: function(data) {
-
 			console.log(data);
-			for (let i = 0; i < $("[id*='click']").length; i++) {
-				if($('[id="' + 'click' + i + '"]').attr('id') == data[i].item1){
-					$('[id="' + 'click' + i + '"]').show();
-				}
-			}		
-			for (let i = 0; i < $("[id*='passive']").length; i++) {
-				if($('[id="' + 'passive' + i + '"]').attr('id') == data[i+5].item1){
-					$('[id="' + 'passive' + i + '"]').show();
-				}
-				
-			}
+			data.forEach(function(element) {
+				$('[id="' + element.item1 + '"]').show();
+
+			}, this);
 		}
-	});
+	});*/
 }
 
 //Update gains counteren
@@ -61,8 +82,35 @@ function liftClickPost(){
 }
 
 function upgradeBtnsPost(){
+
+	$("[id*='click']").each(function(){
+		$(this).on("click", function(){
+			$(this).hide();
+			
+			 $.ajax({    
+                type: 'POST',
+                data: {'id': $(this).attr("id")},
+                url: '/Game/upgradeClick',
+                cache:false
+			});
+		});
+	});
+
+	$("[id*='passive']").each(function(){
+		$(this).on("click", function(){
+			$(this).hide();
+			
+			 $.ajax({    
+                type: 'POST',
+                data: {'id': $(this).attr("id")},
+                url: '/Game/upgradeClick',
+                cache:false
+			});
+		});
+	});
+
 	//UPGRADES
-	for (let i = 0; i < $("[id*='click']").length; i++) {
+	/*for (let i = 0; i < $("[id*='click']").length; i++) {
 
 		$('[id="' + 'click' + i + '"]').click(function () {
             //Hides button on click, shows editbtn
@@ -92,7 +140,7 @@ function upgradeBtnsPost(){
 
             });	
 		});
-	}
+	}*/
 
 	
 }

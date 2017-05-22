@@ -1,6 +1,7 @@
 @model Upgrade
 
-<button id="@Model.Id" class="upgradebtn btn btn-default btn-xs" title="@Model.Id"> <span class="@Model.imgPath"></span></button>
+<button id="@Model.Id" class="upgradebtn btn btn-default" title="@Model.Id" style="display: none" data-content="Cost: @Model.cost, Multiplier: @Model.multi, Type: @Model.type" rel="popover" data-placement="bottom" data-original-title="Title" data-trigger="hover"> <span class="@Model.imgPath" ></span></button>
+
 
 
 
