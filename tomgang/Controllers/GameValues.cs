@@ -107,6 +107,10 @@ namespace tomgang.Controllers
         }
         public List<Tuple<string, int>> checkEligibleUpgrades(string userid)
         {
+            var time = new Stopwatch();
+            time.Start();
+            time.Restart();
+            
             //Lager en liste som inneholder alle upgrades ikke allerede kjøpt.
             //Videre skal vi fjerne upgrades brukeren ikke kvalifiserer for i denne funksjonen.
             var purchasedUpgrades = _dbContext.PlayerUpgrades.Where(m => m.Id == userid).Select(m => m.type).ToList();
@@ -169,6 +173,7 @@ namespace tomgang.Controllers
             foreach(var upgrade in affordableEligibleUpgrades){
                 list.Add(Tuple.Create(upgrade, _dbContext.Upgrade.Find(upgrade).cost));
             }
+            System.Console.WriteLine(time.ElapsedMilliseconds);
             return list;
 
             /*var aflength = affordableEligibleUpgrades.Count;
