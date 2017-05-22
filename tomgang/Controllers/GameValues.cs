@@ -181,5 +181,14 @@ namespace tomgang.Controllers
             affordableEligibleUpgrades.Add(aflength.ToString());
             return affordableEligibleUpgrades;*/
         }
+        public void buyItem(string userid, string itemid){
+            //Hvis bruker har råd til upgraden
+            //startverdi*(e^0.14x)
+            itemPrice =_dbContext.Upgrade.Find(itemid).cost * _dbContext.PlayerGains.GetType().GetPr
+            if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= _dbContext.Upgrade.Find(itemid).cost)
+            {
+
+            }
+        }
     }
 }

@@ -23,6 +23,7 @@ namespace tomgang.Data
         public DbSet<PlayerGains> PlayerGains { get; set;}
         public DbSet<PlayerAchievements> PlayerAchievments { get; set;}
         public DbSet<PlayerUpgrades> PlayerUpgrades { get; set;}
+        public DbSet<Item> Item { get; set;}
         
         
         protected override void OnModelCreating(ModelBuilder builder)
