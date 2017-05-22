@@ -52,29 +52,32 @@ namespace tomgang.Controllers
 
             //Henter upgraden som er kjøpt og applyer den til brukeren
             //Setter den som kjøpt
-            switch (_dbContext.Upgrade.Find(id).type)
+            if (_dbContext.PlayerGains.Find(userid).currentGainsValue > _dbContext.Upgrade.Find(id).cost)
             {
-                case 1:
-                    //Multipliser med income
-                    _dbContext.PlayerGains.Find(userid).incomeValue *= _dbContext.Upgrade.Find(id).multi;
-                    break;
-                case 2:
-                    //Add på income
-                    _dbContext.PlayerGains.Find(userid).incomeValue += _dbContext.Upgrade.Find(id).multi;
-                    break;
-                case 3:
-                    _dbContext.PlayerGains.Find(userid).clickValue *= _dbContext.Upgrade.Find(id).multi;
-                    //Multipliser med click
-                    break;
-                case 4:
-                    _dbContext.PlayerGains.Find(userid).clickValue += _dbContext.Upgrade.Find(id).multi;
-                    //Add på click
-                    break;
-                default:
-                    break;
-            }
+                switch (_dbContext.Upgrade.Find(id).type)
+                {
+                    case 1:
+                        //Multipliser med income
+                        _dbContext.PlayerGains.Find(userid).incomeValue *= _dbContext.Upgrade.Find(id).multi;
+                        break;
+                    case 2:
+                        //Add på income
+                        _dbContext.PlayerGains.Find(userid).incomeValue += _dbContext.Upgrade.Find(id).multi;
+                        break;
+                    case 3:
+                        _dbContext.PlayerGains.Find(userid).clickValue *= _dbContext.Upgrade.Find(id).multi;
+                        //Multipliser med click
+                        break;
+                    case 4:
+                        _dbContext.PlayerGains.Find(userid).clickValue += _dbContext.Upgrade.Find(id).multi;
+                        //Add på click
+                        break;
+                    default:
+                        break;
+                }
             _dbContext.PlayerUpgrades.Add(new PlayerUpgrades(userid, id));
             _dbContext.SaveChanges();
+            }
         }
         public void checkAchievements(string userid)
         {

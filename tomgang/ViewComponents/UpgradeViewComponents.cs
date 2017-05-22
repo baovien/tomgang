@@ -2,6 +2,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using tomgang.Data;
+using System.Linq;
+
+
 
 namespace ViewComponents
 {
@@ -21,7 +24,8 @@ namespace ViewComponents
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var upgrades = await db.Upgrade.ToListAsync();
-            return View(upgrades);
+            var sortedUpgrades = upgrades.OrderBy(i=> i.cost);
+            return View(sortedUpgrades);
         }
     }
 }
