@@ -133,12 +133,12 @@ namespace tomgang
                     
                     for (int i = 0; i < 10; i++)
                     {
-                        db.Upgrade.Add(new Models.Upgrade("click" + i , 1, 3, i*20, "glyphicon glyphicon-cog", 1, 3));
+                        db.Upgrade.Add(new Models.Upgrade("click" + i , 1, 3, i*20, "/images/upgrades/weight.png", 1, 3));
                     }
 
                     for (int i = 0; i < 10; i++)
                     {
-                        db.Upgrade.Add(new Models.Upgrade("passive" + i , 1, 3, i*10, "glyphicon glyphicon-trash", 4, 20));
+                        db.Upgrade.Add(new Models.Upgrade("passive" + i , 1, 3, i*10, "/images/upgrades/pills-1.png", 4, 20));
                     }
 
                     db.SaveChanges();
