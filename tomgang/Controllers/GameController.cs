@@ -42,5 +42,8 @@ namespace tomgang.Controllers
         public List<Tuple<string, int>> checkUpgrades(string userid){
             return _GameValues.checkEligibleUpgrades(User.FindFirstValue(ClaimTypes.NameIdentifier));
         }
+        public List<string> checkAchis(){
+            return _GameValues.checkAchievements(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        }
     }
 }

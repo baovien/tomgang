@@ -76,7 +76,7 @@ namespace tomgang.Controllers
             _dbContext.PlayerUpgrades.Add(new PlayerUpgrades(userid, id));
             _dbContext.SaveChanges();
         }
-        public void checkAchievements(string userid)
+        public List<string> checkAchievements(string userid)
         {
             var earnedAchievements = _dbContext.PlayerAchievments.Where(m => m.Id == userid).Select(m => m.type).ToList();
             //Loope igjennom alle achievement reqs og sjekke om brukeren har fått noen
@@ -89,18 +89,39 @@ namespace tomgang.Controllers
                     case 0:
                         //Sjekker user har større verdi enn required og om user har achien fra før
                         if (_dbContext.PlayerGains.Find(userid).currentGainsValue >=
-                        item.value && _dbContext.PlayerAchievments.Where(m => m.Id == userid && m.type == item.Id) != null)
+                        item.value && _dbContext.PlayerAchievments.Where(m => m.Id == userid && m.type == item.Id).Count() == 0)
                         {
                             _dbContext.PlayerAchievments.Add(new PlayerAchievements(userid, item.Id));
                         }
                         break;
                     case 1:
+                        if (_dbContext.PlayerGains.Find(userid).clickValue >=
+                            item.value && _dbContext.PlayerAchievments.Where(m => m.Id == userid && m.type == item.Id).Count() == 0)
+                        {
+                            _dbContext.PlayerAchievments.Add(new PlayerAchievements(userid, item.Id));
+                        }
                         break;
                     case 2:
+                        if (_dbContext.PlayerGains.Find(userid).timesClicked >=
+                            item.value && _dbContext.PlayerAchievments.Where(m => m.Id == userid && m.type == item.Id).Count() == 0)
+                        {
+                            _dbContext.PlayerAchievments.Add(new PlayerAchievements(userid, item.Id));
+                        }
+                        break;
+                    case 3:
+                        if (_dbContext.PlayerGains.Find(userid).incomeValue >=
+                        item.value && _dbContext.PlayerAchievments.Where(m => m.Id == userid && m.type == item.Id).Count() == 0)
+                        {
+                            _dbContext.PlayerAchievments.Add(new PlayerAchievements(userid, item.Id));
+                        }
+                        break;
+                    default:
                         break;
                 }
             }
             _dbContext.SaveChanges();
+            var list = _dbContext.PlayerAchievments.Where(m => m.Id == userid).Select(m => m.type).ToList();
+            return(list);
         }
         public List<Tuple<string, int>> checkEligibleUpgrades(string userid)
         {
@@ -163,7 +184,8 @@ namespace tomgang.Controllers
                 }*/
             }
             var list = new List<Tuple<string, int>>();
-            foreach(var upgrade in affordableEligibleUpgrades){
+            foreach (var upgrade in affordableEligibleUpgrades)
+            {
                 list.Add(Tuple.Create(upgrade, _dbContext.Upgrade.Find(upgrade).cost));
             }
             return list;

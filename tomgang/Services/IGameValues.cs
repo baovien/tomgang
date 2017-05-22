@@ -10,7 +10,7 @@ namespace tomgang.Services
 
         void buyUpgrade(string userid, string id);
 
-        void checkAchievements(string userid);
+        List<string> checkAchievements(string userid);
         List<Tuple<string, int>> checkEligibleUpgrades(string userid);
     }
     
