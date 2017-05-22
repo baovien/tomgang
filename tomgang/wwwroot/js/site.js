@@ -37,10 +37,10 @@ function timer() { //Do shit
 		_upgrades.forEach(function(element) {
 			if(_gains <= element.item2){
 				$('[id="' + element.item1 + '"]').css({"background-color":"grey"});
-				$('[id="' + element.item1 + '"]').addClass("disabled");
+				$('[id="' + element.item1 + '"]').prop("onclick", false)
 			}else{
 				$('[id="' + element.item1 + '"]').css({"background-color":"green"});
-				$('[id="' + element.item1 + '"]').removeClass("disabled");
+				$('[id="' + element.item1 + '"]').prop("onclick", true);
 			}
 			$('[id="' + element.item1 + '"]').show();
 		}, this);
