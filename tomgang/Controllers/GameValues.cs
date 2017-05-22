@@ -26,7 +26,8 @@ namespace tomgang.Controllers
             //System.Console.WriteLine("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
         }
         public void onLiftClick(string userid)
-        {
+        {   _dbContext.PlayerGains.Find(userid).totalGains +=
+            _dbContext.PlayerGains.Find(userid).clickValue;
             _dbContext.PlayerGains.Find(userid).currentGainsValue +=
             _dbContext.PlayerGains.Find(userid).clickValue;
             _dbContext.PlayerGains.Find(userid).timesClicked++; //Teller antall klikk (Relevant for achis og upgrade unlocks)
@@ -35,7 +36,9 @@ namespace tomgang.Controllers
             //adder mouse click value til playerGains
         }
         public void increaseGains(string userid, double secondsSinceLastCall)
-        {
+        {   
+            _dbContext.PlayerGains.Find(userid).totalGains +=
+            _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
             _dbContext.PlayerGains.Find(userid).currentGainsValue +=
             _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
             _dbContext.SaveChanges();
@@ -52,8 +55,9 @@ namespace tomgang.Controllers
 
             //Henter upgraden som er kjøpt og applyer den til brukeren
             //Setter den som kjøpt
-            if (_dbContext.PlayerGains.Find(userid).currentGainsValue > _dbContext.Upgrade.Find(id).cost)
+            if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= _dbContext.Upgrade.Find(id).cost)
             {
+                _dbContext.PlayerGains.Find(userid).currentGainsValue -= _dbContext.Upgrade.Find(id).cost;
                 switch (_dbContext.Upgrade.Find(id).type)
                 {
                     case 1:
@@ -146,8 +150,8 @@ namespace tomgang.Controllers
                             //for å unlocke den.
                         }
                         break;
-                    case 4: //Sjekker currentGains for å unlocke upgrade
-                        if (_dbContext.PlayerGains.Find(userid).currentGainsValue < requirementValue)
+                    case 4: //Sjekker totalGains for å unlocke upgrade
+                        if (_dbContext.PlayerGains.Find(userid).totalGains < requirementValue)
                         {
                             affordableEligibleUpgrades.RemoveAll(m => m.Equals(_dbContext.Upgrade.Find(item.Id).Id));
                             //Fjerner en upgrade fra eligibleUpgrades om bruker ikke har verdiene som kreves

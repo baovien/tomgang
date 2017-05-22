@@ -148,3 +148,22 @@ else
 </div>
                           
 }
+
+<script>
+    $(document).ready(function(){
+        //Timer, 1sekund
+	    setInterval(update, 1000);
+
+        liftClickPost();
+	    upgradeBtnsPost();	
+
+        //-----------------CHAT -------------------
+
+        //Hent tidligere meldinger
+        getPostList();
+        connectToHub();
+        userSubmitMessage();
+
+        $('.upgradeImg').popover();
+        });
+</script>
