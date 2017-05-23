@@ -1,6 +1,17 @@
 @model Upgrade
 
-<img src="@Model.imgPath" id="@Model.Id" class="upgradeImg" style="display: none" data-content="Cost: @Model.cost, Multiplier: @Model.multi, Type: @Model.type" rel="popover" data-placement="bottom" data-original-title="@Model.Id" data-trigger="hover"></img>
+<img 
+    src="@Model.imgPath" 
+    id="@Model.Id" 
+    class="upgradeImg" 
+    style="display: none" 
+    data-cost="@Model.cost" 
+    data-content="Cost: @Model.cost, Multiplier: @Model.multi, Type: @Model.type" 
+    rel="popover" 
+    data-placement="bottom" 
+    data-original-title="@Model.Id" 
+    data-trigger="hover">
+</img>
 
 
 
