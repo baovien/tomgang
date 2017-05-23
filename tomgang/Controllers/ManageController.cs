@@ -56,7 +56,7 @@ namespace tomgang.Controllers
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
-                return View("Error");
+                return PartialView("Error");
             }
             var model = new IndexViewModel
             {
@@ -66,7 +66,7 @@ namespace tomgang.Controllers
                 Logins = await _userManager.GetLoginsAsync(user),
                 BrowserRemembered = await _signInManager.IsTwoFactorClientRememberedAsync(user)
             };
-            return View(model);
+            return PartialView(model);
         }
 
         //
@@ -93,7 +93,7 @@ namespace tomgang.Controllers
         // GET: /Manage/AddPhoneNumber
         public IActionResult AddPhoneNumber()
         {
-            return View();
+            return PartialView();
         }
 
         //
@@ -104,13 +104,13 @@ namespace tomgang.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return PartialView(model);
             }
             // Generate the token and send it
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
-                return View("Error");
+                return PartialView("Error");
             }
             var code = await _userManager.GenerateChangePhoneNumberTokenAsync(user, model.PhoneNumber);
             await _smsSender.SendSmsAsync(model.PhoneNumber, "Your security code is: " + code);
@@ -234,12 +234,12 @@ namespace tomgang.Controllers
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User changed their password successfully.");
-                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangePasswordSuccess });
+                    return PartialView(nameof(Index), new { Message = ManageMessageId.ChangePasswordSuccess });
                 }
                 AddErrors(result);
-                return PartialView();
+                return PartialView(model);
             }
-            return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
+            return PartialView(nameof(Index), new { Message = ManageMessageId.Error });
         }
 
         //
@@ -258,7 +258,7 @@ namespace tomgang.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return PartialView(model);
             }
 
             var user = await GetCurrentUserAsync();
@@ -271,7 +271,7 @@ namespace tomgang.Controllers
                     return RedirectToAction(nameof(Index), new { Message = ManageMessageId.SetPasswordSuccess });
                 }
                 AddErrors(result);
-                return View(model);
+                return PartialView(model);
             }
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }
@@ -288,12 +288,12 @@ namespace tomgang.Controllers
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
-                return View("Error");
+                return PartialView("Error");
             }
             var userLogins = await _userManager.GetLoginsAsync(user);
             var otherLogins = _signInManager.GetExternalAuthenticationSchemes().Where(auth => userLogins.All(ul => auth.AuthenticationScheme != ul.LoginProvider)).ToList();
             ViewData["ShowRemoveButton"] = user.PasswordHash != null || userLogins.Count > 1;
-            return View(new ManageLoginsViewModel
+            return PartialView(new ManageLoginsViewModel
             {
                 CurrentLogins = userLogins,
                 OtherLogins = otherLogins
@@ -323,7 +323,7 @@ namespace tomgang.Controllers
             var user = await GetCurrentUserAsync();
             if (user == null)
             {
-                return View("Error");
+                return PartialView("Error");
             }
             var info = await _signInManager.GetExternalLoginInfoAsync(await _userManager.GetUserIdAsync(user));
             if (info == null)

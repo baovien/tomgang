@@ -86,12 +86,12 @@ namespace tomgang.Controllers
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return View("Index");
+                    return PartialView("Login", model);
                 }
             }
 
             // If we got this far, something failed, redisplay form
-            return View("Index");
+            return View("index");
         }
 
         //
@@ -193,7 +193,7 @@ namespace tomgang.Controllers
             }
             if (result.IsLockedOut)
             {
-                return View("Lockout");
+                return PartialView("Lockout");
             }
             else
             {
@@ -201,7 +201,7 @@ namespace tomgang.Controllers
                 ViewData["ReturnUrl"] = returnUrl;
                 ViewData["LoginProvider"] = info.LoginProvider;
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
+                return PartialView("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = email });
             }
         }
 
@@ -236,7 +236,7 @@ namespace tomgang.Controllers
             }
 
             ViewData["ReturnUrl"] = returnUrl;
-            return View(model);
+            return PartialView(model);
         }
 
         // GET: /Account/ConfirmEmail
@@ -246,15 +246,15 @@ namespace tomgang.Controllers
         {
             if (userId == null || code == null)
             {
-                return View("Error");
+                return PartialView("Error");
             }
             var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                return View("Error");
+                return PartialView("Error");
             }
             var result = await _userManager.ConfirmEmailAsync(user, code);
-            return View(result.Succeeded ? "ConfirmEmail" : "Error");
+            return PartialView(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
         //
@@ -263,7 +263,7 @@ namespace tomgang.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
-            return View();
+            return PartialView();
         }
 
         //
@@ -292,7 +292,7 @@ namespace tomgang.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            return PartialView(model);
         }
 
         //
@@ -301,7 +301,7 @@ namespace tomgang.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
         {
-            return View();
+            return PartialView();
         }
 
         //
@@ -322,7 +322,7 @@ namespace tomgang.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return PartialView(model);
             }
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (user == null)
@@ -336,7 +336,7 @@ namespace tomgang.Controllers
                 return RedirectToAction(nameof(AccountController.ResetPasswordConfirmation), "Account");
             }
             AddErrors(result);
-            return View();
+            return PartialView();
         }
 
         //
@@ -345,7 +345,7 @@ namespace tomgang.Controllers
         [AllowAnonymous]
         public IActionResult ResetPasswordConfirmation()
         {
-            return View();
+            return PartialView();
         }
 
         //

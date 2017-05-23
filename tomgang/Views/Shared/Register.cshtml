@@ -7,26 +7,26 @@
     <hr />
      <div class="form-group">
         <div class="col-md-10 col-md-offset-2">
-            <input asp-for="BrukerNavn" class="form-control" placeholder="Username"/>
+            <input asp-for="BrukerNavn" class="form-control" placeholder="Username" required/>
             <span asp-validation-for="BrukerNavn" class="text-danger"></span>
         </div>
     </div>
 
     <div class="form-group">
         <div class="col-md-10 col-md-offset-2">
-            <input asp-for="Email" class="form-control" placeholder="Email@example.com"/>
+            <input asp-for="Email" class="form-control" placeholder="Email@example.com" required/>
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-10 col-md-offset-2">
-            <input asp-for="Password" class="form-control" placeholder="Password"/>
+            <input asp-for="Password" class="form-control" placeholder="Password" required/>
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
     </div>
     <div class="form-group">
         <div class="col-md-10 col-md-offset-2">
-            <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm password"/>
+            <input asp-for="ConfirmPassword" class="form-control" placeholder="Confirm password" required/>
             <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
         </div>
     </div>
