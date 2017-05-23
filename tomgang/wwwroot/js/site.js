@@ -173,24 +173,3 @@ $(function() {
 	});
 
 });
-
-//CHANGE PASSWORD
-$("#login-dp").click(function(e){
-  e.stopPropagation(); 
-});
-
-$(document).ready(function()
-{
-    // Hook up the click handler
-    $('#letsgoleft').click(function()
-    {
-        // You can also use the shorthand load() function. The method is always GET.
-        $("#divContent").load("/Manage/ChangePassword", $('#divContent').serialize());
-    });
-	$('#loginknapp').click(function()
-    {
-        // You can also use the shorthand load() function. The method is always GET.
-        $("#loginn").load("/account/Login", $('#loginn').serialize());
-    });
-
-});

@@ -91,7 +91,7 @@ namespace tomgang.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View("index");
+            return View();
         }
 
         //
@@ -136,7 +136,7 @@ namespace tomgang.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View("Index");
+            return PartialView("Register", model);
         }
 
         //
