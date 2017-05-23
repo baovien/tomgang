@@ -11,6 +11,7 @@ namespace tomgang.Models
             currentGainsValue = 0;
             incomeValue =  5;
             clickValue = 1;
+            itemMultiplier = 1;
         }
         [Key]
         public string Id{get; set;}
@@ -18,10 +19,6 @@ namespace tomgang.Models
         public double incomeValue{get; set;}
         public double currentGainsValue{get; set;}
         public int timesClicked{get;set;}
-        public int item1amount {get;set;}
-        public int item2amount {get;set;}
-        public int item3amount {get;set;}
-        public int item4amount {get;set;}
-        public int item5amount {get;set;}
+        public double itemMultiplier{get;set;}
     }
 }

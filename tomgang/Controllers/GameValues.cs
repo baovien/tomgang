@@ -39,6 +39,7 @@ namespace tomgang.Controllers
             _dbContext.PlayerGains.Find(userid).currentGainsValue +=
             _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
             _dbContext.SaveChanges();
+
             //Getter Gains/s til brukeren
             //Adder Gains/s på current Gains utifra hvor lang tid som har gått siden sist
         }
@@ -71,6 +72,9 @@ namespace tomgang.Controllers
                     case 4:
                         _dbContext.PlayerGains.Find(userid).clickValue += _dbContext.Upgrade.Find(id).multi;
                         //Add på click
+                        break;
+                    case 5:
+                        _dbContext.PlayerGains.Find(userid).itemMultiplier *= _dbContext.Upgrade.Find(id).multi;
                         break;
                     default:
                         break;
@@ -158,6 +162,11 @@ namespace tomgang.Controllers
                             //for å unlocke den.
                         }
                         break;
+                    case 5: //Sjekker summen av antall items for å unlocke upgrade
+                        if (_dbContext.PlayerItems.Where(m => m.userid == userid).Sum(m => m.amount) < requirementValue){
+                            affordableEligibleUpgrades.RemoveAll(m => m.Equals(_dbContext.Upgrade.Find(item.Id).Id));
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -184,10 +193,13 @@ namespace tomgang.Controllers
         public void buyItem(string userid, string itemid){
             //Hvis bruker har råd til upgraden
             //startverdi*(e^0.14x)
-            itemPrice =_dbContext.Upgrade.Find(itemid).cost * _dbContext.PlayerGains.GetType().GetPr
-            if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= _dbContext.Upgrade.Find(itemid).cost)
+            double amount = _dbContext.PlayerItems.Find(userid, itemid).amount;
+            double startingPrice = _dbContext.Upgrade.Find(itemid).cost;
+            double price = (startingPrice * Math.Pow(Math.E, amount)); 
+            
+            if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= price)
             {
-
+                _dbContext.PlayerItems.Find(userid, itemid).amount++;
             }
         }
     }
