@@ -114,6 +114,14 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $(window).load(function(){
+	    setInterval(update, 1000);    
+    });
+</script>
+
 }
 else
 {
@@ -148,22 +156,3 @@ else
 </div>
                           
 }
-
-<script>
-    $(document).ready(function(){
-        //Timer, 1sekund
-	    setInterval(update, 1000);
-
-        liftClickPost();
-	    upgradeBtnsPost();	
-
-        //-----------------CHAT -------------------
-
-        //Hent tidligere meldinger
-        getPostList();
-        connectToHub();
-        userSubmitMessage();
-
-        $('.upgradeImg').popover();
-        });
-</script>
