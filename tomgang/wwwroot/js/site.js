@@ -1,31 +1,41 @@
 $(document).ready(function () {
-	//Timer, 1sekund
+	//Connecter til chathub
 	chatHub();
 	
-	updateGainsCounter();
+	//Første innlastning
+	update();
+	
+	//Spillfunksjoner
 	liftClickPost();
 	upgradeBtnsPost();
+	
 	//Vise popover info for upgradsa
 	$('.upgradeImg').popover();
 });
 
 
-function update() {
+function update() { //Kjøres i timer funksjon i index.
 	//Oppdaterer current gains
+	getEligibleUpgrades();
+	getCurrentGains();
+	updateUpgradesStatus();
+	updateGainsCounter();
+}
 
+function updateUpgradesStatus(){
 	/*
 	Itererer gjennom alle upgrades som brukeren kan kjøpe og viser de. 
 	De som brukeren ikke har råd til blir gråfarga. Ellers får de som er affordable grønn bakgrunn,
 	*/
-	var _upgrades = getEligibleUpgrades();
-	_upgrades.forEach(function (element) {
-		if (getCurrentGains() <= element.item2) {
-			$('[id="' + element.item1 + '"]').addClass("upgradeGreyed")
+
+	window.upgrades.forEach(function (element) {
+		if (window.gains <= element.item2) { //Cost er større enn playergains.
+			$('[id="' + element.item1 + '"]').addClass("upgradeGreyed");
 			$('[id="' + element.item1 + '"]').css({
 				"background-color": ""
 			});
-		} else {
-			$('[id="' + element.item1 + '"]').removeClass("upgradeGreyed")
+		} else { //Cost er mindre enn playergains.
+			$('[id="' + element.item1 + '"]').removeClass("upgradeGreyed");
 			$('[id="' + element.item1 + '"]').css({
 				"background-color": "green"
 			});
@@ -33,7 +43,7 @@ function update() {
 
 		//Viser de upgradene som trengs
 		$('[id="' + element.item1 + '"]').show();
-	}, this);
+	});
 }
 
 //Liftclick posting
@@ -43,58 +53,53 @@ function liftClickPost() {
 			type: 'POST',
 			url: '/Game/liftClick',
 			cache: false,
-			success: function(data){
-				updateGainsCounter();
-				console.log(getCurrentGains());
-				console.log(getEligibleUpgrades());
+			success: function (data) {
+				updateUpgradesStatus();
+				$('#gainNumber').text(window.gains +=1); //Oppdaterer client før server for smoothere opplevelse.
 			}
 		});
 	});
 }
 
-function getCurrentGains(){
-	var result;
+function getCurrentGains() {
 	$.ajax({
 		type: "GET",
 		url: 'Game/getCurrentGains',
-		async: false,  
-		success: function(data) {
-			result = data;
+		async: false,
+		success: function (data) {
+			window.gains = data;
 		},
 		error: function (xhr) {
-				console.log("Could not request getCurrentGains");
+			console.log("Could not request getCurrentGains");
 		}
-  	});
-	return result;
+	});
 }
 
-function getEligibleUpgrades(){
-	var result1;
+function getEligibleUpgrades() {
 	$.ajax({
-			type: "GET",
-			url: "Game/checkUpgrades",
-			success: function (data) {
-				result1 = data;
-			},
-			error: function (xhr) {
-				console.log("Could not request checkUpgrades");
-			}
-		});
-	return result1;
+		type: "GET",
+		url: "Game/checkUpgrades",
+		async: false,
+		success: function (data) {
+			window.upgrades = data;
+		},
+		error: function (xhr) {
+			console.log("Could not request checkUpgrades");
+		}
+	});
 }
 
-//Update gains counteren
-function updateGainsCounter(){ 	
-	$('#gainNumber').text(getCurrentGains());
+function updateGainsCounter() {
+	$('#gainNumber').text(window.gains);
 }
 
 function upgradeBtnsPost() {
 	$(".upgradeImg").each(function () {
 		$(this).on("click", function () {
-			if (_gains >= this.dataset.cost) {
+			if (window.gains >= this.dataset.cost) {
 				$(this).remove();
 				$(".popover").remove();
-				_gains -= this.dataset.cost; //Smoothere update på clienthin
+				$('#gainNumber').text(window.gains - this.dataset.cost); //Smoothere update på client
 			}
 			$.ajax({
 				type: 'POST',
@@ -111,7 +116,7 @@ function upgradeBtnsPost() {
 
 function addPostsList(posts) {
 	$.each(posts, function (index) {
-		var post2 = posts[index]
+		var post2 = posts[index];
 		var post = posts;
 		addPost(post);
 	});
@@ -164,7 +169,7 @@ function chatHub() {
 
 	// If the User wants to send the message with the button
 	$("#publishPostButton").click(function () {
-		if ($("#textInput").val() != "") { //Feilsjekk, om textboksen er tom, kan ikke sende.
+		if ($("#textInput").val() !== "") { //Feilsjekk, om textboksen er tom, kan ikke sende.
 			var post = {
 				content: $("#textInput").val()
 			};
@@ -210,5 +215,5 @@ $("#login-dp").click(function (e) {
 });
 
 $("#letsgoleft").click(function () {
-	$("#divContent").load('@Url.Action("ChangePassword","Manage")')
+	$("#divContent").load('@Url.Action("ChangePassword","Manage")');
 });
