@@ -1,14 +1,11 @@
 $(document).ready(function () {
 	//Connecter til chathub
 	chatHub();
-	
-	//Første innlastning
-	update();
-	
+
 	//Spillfunksjoner
 	liftClickPost();
 	upgradeBtnsPost();
-	
+
 	//Vise popover info for upgradsa
 	$('.upgradeImg').popover();
 });
@@ -22,7 +19,7 @@ function update() { //Kjøres i timer funksjon i index.
 	updateGainsCounter();
 }
 
-function updateUpgradesStatus(){
+function updateUpgradesStatus() {
 	/*
 	Itererer gjennom alle upgrades som brukeren kan kjøpe og viser de. 
 	De som brukeren ikke har råd til blir gråfarga. Ellers får de som er affordable grønn bakgrunn,
@@ -55,7 +52,7 @@ function liftClickPost() {
 			cache: false,
 			success: function (data) {
 				updateUpgradesStatus();
-				$('#gainNumber').text(window.gains +=1); //Oppdaterer client før server for smoothere opplevelse.
+				$('#gainNumber').text(window.gains += 1); //Oppdaterer client før server for smoothere opplevelse.
 			}
 		});
 	});
@@ -96,19 +93,29 @@ function updateGainsCounter() {
 function upgradeBtnsPost() {
 	$(".upgradeImg").each(function () {
 		$(this).on("click", function () {
-			if (window.gains >= this.dataset.cost) {
+			
+			//Oppdaterer gains i tilfelle client ikke har polla fra server
+			getCurrentGains();
+			var temp = window.gains;
+
+			if (temp >= this.dataset.cost) {
+				
+				$.ajax({
+					type: 'POST',
+					data: {
+						'id': $(this).attr("id")
+					},
+					url: '/Game/upgradeClick',
+					cache: false,
+
+				});
+				
+				//Smoothere update på client
 				$(this).remove();
 				$(".popover").remove();
-				$('#gainNumber').text(window.gains - this.dataset.cost); //Smoothere update på client
+				$('#gainNumber').text(temp - this.dataset.cost); 
+
 			}
-			$.ajax({
-				type: 'POST',
-				data: {
-					'id': $(this).attr("id")
-				},
-				url: '/Game/upgradeClick',
-				cache: false
-			});
 		});
 	});
 
