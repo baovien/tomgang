@@ -2,25 +2,7 @@ var hub;
 var _upgrades;
 var _gains;
 
-$(document).ready(function () {
-	//Timer, 1sekund
-	setInterval(timer, 1000);
-
-	liftClickPost();
-	upgradeBtnsPost();	
-
-	//-----------------CHAT -------------------
-
-	//Hent tidligere meldinger
-	getPostList();
-	connectToHub();
-	userSubmitMessage();
-
-	$('.upgradebtn').popover();
-	
-});
-
-function timer() { //Do shit
+function update() { 
 	//updateGainsCounter();
 
 	$.when(
@@ -33,31 +15,23 @@ function timer() { //Do shit
 
 	).then(function(){
 		$('#gainNumber').html(_gains);
-
+		console.log(_upgrades);
 		_upgrades.forEach(function(element) {
 			if(_gains <= element.item2){
-				$('[id="' + element.item1 + '"]').css({"background-color":"grey"});
-				$('[id="' + element.item1 + '"]').prop("onclick", false)
+				$('[id="' + element.item1 + '"]').addClass("upgradeGreyed")
+				$('[id="' + element.item1 + '"]').css({"background-color":""});
+				//$('[id="' + element.item1 + '"]').prop("onclick", false)
 			}else{
+				$('[id="' + element.item1 + '"]').removeClass("upgradeGreyed")
 				$('[id="' + element.item1 + '"]').css({"background-color":"green"});
-				$('[id="' + element.item1 + '"]').prop("onclick", true);
+				//$('[id="' + element.item1 + '"]').prop("onclick", true);
 			}
+
+			//Viser de upgradene som trengs
 			$('[id="' + element.item1 + '"]').show();
 		}, this);
 
 	});
-
-	/*$.ajax({
-		type: "GET",
-		url: 'Game/checkUpgrades',
-		success: function(data) {
-			console.log(data);
-			data.forEach(function(element) {
-				$('[id="' + element.item1 + '"]').show();
-
-			}, this);
-		}
-	});*/
 }
 
 //Update gains counteren
@@ -115,41 +89,6 @@ function upgradeBtnsPost(){
 			});
 		});
 	});
-
-	//UPGRADES
-	/*for (let i = 0; i < $("[id*='click']").length; i++) {
-
-		$('[id="' + 'click' + i + '"]').click(function () {
-            //Hides button on click, shows editbtn
-            $(this).hide();
-			console.log("clickbtn " + i);
-
-			 $.ajax({    
-                type: 'POST',
-                data: {'id':'click'+ i},
-                url: '/Game/upgradeClick',
-                cache:false
-
-            });	
-		});
-	}
-	for (let i = 0; i < $("[id*='passive']").length; i++) {
-		$('[id="' + 'passive' + i + '"]').click(function () {
-            //Hides button on click, shows editbtn
-            $(this).hide();
-			console.log("passivebtn " + i);
-
-			 $.ajax({    
-                type: 'POST',
-                data: {'id':'passive'+ i},
-                url: '/Game/upgradeClick',
-                cache:false
-
-            });	
-		});
-	}*/
-
-	
 }
 
 //-----------Chat functions-------------
