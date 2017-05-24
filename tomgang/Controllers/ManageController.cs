@@ -234,7 +234,7 @@ namespace tomgang.Controllers
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User changed their password successfully.");
-                    return View(nameof(Index), new { Message = ManageMessageId.ChangePasswordSuccess });
+                    return PartialView("~/Views/Manage/Index.cshtml");
                 }
                 AddErrors(result);
                 return PartialView("ChangePassword", model);

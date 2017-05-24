@@ -179,4 +179,8 @@ $(document).ready(function()
 	$("#login-dp").click(function(e){
   		e.stopPropagation(); 
 	});
+
+	$("#letsgoleft").click(function(){
+  		$("#divContent").load("Manage/ChangePassword", $('#divContent').serialize()); 
+	});
 });

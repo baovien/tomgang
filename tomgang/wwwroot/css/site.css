@@ -370,6 +370,7 @@ textarea {
     }
 }
 #testlols{
+    position: relative;
     width: 800px;
     height: 220px;
 }
@@ -383,5 +384,11 @@ textarea {
     position: absolute;
     left:    0;
     bottom:   0;
+    margin: 5px;
+}
+#styling{
+    position: absolute;
+    left: 0;
+    bottom: 0;
     margin: 5px;
 }
