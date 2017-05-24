@@ -234,12 +234,12 @@ namespace tomgang.Controllers
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User changed their password successfully.");
-                    return PartialView(nameof(Index), new { Message = ManageMessageId.ChangePasswordSuccess });
+                    return View(nameof(Index), new { Message = ManageMessageId.ChangePasswordSuccess });
                 }
                 AddErrors(result);
-                return PartialView(model);
+                return PartialView("ChangePassword", model);
             }
-            return PartialView(nameof(Index), new { Message = ManageMessageId.Error });
+            return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
         }
 
         //

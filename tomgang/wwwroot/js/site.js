@@ -18,7 +18,8 @@ $(document).ready(function () {
 
 });
 
-function timer() { //Do shit
+function timer() { 
+	//Do shit
 	updateGainsCounter();
 }
 
@@ -172,4 +173,10 @@ $(function() {
 		e.preventDefault();
 	});
 
+});
+$(document).ready(function()
+{
+	$("#login-dp").click(function(e){
+  		e.stopPropagation(); 
+	});
 });
