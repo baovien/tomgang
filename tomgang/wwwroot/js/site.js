@@ -20,6 +20,7 @@ $(document).ready(function () {
 	
 });
 
+<<<<<<< HEAD
 function timer() { //Do shit
 	//updateGainsCounter();
 
@@ -58,6 +59,10 @@ function timer() { //Do shit
 			}, this);
 		}
 	});*/
+
+function timer() { 
+	//Do shit
+	updateGainsCounter();
 }
 
 //Update gains counteren
@@ -254,4 +259,14 @@ $(function() {
 		e.preventDefault();
 	});
 
+});
+$(document).ready(function()
+{
+	$("#login-dp").click(function(e){
+  		e.stopPropagation(); 
+	});
+
+	$("#letsgoleft").click(function(){
+  		$("#divContent").load("Manage/ChangePassword", $('#divContent').serialize()); 
+	});
 });

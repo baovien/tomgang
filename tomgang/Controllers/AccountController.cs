@@ -86,7 +86,7 @@ namespace tomgang.Controllers
                 else
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return PartialView("Login", model);
+                    return View("index");
                 }
             }
 
@@ -136,7 +136,7 @@ namespace tomgang.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return PartialView("Register", model);
+            return View("index");
         }
 
         //
@@ -229,7 +229,7 @@ namespace tomgang.Controllers
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
-                        return RedirectToLocal(returnUrl);
+                        return View("Index");
                     }
                 }
                 AddErrors(result);
