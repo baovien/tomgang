@@ -131,9 +131,14 @@ namespace tomgang
                     db.Database.EnsureDeleted();
                     db.Database.EnsureCreated();
                     
-                    for (int i = 0; i < 20; i++)
+                    for (int i = 0; i < 10; i++)
                     {
-                        db.Upgrade.Add(new Models.Upgrade("test" + i , 1, 5));
+                        db.Upgrade.Add(new Models.Upgrade("click" + i , 1, 3, i*20, "glyphicon glyphicon-cog", 1, 3));
+                    }
+
+                    for (int i = 0; i < 10; i++)
+                    {
+                        db.Upgrade.Add(new Models.Upgrade("passive" + i , 1, 3, i*10, "glyphicon glyphicon-trash", 4, 20));
                     }
 
                     db.SaveChanges();

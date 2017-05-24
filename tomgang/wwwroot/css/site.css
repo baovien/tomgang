@@ -3,6 +3,10 @@ body {
     padding-bottom: 20px;
 }
 
+.btn.disabled {
+    pointer-events: auto;
+}
+
 .transparentinput {
     border: none;
     background-color: transparent;
@@ -36,7 +40,7 @@ html {
 /* TAB SELECTION */
 
 .tabselect {
-    background: #ffded7;
+    background: #ffffff;
 }
 
 a:hover,

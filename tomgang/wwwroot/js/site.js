@@ -1,4 +1,6 @@
 var hub;
+var _upgrades;
+var _gains;
 
 $(document).ready(function () {
 	//Timer, 1sekund
@@ -7,7 +9,6 @@ $(document).ready(function () {
 	liftClickPost();
 	upgradeBtnsPost();	
 
-
 	//-----------------CHAT -------------------
 
 	//Hent tidligere meldinger
@@ -15,11 +16,48 @@ $(document).ready(function () {
 	connectToHub();
 	userSubmitMessage();
 
-
+	$('.upgradebtn').popover();
+	
 });
 
 function timer() { //Do shit
-	updateGainsCounter();
+	//updateGainsCounter();
+
+	$.when(
+		$.get("Game/checkUpgrades", function(upgrades) {
+			_upgrades = upgrades; 
+  		}),
+		$.get("Game/getCurrentGains", function(gains) {
+			_gains = gains;
+  		})
+
+	).then(function(){
+		$('#gainNumber').html(_gains);
+
+		_upgrades.forEach(function(element) {
+			if(_gains <= element.item2){
+				$('[id="' + element.item1 + '"]').css({"background-color":"grey"});
+				$('[id="' + element.item1 + '"]').addClass("disabled");
+			}else{
+				$('[id="' + element.item1 + '"]').css({"background-color":"green"});
+				$('[id="' + element.item1 + '"]').removeClass("disabled");
+			}
+			$('[id="' + element.item1 + '"]').show();
+		}, this);
+
+	});
+
+	/*$.ajax({
+		type: "GET",
+		url: 'Game/checkUpgrades',
+		success: function(data) {
+			console.log(data);
+			data.forEach(function(element) {
+				$('[id="' + element.item1 + '"]').show();
+
+			}, this);
+		}
+	});*/
 }
 
 //Update gains counteren
@@ -51,23 +89,67 @@ function liftClickPost(){
 }
 
 function upgradeBtnsPost(){
-	//UPGRADES
-	for (let i = 0; i < $('.upgradebtn').length; i++) {
 
-		$('[id="' + 'test' + i + '"]').click(function () {
+	$("[id*='click']").each(function(){
+		$(this).on("click", function(){
+			$(this).hide();
+			
+			 $.ajax({    
+                type: 'POST',
+                data: {'id': $(this).attr("id")},
+                url: '/Game/upgradeClick',
+                cache:false
+			});
+		});
+	});
+
+	$("[id*='passive']").each(function(){
+		$(this).on("click", function(){
+			$(this).hide();
+			
+			 $.ajax({    
+                type: 'POST',
+                data: {'id': $(this).attr("id")},
+                url: '/Game/upgradeClick',
+                cache:false
+			});
+		});
+	});
+
+	//UPGRADES
+	/*for (let i = 0; i < $("[id*='click']").length; i++) {
+
+		$('[id="' + 'click' + i + '"]').click(function () {
             //Hides button on click, shows editbtn
             $(this).hide();
-			console.log("button " + i);
+			console.log("clickbtn " + i);
 
 			 $.ajax({    
                 type: 'POST',
-                data: {'id':'test'+ i},
+                data: {'id':'click'+ i},
                 url: '/Game/upgradeClick',
                 cache:false
 
             });	
 		});
 	}
+	for (let i = 0; i < $("[id*='passive']").length; i++) {
+		$('[id="' + 'passive' + i + '"]').click(function () {
+            //Hides button on click, shows editbtn
+            $(this).hide();
+			console.log("passivebtn " + i);
+
+			 $.ajax({    
+                type: 'POST',
+                data: {'id':'passive'+ i},
+                url: '/Game/upgradeClick',
+                cache:false
+
+            });	
+		});
+	}*/
+
+	
 }
 
 //-----------Chat functions-------------

@@ -23,6 +23,9 @@ namespace tomgang.Data
         public DbSet<PlayerGains> PlayerGains { get; set;}
         public DbSet<PlayerAchievements> PlayerAchievments { get; set;}
         public DbSet<PlayerUpgrades> PlayerUpgrades { get; set;}
+        public DbSet<Item> Item { get; set;}
+        
+        public DbSet<PlayerItems> PlayerItems {get;set;}
         
         
         protected override void OnModelCreating(ModelBuilder builder)
@@ -31,6 +34,9 @@ namespace tomgang.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+
+            builder.Entity<PlayerItems>()
+                .HasKey(c => new {c.userid, c.itemID});
 
             builder.Entity<Message>()
                 .Property(m => m.DateCreated)

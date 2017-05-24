@@ -39,6 +39,7 @@ namespace tomgang.Controllers
             _dbContext.PlayerGains.Find(userid).currentGainsValue +=
             _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
             _dbContext.SaveChanges();
+
             //Getter Gains/s til brukeren
             //Adder Gains/s på current Gains utifra hvor lang tid som har gått siden sist
         }
@@ -52,29 +53,35 @@ namespace tomgang.Controllers
 
             //Henter upgraden som er kjøpt og applyer den til brukeren
             //Setter den som kjøpt
-            switch (_dbContext.Upgrade.Find(id).type)
+            if (_dbContext.PlayerGains.Find(userid).currentGainsValue > _dbContext.Upgrade.Find(id).cost)
             {
-                case 1:
-                    //Multipliser med income
-                    _dbContext.PlayerGains.Find(userid).incomeValue *= _dbContext.Upgrade.Find(id).multi;
-                    break;
-                case 2:
-                    //Add på income
-                    _dbContext.PlayerGains.Find(userid).incomeValue += _dbContext.Upgrade.Find(id).multi;
-                    break;
-                case 3:
-                    _dbContext.PlayerGains.Find(userid).clickValue *= _dbContext.Upgrade.Find(id).multi;
-                    //Multipliser med click
-                    break;
-                case 4:
-                    _dbContext.PlayerGains.Find(userid).clickValue += _dbContext.Upgrade.Find(id).multi;
-                    //Add på click
-                    break;
-                default:
-                    break;
-            }
+                switch (_dbContext.Upgrade.Find(id).type)
+                {
+                    case 1:
+                        //Multipliser med income
+                        _dbContext.PlayerGains.Find(userid).incomeValue *= _dbContext.Upgrade.Find(id).multi;
+                        break;
+                    case 2:
+                        //Add på income
+                        _dbContext.PlayerGains.Find(userid).incomeValue += _dbContext.Upgrade.Find(id).multi;
+                        break;
+                    case 3:
+                        _dbContext.PlayerGains.Find(userid).clickValue *= _dbContext.Upgrade.Find(id).multi;
+                        //Multipliser med click
+                        break;
+                    case 4:
+                        _dbContext.PlayerGains.Find(userid).clickValue += _dbContext.Upgrade.Find(id).multi;
+                        //Add på click
+                        break;
+                    case 5:
+                        _dbContext.PlayerGains.Find(userid).itemMultiplier *= _dbContext.Upgrade.Find(id).multi;
+                        break;
+                    default:
+                        break;
+                }
             _dbContext.PlayerUpgrades.Add(new PlayerUpgrades(userid, id));
             _dbContext.SaveChanges();
+            }
         }
         public void checkAchievements(string userid)
         {
@@ -104,6 +111,10 @@ namespace tomgang.Controllers
         }
         public List<Tuple<string, int>> checkEligibleUpgrades(string userid)
         {
+            var time = new Stopwatch();
+            time.Start();
+            time.Restart();
+            
             //Lager en liste som inneholder alle upgrades ikke allerede kjøpt.
             //Videre skal vi fjerne upgrades brukeren ikke kvalifiserer for i denne funksjonen.
             var purchasedUpgrades = _dbContext.PlayerUpgrades.Where(m => m.Id == userid).Select(m => m.type).ToList();
@@ -151,6 +162,11 @@ namespace tomgang.Controllers
                             //for å unlocke den.
                         }
                         break;
+                    case 5: //Sjekker summen av antall items for å unlocke upgrade
+                        if (_dbContext.PlayerItems.Where(m => m.userid == userid).Sum(m => m.amount) < requirementValue){
+                            affordableEligibleUpgrades.RemoveAll(m => m.Equals(_dbContext.Upgrade.Find(item.Id).Id));
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -166,12 +182,25 @@ namespace tomgang.Controllers
             foreach(var upgrade in affordableEligibleUpgrades){
                 list.Add(Tuple.Create(upgrade, _dbContext.Upgrade.Find(upgrade).cost));
             }
+            System.Console.WriteLine(time.ElapsedMilliseconds);
             return list;
 
             /*var aflength = affordableEligibleUpgrades.Count;
             affordableEligibleUpgrades.AddRange(inaffordableEligibleUpgrades);
             affordableEligibleUpgrades.Add(aflength.ToString());
             return affordableEligibleUpgrades;*/
+        }
+        public void buyItem(string userid, string itemid){
+            //Hvis bruker har råd til upgraden
+            //startverdi*(e^0.14x)
+            double amount = _dbContext.PlayerItems.Find(userid, itemid).amount;
+            double startingPrice = _dbContext.Upgrade.Find(itemid).cost;
+            double price = (startingPrice * Math.Pow(Math.E, amount)); 
+            
+            if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= price)
+            {
+                _dbContext.PlayerItems.Find(userid, itemid).amount++;
+            }
         }
     }
 }
