@@ -1,259 +1,214 @@
-var hub;
-var _upgrades;
-var _gains;
-
 $(document).ready(function () {
-	//Timer, 1sekund
-	setInterval(timer, 1000);
+	//Connecter til chathub
+	chatHub();
 
+	//Spillfunksjoner
 	liftClickPost();
-	upgradeBtnsPost();	
+	upgradeBtnsPost();
 
-	//-----------------CHAT -------------------
-
-	//Hent tidligere meldinger
-	getPostList();
-	connectToHub();
-	userSubmitMessage();
-
-	$('.upgradebtn').popover();
-	
+	//Vise popover info for upgradsa
+	$('.upgradeImg').popover();
 });
 
-<<<<<<< HEAD
-function timer() { //Do shit
-	//updateGainsCounter();
 
-	$.when(
-		$.get("Game/checkUpgrades", function(upgrades) {
-			_upgrades = upgrades; 
-  		}),
-		$.get("Game/getCurrentGains", function(gains) {
-			_gains = gains;
-  		})
-
-	).then(function(){
-		$('#gainNumber').html(_gains);
-
-		_upgrades.forEach(function(element) {
-			if(_gains <= element.item2){
-				$('[id="' + element.item1 + '"]').css({"background-color":"grey"});
-				$('[id="' + element.item1 + '"]').addClass("disabled");
-			}else{
-				$('[id="' + element.item1 + '"]').css({"background-color":"green"});
-				$('[id="' + element.item1 + '"]').removeClass("disabled");
-			}
-			$('[id="' + element.item1 + '"]').show();
-		}, this);
-
-	});
-
-	/*$.ajax({
-		type: "GET",
-		url: 'Game/checkUpgrades',
-		success: function(data) {
-			console.log(data);
-			data.forEach(function(element) {
-				$('[id="' + element.item1 + '"]').show();
-
-			}, this);
-		}
-	});*/
-
-function timer() { 
-	//Do shit
+function update() { //Kjøres i timer funksjon i index.
+	//Oppdaterer current gains
+	getEligibleUpgrades();
+	getCurrentGains();
+	updateUpgradesStatus();
 	updateGainsCounter();
 }
 
-//Update gains counteren
-function updateGainsCounter(){ 	
-	$.ajax({
-		type: "GET",
-		url: 'Game/getCurrentGains',
-		success: function(data) {
-			// data is ur summary
-			$('#gainNumber').html(data);
+function updateUpgradesStatus() {
+	/*
+	Itererer gjennom alle upgrades som brukeren kan kjøpe og viser de. 
+	De som brukeren ikke har råd til blir gråfarga. Ellers får de som er affordable grønn bakgrunn,
+	*/
+
+	window.upgrades.forEach(function (element) {
+		if (window.gains <= element.item2) { //Cost er større enn playergains.
+			$('[id="' + element.item1 + '"]').addClass("upgradeGreyed");
+			$('[id="' + element.item1 + '"]').css({
+				"background-color": ""
+			});
+		} else { //Cost er mindre enn playergains.
+			$('[id="' + element.item1 + '"]').removeClass("upgradeGreyed");
+			$('[id="' + element.item1 + '"]').css({
+				"background-color": "green"
+			});
 		}
 
-   });
+		//Viser de upgradene som trengs
+		$('[id="' + element.item1 + '"]').show();
+	});
 }
 
 //Liftclick posting
-function liftClickPost(){ 	
-	$('#benkmann').click(function(){
+function liftClickPost() {
+	$('#benkmann').click(function () {
 		$.ajax({
 			type: 'POST',
 			url: '/Game/liftClick',
-			cache:false
+			cache: false,
+			success: function (data) {
+				updateUpgradesStatus();
+				$('#gainNumber').text(window.gains += 1); //Oppdaterer client før server for smoothere opplevelse.
+			}
 		});
-
-		updateGainsCounter();
 	});
-
-	
 }
 
-function upgradeBtnsPost(){
-
-	$("[id*='click']").each(function(){
-		$(this).on("click", function(){
-			$(this).hide();
-			
-			 $.ajax({    
-                type: 'POST',
-                data: {'id': $(this).attr("id")},
-                url: '/Game/upgradeClick',
-                cache:false
-			});
-		});
+function getCurrentGains() {
+	$.ajax({
+		type: "GET",
+		url: 'Game/getCurrentGains',
+		async: false,
+		success: function (data) {
+			window.gains = data;
+		},
+		error: function (xhr) {
+			console.log("Could not request getCurrentGains");
+		}
 	});
-
-	$("[id*='passive']").each(function(){
-		$(this).on("click", function(){
-			$(this).hide();
-			
-			 $.ajax({    
-                type: 'POST',
-                data: {'id': $(this).attr("id")},
-                url: '/Game/upgradeClick',
-                cache:false
-			});
-		});
-	});
-
-	//UPGRADES
-	/*for (let i = 0; i < $("[id*='click']").length; i++) {
-
-		$('[id="' + 'click' + i + '"]').click(function () {
-            //Hides button on click, shows editbtn
-            $(this).hide();
-			console.log("clickbtn " + i);
-
-			 $.ajax({    
-                type: 'POST',
-                data: {'id':'click'+ i},
-                url: '/Game/upgradeClick',
-                cache:false
-
-            });	
-		});
-	}
-	for (let i = 0; i < $("[id*='passive']").length; i++) {
-		$('[id="' + 'passive' + i + '"]').click(function () {
-            //Hides button on click, shows editbtn
-            $(this).hide();
-			console.log("passivebtn " + i);
-
-			 $.ajax({    
-                type: 'POST',
-                data: {'id':'passive'+ i},
-                url: '/Game/upgradeClick',
-                cache:false
-
-            });	
-		});
-	}*/
-
-	
 }
 
-//-----------Chat functions-------------
+function getEligibleUpgrades() {
+	$.ajax({
+		type: "GET",
+		url: "Game/checkUpgrades",
+		async: false,
+		success: function (data) {
+			window.upgrades = data;
+		},
+		error: function (xhr) {
+			console.log("Could not request checkUpgrades");
+		}
+	});
+}
 
-function addPostsList(posts){
+function updateGainsCounter() {
+	$('#gainNumber').text(window.gains);
+}
+
+function upgradeBtnsPost() {
+	$(".upgradeImg").each(function () {
+		$(this).on("click", function () {
+			
+			//Oppdaterer gains i tilfelle client ikke har polla fra server
+			getCurrentGains();
+			var temp = window.gains;
+
+			if (temp >= this.dataset.cost) {
+				
+				$.ajax({
+					type: 'POST',
+					data: {
+						'id': $(this).attr("id")
+					},
+					url: '/Game/upgradeClick',
+					cache: false,
+
+				});
+				
+				//Smoothere update på client
+				$(this).remove();
+				$(".popover").remove();
+				$('#gainNumber').text(temp - this.dataset.cost); 
+
+			}
+		});
+	});
+
+}
+
+function addPostsList(posts) {
 	$.each(posts, function (index) {
-		var post2 = posts[index]
+		var post2 = posts[index];
 		var post = posts;
 		addPost(post);
 	});
 }
 
-function addPost(post){
+function addPost(post) {
 	console.log('New post from server: ', post);
-	$("#postsList").append('<li>' + '(' + post.timestamp.substring(11,16) + ') ' + post.author + ': ' + post.content + '</li>');
+	$("#postsList").append('<li>' + '(' + post.timestamp.substring(11, 16) + ') ' + post.author + ': ' + post.content + '</li>');
 	var posteliste = $("#postsList").get(0);
 	posteliste.scrollTop = posteliste.scrollHeight;
 }
 
-function getPostList(){
+function getPostList() {
 	$.ajax({
-        url: '/chatroom/',
-        method: 'GET',
-        dataType: 'JSON',
-        success: addPostsList
-    });
+		url: '/chatroom/',
+		method: 'GET',
+		dataType: 'JSON',
+		success: addPostsList
+	});
 }
 
-function connectToHub(){
+function chatHub() {
 	// Connect to the broadcaster on the server
-    hub = $.connection.broadcaster;
-    // A function we will call from the server
-    $.connection.broadcaster.client.addChatMessage = addPost;
+	hub = $.connection.broadcaster;
+	// A function we will call from the server
+	$.connection.broadcaster.client.addChatMessage = addPost;
 	// log for debug
 	$.connection.hub.logging = true;
 	// Connecting to SignalR Hub
-    $.connection.hub.start().done(function(signalr) {
-        console.log('Connected!');
-        console.log('SignalR object: ', signalr);
+	$.connection.hub.start().done(function (signalr) {
+		console.log('Connected!');
+		console.log('SignalR object: ', signalr);
 
-        // The subscribe method lets you subscribe to a specific method on the server
-        // You could use this method to subscribe to a specific chatroom,
-        // listen for updates to a specific resource, or whatever you would want to "subscribe" to.
-        
-        hub.server.subscribe("MainChatroom");
-    }).fail(function(error) {
-        // Just in case we fail to connect
-        console.log('Failed to start connection! Error: ', error);
-    });
+		// The subscribe method lets you subscribe to a specific method on the server
+		// You could use this method to subscribe to a specific chatroom,
+		// listen for updates to a specific resource, or whatever you would want to "subscribe" to.
+
+		hub.server.subscribe("MainChatroom");
+	}).fail(function (error) {
+		// Just in case we fail to connect
+		console.log('Failed to start connection! Error: ', error);
+	});
+
+	// If the User wants to send the message with the "Return" button
+	$("#textInput").keypress(function (e) {
+		if (e.keyCode == 13) {
+			$("#publishPostButton").click();
+		}
+	});
+
+	// If the User wants to send the message with the button
+	$("#publishPostButton").click(function () {
+		if ($("#textInput").val() !== "") { //Feilsjekk, om textboksen er tom, kan ikke sende.
+			var post = {
+				content: $("#textInput").val()
+			};
+			$.ajax({
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				type: 'POST',
+				url: '/chatroom/',
+				data: JSON.stringify(post),
+				dataType: 'json'
+			}).fail(function (e) {
+				console.log(e);
+			});
+			$("#textInput").val("");
+		}
+	});
 }
-
-function userSubmitMessage(){
-
-	
-		// If the User wants to send the message with the "Return" button
-		$("#textInput").keypress(function (e){
-			if(e.keyCode==13){
-				$("#publishPostButton").click();
-			}
-		});
-
-		// If the User wants to send the message with the button
-		$("#publishPostButton").click(function (){
-				if($("#textInput").val() != ""){ //Feilsjekk, om textboksen er tom, kan ikke sende.
-					var post = {
-						content: $("#textInput").val()
-					};
-					$.ajax({
-						headers: {
-							'Content-Type': 'application/json'
-						},
-						type: 'POST',
-						url: '/chatroom/',
-						data: JSON.stringify(post),
-						dataType: 'json'
-					}).fail(function(e) {
-						console.log(e);
-					});
-					$("#textInput").val("");
-				}
-		});
-	
-}
-
-
 
 //INNLOGGING
-$(function() {
+$(function () {
 
-    $('#login-form-link').click(function(e) {
+	$('#login-form-link').click(function (e) {
 		$("#login-form").delay(100).fadeIn(100);
- 		$("#register-form").fadeOut(100);
+		$("#register-form").fadeOut(100);
 		$('#register-form-link').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();
 	});
-	$('#register-form-link').click(function(e) {
+	$('#register-form-link').click(function (e) {
 		$("#register-form").delay(100).fadeIn(100);
- 		$("#login-form").fadeOut(100);
+		$("#login-form").fadeOut(100);
 		$('#login-form-link').removeClass('active');
 		$(this).addClass('active');
 		e.preventDefault();

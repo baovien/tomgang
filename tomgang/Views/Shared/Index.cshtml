@@ -18,7 +18,7 @@
         </div>
         <!-- CLICK AREA -->
         <div class="col-xs-6 col-sm-4">
-            <img id="benkmann" class="img-responsive" src="images/benk.png">
+            <img id="benkmann" class="img-responsive" draggable="false" src="images/benk.png">
         </div>
 
         <!-- INFORMATION AREA -->
@@ -114,6 +114,17 @@
         </div>
     </div>
 </div>
+
+@section scripts {
+    <script>
+        $(window).load(function(){
+            //Forste innlastning
+            update();
+            setInterval(update, 1000);    
+        });
+    </script>
+}
+
 }
 else
 {
