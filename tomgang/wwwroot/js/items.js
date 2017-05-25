@@ -33,7 +33,7 @@ function itemBtnsPost() {
 					url: '/Game/itemClick',
 					type: 'POST',
 					data: {
-						'id': $(this).attr("id")
+						'itemid': $(this).attr("id")
 					},
 					dataType: "json"
 				});

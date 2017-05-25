@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using tomgang.Services;
+using System;
 namespace tomgang.Models
 {
     public class PlayerItems
@@ -11,12 +12,12 @@ namespace tomgang.Models
         public PlayerItems(string id, string item){
             userid = id;
             itemID = item;
-            amount = 0;
+          //  time = DateTime.Now;
         }
-        [Key, Column(Order = 0)]
+        [Key]
+        public int ID{get;set;}
         public string userid{get;set;}
-        [Key, Column(Order = 1)]
         public string itemID{get; set;}
-        public int amount{get; set;} 
+        //public DateTime time {get;set;}
     }
 }
