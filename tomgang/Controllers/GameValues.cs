@@ -192,7 +192,7 @@ namespace tomgang.Controllers
                         if (_dbContext.PlayerItems
                             .Where(m => m.userid == userid)
                             .Select(m => m.ID).Count() < requirementValue)
-                         {
+                        {
                             affordableEligibleUpgrades.RemoveAll(m => m.Equals(_dbContext.Upgrade.Find(item.Id).Id));
                         }
                         break;
@@ -245,7 +245,18 @@ namespace tomgang.Controllers
             {
                 Console.WriteLine("--------------------------------------------------ELSE--------------------------------");
             }
-
+        }
+        public List<Tuple<string, int>> getItemAmounts(string userid)
+        {
+            var list = new List<Tuple<string, int>>();
+            foreach (var item in _dbContext.Item)
+            {
+                list.Add(Tuple.Create(item.Id,
+                _dbContext.PlayerItems
+                .Where(m => m.userid == userid && m.itemID == item.Id)
+                .Select(m => m.ID).Count()));
+            }
+            return list;
         }
     }
 }

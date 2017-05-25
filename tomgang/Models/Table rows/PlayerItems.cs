@@ -12,12 +12,12 @@ namespace tomgang.Models
         public PlayerItems(string id, string item){
             userid = id;
             itemID = item;
-          //  time = DateTime.Now;
+            time = DateTime.Now;
         }
         [Key]
         public int ID{get;set;}
         public string userid{get;set;}
         public string itemID{get; set;}
-        //public DateTime time {get;set;}
+        public DateTime time {get;set;}
     }
 }

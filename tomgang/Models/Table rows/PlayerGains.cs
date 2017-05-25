@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using tomgang.Services;
+using System;
 namespace tomgang.Models
 {
     public class PlayerGains
@@ -13,6 +14,7 @@ namespace tomgang.Models
             clickValue = 1;
             itemMultiplier = 1;
             totalGains = 0;
+            timeJoined = DateTime.Now;
         }
         [Key]
         public string Id{get; set;}
@@ -22,5 +24,6 @@ namespace tomgang.Models
         public double totalGains{get; set;}
         public int timesClicked{get;set;}
         public double itemMultiplier{get;set;}
+        public DateTime timeJoined {get;set;}
     }
 }

@@ -11,6 +11,7 @@ namespace tomgang.Services
         void buyItem(string userid, string itemid);
         List<string> checkAchievements(string userid);
         List<Tuple<string, int>> checkEligibleUpgrades(string userid);
+        List<Tuple<string, int>> getItemAmounts(string userid);
     }
     
 }
