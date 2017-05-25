@@ -30,13 +30,12 @@ function itemBtnsPost() {
 			if (temp >= this.dataset.cost) {
 				
 				$.ajax({
+					url: '/Game/itemClick',
 					type: 'POST',
 					data: {
-						'itemid': $(this).attr("id")
+						'id': $(this).attr("id")
 					},
-					url: '/Game/itemClick',
-					cache: false,
-
+					dataType: "json"
 				});
 				
 				//Smoothere update på client

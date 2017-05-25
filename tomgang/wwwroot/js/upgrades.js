@@ -90,13 +90,12 @@ function upgradeBtnsPost() {
 			if (temp >= this.dataset.cost) {
 				
 				$.ajax({
+					url: '/Game/upgradeClick',
 					type: 'POST',
 					data: {
 						'id': $(this).attr("id")
 					},
-					url: '/Game/upgradeClick',
-					cache: false,
-
+					dataType: "json"
 				});
 				
 				//Smoothere update på client

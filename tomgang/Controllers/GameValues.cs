@@ -221,21 +221,23 @@ namespace tomgang.Controllers
         public void buyItem(string userid, string itemid)
         {
             //Hvis bruker har råd til upgraden
-            //startverdi*(e^0.14x)
-            double amount = _dbContext.PlayerItems.Find(userid, itemid).amount;
-            double startingPrice = _dbContext.Upgrade.Find(itemid).cost;
-            double price = (startingPrice * Math.Pow(Math.E, amount));
+            if (_dbContext.PlayerItems.Where(m => m.userid == userid && m.itemID == itemid).Count() != 0)
+            {//startverdi*(e^0.14x)
+                Console.WriteLine("--------------------------------------------------IF ENTERED--------------------------------");
 
-            if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= price)
-            {
-                if (_dbContext.PlayerItems.Find(userid, itemid) != null)
+                double amount = _dbContext.PlayerItems.Find(userid, itemid).amount;
+                double startingPrice = _dbContext.Upgrade.Find(itemid).cost;
+                double price = (startingPrice * Math.Pow(Math.E, amount));
+
+                if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= price)
                 {
                     _dbContext.PlayerItems.Find(userid, itemid).amount++;
                 }
-                else
-                {
-                    _dbContext.PlayerItems.Add(new PlayerItems(userid, itemid));
-                }
+            }
+            else
+            {
+                Console.WriteLine("--------------------------------------------------ELSE--------------------------------");
+                _dbContext.PlayerItems.Add(new PlayerItems(userid, itemid));
             }
         }
     }
