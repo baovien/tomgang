@@ -11,19 +11,18 @@ namespace tomgang.Controllers
 {
     public class GameValues : Services.IGameValues
     {
+        private Dictionary<string, DateTime> lastUpdate;
         private readonly ApplicationDbContext _dbContext;
         public GameValues(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
-
-
         public void onAccountCreation(string userid)
         {
             _dbContext.PlayerGains.Add(new PlayerGains(userid));
             _dbContext.SaveChanges();
             //Setter alle verdiene til ny bruker til startverdier
-            //System.Console.WriteLine("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
+            lastUpdate.Add(userid, DateTime.Now);
         }
         public void onLiftClick(string userid)
         {
@@ -36,20 +35,20 @@ namespace tomgang.Controllers
             //getter mouse click value til brukeren
             //adder mouse click value til playerGains
         }
-        public void increaseGains(string userid, double secondsSinceLastCall)
+        public void increaseGains(string userid)
         {
+            var diff = DateTime.Now.Subtract(lastUpdate[userid]);
+            var secondsSinceLastCall = diff.TotalSeconds;
             _dbContext.PlayerGains.Find(userid).totalGains +=
             _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
             _dbContext.PlayerGains.Find(userid).currentGainsValue +=
             _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
             _dbContext.SaveChanges();
+            lastUpdate[userid] = DateTime.Now;
 
             //Getter Gains/s til brukeren
             //Adder Gains/s på current Gains utifra hvor lang tid som har gått siden sist
         }
-
-
-        //Denne trenger userid, typen upgrade kjøpt og tilhørende value
         public void buyUpgrade(string userid, string id)
         {
             //IDen bestemmer hva upgraden vil påvirke. Om flere typer
@@ -59,6 +58,7 @@ namespace tomgang.Controllers
             //Setter den som kjøpt
             if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= _dbContext.Upgrade.Find(id).cost)
             {
+                increaseGains(userid);
                 _dbContext.PlayerGains.Find(userid).currentGainsValue -= _dbContext.Upgrade.Find(id).cost;
                 switch (_dbContext.Upgrade.Find(id).type)
                 {
@@ -236,14 +236,10 @@ namespace tomgang.Controllers
 
             if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= price)
             {
-                Console.WriteLine("--------------------------------------------------IF ENTERED--------------------------------");
+                increaseGains(userid);   
                 _dbContext.PlayerGains.Find(userid).currentGainsValue -= price;
                 _dbContext.PlayerItems.Add(new Models.PlayerItems(userid, itemid));
                 _dbContext.SaveChanges();
-            }
-            else
-            {
-                Console.WriteLine("--------------------------------------------------ELSE--------------------------------");
             }
         }
         public List<Tuple<string, int>> getItemAmounts(string userid)
@@ -258,5 +254,6 @@ namespace tomgang.Controllers
             }
             return list;
         }
+
     }
 }
