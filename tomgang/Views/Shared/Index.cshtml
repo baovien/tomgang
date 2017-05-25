@@ -52,8 +52,13 @@
                     <!-- Tab panes -->
                     <div class="tab-content tabs">
                         <div role="tabpanel" class="tab-pane fade in active" id="Section1">
-
+                                <div>
+                                    <h3>Upgrades</h3>
                                     @(await Component.InvokeAsync<ViewComponents.UpgradeList>())
+                                </div>
+                                    <h3>Items</h3>
+                                    @(await Component.InvokeAsync<ViewComponents.ItemList>())
+
 
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="Section2">
@@ -115,12 +120,15 @@
     </div>
 </div>
 
-@section scripts {
+
+@section scripts { 
+    
     <script>
+        //Scripten under blir lastet inn etter de nødvendige .js filene. Se _Layout sin rendersection "scripts" på bunnen
         $(window).load(function(){
             //Forste innlastning
             update();
-            setInterval(update, 1000);    
+            setInterval(update, 1000);
         });
     </script>
 }

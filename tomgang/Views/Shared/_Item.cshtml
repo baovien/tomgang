@@ -1,13 +1,13 @@
-@model Upgrade
+@model Item
 
 <img 
     src="@Model.imgPath" 
     id="@Model.Id" 
-    class="upgradeImg img-thumbnail" 
+    class="itemImg img-thumbnail" 
     style="display: none" 
     draggable="false"
-    data-cost="@Model.cost" 
-    data-content="Cost: @Model.cost, Multiplier: @Model.multi, Type: @Model.type" 
+    data-cost="@Model.cost"
+    data-content="Cost: @Model.cost, Income: @Model.income" 
     rel="popover" 
     data-placement="bottom" 
     data-original-title="@Model.Id" 

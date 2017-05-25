@@ -1,0 +1,6 @@
+@model IEnumerable<Item>
+
+@foreach (var a in Model)
+{
+    Html.RenderPartial("_Item", a);
+}

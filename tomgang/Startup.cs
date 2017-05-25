@@ -138,6 +138,9 @@ namespace tomgang
 
                     }
 
+                    db.Item.Add(new Models.Item("Stringlet",10,40,"/images/upgrades/clothes.png"));
+                    db.Item.Add(new Models.Item("Water Bottle",5,15,"/images/upgrades/water-bottle.png"));
+
                     db.SaveChanges();
 
                     // Then create the standard users and roles

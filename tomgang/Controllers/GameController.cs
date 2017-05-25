@@ -31,6 +31,11 @@ namespace tomgang.Controllers
         }
 
         [HttpPost]
+        public void itemClick(string itemid){
+            _GameValues.buyItem(User.FindFirstValue(ClaimTypes.NameIdentifier), itemid);
+        }
+
+        [HttpPost]
         public void liftClick(){
             _GameValues.onLiftClick(User.FindFirstValue(ClaimTypes.NameIdentifier));
         }
@@ -40,6 +45,7 @@ namespace tomgang.Controllers
             return _dbContext.PlayerGains.Find(User.FindFirstValue(ClaimTypes.NameIdentifier)).currentGainsValue;
         }
         
+        [HttpGet]
         public List<Tuple<string, int>> checkUpgrades(){
             return _GameValues.checkEligibleUpgrades(User.FindFirstValue(ClaimTypes.NameIdentifier));
         }

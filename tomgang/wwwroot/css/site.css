@@ -1,19 +1,3 @@
-body {
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-.overlay {
-    display:none;
-    position: absolute;    
-    width:100px;
-    height:100px;
-    background-color: gray;
-    top: 50px;
-    left: 50px;
-    padding: 10px;
-    opacity: .8;
-}
 
 .upgradeGreyed{
     -webkit-filter: grayscale(100%);
@@ -23,7 +7,7 @@ body {
             filter: grayscale(100%); 
 }
 
-.upgradeImg {
+.upgradeImg, .itemImg {
     max-width: 10%;
     margin-bottom: 5px;
     height: auto;
@@ -41,8 +25,12 @@ body {
     -ms-user-select: none;
     /* Internet Explorer/Edge */
     user-select: none;
-    /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+    /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
 }
 
 /* Fix scrollbar bump */

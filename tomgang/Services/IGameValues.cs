@@ -7,9 +7,8 @@ namespace tomgang.Services
         void onAccountCreation(string userid);
         void onLiftClick(string userid);
         void increaseGains(string userid,double secondsSinceLastCall);
-
         void buyUpgrade(string userid, string id);
-
+        void buyItem(string userid, string itemid);
         List<string> checkAchievements(string userid);
         List<Tuple<string, int>> checkEligibleUpgrades(string userid);
     }
