@@ -189,8 +189,10 @@ namespace tomgang.Controllers
                         }
                         break;
                     case 5: //Sjekker summen av antall items for å unlocke upgrade
-                        if (_dbContext.PlayerItems.Where(m => m.userid == userid).Sum(m => m.amount) < requirementValue)
-                        {
+                        if (_dbContext.PlayerItems
+                            .Where(m => m.userid == userid)
+                            .Select(m => m.ID).Count() < requirementValue)
+                         {
                             affordableEligibleUpgrades.RemoveAll(m => m.Equals(_dbContext.Upgrade.Find(item.Id).Id));
                         }
                         break;
@@ -210,7 +212,7 @@ namespace tomgang.Controllers
             {
                 list.Add(Tuple.Create(upgrade, _dbContext.Upgrade.Find(upgrade).cost));
             }
-            System.Console.WriteLine(time.ElapsedMilliseconds);
+            //System.Console.WriteLine(time.ElapsedMilliseconds);
             return list;
 
             /*var aflength = affordableEligibleUpgrades.Count;
@@ -221,24 +223,29 @@ namespace tomgang.Controllers
         public void buyItem(string userid, string itemid)
         {
             //Hvis bruker har råd til upgraden
-            if (_dbContext.PlayerItems.Where(m => m.userid == userid && m.itemID == itemid).Count() != 0)
-            {//startverdi*(e^0.14x)
+            //startverdi*(e^0.14x)
+
+            var amount = _dbContext.PlayerItems
+            .Where(m => m.userid == userid && m.itemID == itemid)
+            .Select(m => m.ID).Count();
+            var startingPrice = _dbContext.Item.Find(itemid).cost;
+            double price = (startingPrice * Math.Pow(Math.E, amount));
+            Console.WriteLine(amount);
+            Console.WriteLine(startingPrice);
+            Console.WriteLine(price);
+
+            if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= price)
+            {
                 Console.WriteLine("--------------------------------------------------IF ENTERED--------------------------------");
-
-                double amount = _dbContext.PlayerItems.Find(userid, itemid).amount;
-                double startingPrice = _dbContext.Upgrade.Find(itemid).cost;
-                double price = (startingPrice * Math.Pow(Math.E, amount));
-
-                if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= price)
-                {
-                    _dbContext.PlayerItems.Find(userid, itemid).amount++;
-                }
+                _dbContext.PlayerGains.Find(userid).currentGainsValue -= price;
+                _dbContext.PlayerItems.Add(new Models.PlayerItems(userid, itemid));
+                _dbContext.SaveChanges();
             }
             else
             {
                 Console.WriteLine("--------------------------------------------------ELSE--------------------------------");
-                _dbContext.PlayerItems.Add(new PlayerItems(userid, itemid));
             }
+
         }
     }
 }
