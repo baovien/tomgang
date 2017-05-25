@@ -26,7 +26,8 @@ namespace tomgang.Controllers
             //System.Console.WriteLine("ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ");
         }
         public void onLiftClick(string userid)
-        {   _dbContext.PlayerGains.Find(userid).totalGains +=
+        {
+            _dbContext.PlayerGains.Find(userid).totalGains +=
             _dbContext.PlayerGains.Find(userid).clickValue;
             _dbContext.PlayerGains.Find(userid).currentGainsValue +=
             _dbContext.PlayerGains.Find(userid).clickValue;
@@ -36,7 +37,7 @@ namespace tomgang.Controllers
             //adder mouse click value til playerGains
         }
         public void increaseGains(string userid, double secondsSinceLastCall)
-        {   
+        {
             _dbContext.PlayerGains.Find(userid).totalGains +=
             _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
             _dbContext.PlayerGains.Find(userid).currentGainsValue +=
@@ -83,8 +84,8 @@ namespace tomgang.Controllers
                     default:
                         break;
                 }
-            _dbContext.PlayerUpgrades.Add(new PlayerUpgrades(userid, id));
-            _dbContext.SaveChanges();
+                _dbContext.PlayerUpgrades.Add(new PlayerUpgrades(userid, id));
+                _dbContext.SaveChanges();
             }
         }
         public List<string> checkAchievements(string userid)
@@ -132,14 +133,14 @@ namespace tomgang.Controllers
             }
             _dbContext.SaveChanges();
             var list = _dbContext.PlayerAchievments.Where(m => m.Id == userid).Select(m => m.type).ToList();
-            return(list);
+            return (list);
         }
         public List<Tuple<string, int>> checkEligibleUpgrades(string userid)
         {
             var time = new Stopwatch();
             time.Start();
             time.Restart();
-            
+
             //Lager en liste som inneholder alle upgrades ikke allerede kjøpt.
             //Videre skal vi fjerne upgrades brukeren ikke kvalifiserer for i denne funksjonen.
             var purchasedUpgrades = _dbContext.PlayerUpgrades.Where(m => m.Id == userid).Select(m => m.type).ToList();
@@ -188,7 +189,8 @@ namespace tomgang.Controllers
                         }
                         break;
                     case 5: //Sjekker summen av antall items for å unlocke upgrade
-                        if (_dbContext.PlayerItems.Where(m => m.userid == userid).Sum(m => m.amount) < requirementValue){
+                        if (_dbContext.PlayerItems.Where(m => m.userid == userid).Sum(m => m.amount) < requirementValue)
+                        {
                             affordableEligibleUpgrades.RemoveAll(m => m.Equals(_dbContext.Upgrade.Find(item.Id).Id));
                         }
                         break;
@@ -216,16 +218,24 @@ namespace tomgang.Controllers
             affordableEligibleUpgrades.Add(aflength.ToString());
             return affordableEligibleUpgrades;*/
         }
-        public void buyItem(string userid, string itemid){
+        public void buyItem(string userid, string itemid)
+        {
             //Hvis bruker har råd til upgraden
             //startverdi*(e^0.14x)
             double amount = _dbContext.PlayerItems.Find(userid, itemid).amount;
             double startingPrice = _dbContext.Upgrade.Find(itemid).cost;
-            double price = (startingPrice * Math.Pow(Math.E, amount)); 
-            
+            double price = (startingPrice * Math.Pow(Math.E, amount));
+
             if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= price)
             {
-                _dbContext.PlayerItems.Find(userid, itemid).amount++;
+                if (_dbContext.PlayerItems.Find(userid, itemid) != null)
+                {
+                    _dbContext.PlayerItems.Find(userid, itemid).amount++;
+                }
+                else
+                {
+                    _dbContext.PlayerItems.Add(new PlayerItems(userid, itemid));
+                }
             }
         }
     }
