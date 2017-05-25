@@ -32,6 +32,6 @@ $(document).ready(function () {
 	});
 
 	$("#letsgoleft").click(function(){
-  		$("#divContent").load("Manage/ChangePassword", $('#divContent').serialize()); 
+  		$("#testlols").load("Manage/ChangePassword", $('#testlols').serialize()); 
 	});
 });
