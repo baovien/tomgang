@@ -1,5 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using tomgang.Services;
+using System.Collections;
+using System.Collections.Generic;
 namespace tomgang.Models
 {
     public class Upgrade
@@ -28,5 +30,8 @@ namespace tomgang.Models
         //public string name {get; set;}
         //public string description {get; set;}
         public string imgPath {get; set;}
+    }
+    public class Upgrades{
+        public IList<Upgrade> upgrades {get;set;}
     }
 }

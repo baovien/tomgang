@@ -1,0 +1,6 @@
+{
+    "Upgrades":[
+    { "Id":"The pump", "type":1, "multi":2, "cost":10 , "imgPath": "/images/upgrades/weight.png", "reqType":1 , "reqValue":1 },
+    { "Id":"Das pump", "type":1, "multi":2, "cost":10 , "imgPath": "/images/upgrades/weight.png", "reqType":1 , "reqValue":1 }
+    ]
+}

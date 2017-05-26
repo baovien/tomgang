@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -46,16 +47,15 @@ namespace tomgang
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
         }
-        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {  
+        {
             // Add framework services.
-            services.AddDbContext<ApplicationDbContext>(options => 
+            services.AddDbContext<ApplicationDbContext>(options =>
             {
                 //Development mode, SQLite
-                if(_env.IsDevelopment())
+                if (_env.IsDevelopment())
                 {
                     options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
                 }
@@ -64,7 +64,7 @@ namespace tomgang
                     options.UseSqlServer(Configuration.GetConnectionString("AzureSQL"));
                 }
             });
-                
+
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
@@ -122,7 +122,7 @@ namespace tomgang
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();  
+                app.UseDatabaseErrorPage();
 
                 using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
                 {
@@ -131,23 +131,30 @@ namespace tomgang
                     db.Database.EnsureDeleted();
                     db.Database.EnsureCreated();
                     
-                    for (int i = 0; i < 10; i++)
-                    {
-                        db.Upgrade.Add(new Models.Upgrade("click" + i , 1, 3, i*2, "/images/upgrades/weight.png", 1, 3));
-                        db.Upgrade.Add(new Models.Upgrade("passive" + i , 1, 3, i*1, "/images/upgrades/pills-1.png", 4, 20));
-
+                    //Read json files containing upgrades, items and achievements and load them into database
+                    string upgstring = File.ReadAllText("GameEntitiesJSON/Upgrades.json");
+                    var upg = JsonConvert.DeserializeObject<Models.Upgrades>(upgstring);
+                    foreach(var hei in upg.upgrades){
+                        db.Upgrade.Add(hei);
                     }
-
-                    db.Item.Add(new Models.Item("Stringlet",10,40,"/images/upgrades/clothes.png"));
-                    db.Item.Add(new Models.Item("Water Bottle",5,15,"/images/upgrades/water-bottle.png"));
-
-                    db.SaveChanges();
+                    
+                    string itstring = File.ReadAllText("GameEntitiesJSON/Items.json");
+                    var it = JsonConvert.DeserializeObject<Models.Items>(itstring);
+                    foreach(var hei in it.items){
+                        db.Item.Add(hei);
+                    }
+                    
+                    string achistring = File.ReadAllText("GameEntitiesJSON/Achievements.json");
+                    var achi = JsonConvert.DeserializeObject<Models.Achievements>(achistring);
+                    foreach(var hei in achi.achievements){
+                        db.Achievement.Add(hei);
+                    }
 
                     // Then create the standard users and roles
                     CreateUsersAndRoles(serviceScope).Wait();
-                    
+
                 }
-                
+
             }
             else
             {
