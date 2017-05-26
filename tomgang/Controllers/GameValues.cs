@@ -11,7 +11,6 @@ namespace tomgang.Controllers
 {
     public class GameValues : Services.IGameValues
     {
-        private Dictionary<string, DateTime> lastUpdate;
         private readonly ApplicationDbContext _dbContext;
         public GameValues(ApplicationDbContext dbContext)
         {
@@ -22,7 +21,6 @@ namespace tomgang.Controllers
             _dbContext.PlayerGains.Add(new PlayerGains(userid));
             _dbContext.SaveChanges();
             //Setter alle verdiene til ny bruker til startverdier
-            lastUpdate.Add(userid, DateTime.Now);
         }
         public void onLiftClick(string userid)
         {
@@ -37,14 +35,22 @@ namespace tomgang.Controllers
         }
         public void increaseGains(string userid)
         {
-            var diff = DateTime.Now.Subtract(lastUpdate[userid]);
+         /*   Console.WriteLine("NÅ");
+            Console.WriteLine(_dbContext.PlayerGains.Find(userid).lastPurchaseTime);
+            Console.WriteLine("MINUS:");
+            Console.WriteLine(DateTime.Now);
+            Console.WriteLine("DIFF:");
+             */
+            var diff = DateTime.Now.Subtract(_dbContext.PlayerGains.Find(userid).lastPurchaseTime);
             var secondsSinceLastCall = diff.TotalSeconds;
+            //Console.WriteLine(diff);
+            //Console.WriteLine(secondsSinceLastCall);
             _dbContext.PlayerGains.Find(userid).totalGains +=
             _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
             _dbContext.PlayerGains.Find(userid).currentGainsValue +=
             _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
             _dbContext.SaveChanges();
-            lastUpdate[userid] = DateTime.Now;
+            _dbContext.PlayerGains.Find(userid).lastPurchaseTime = DateTime.Now;
 
             //Getter Gains/s til brukeren
             //Adder Gains/s på current Gains utifra hvor lang tid som har gått siden sist
