@@ -54,6 +54,7 @@ namespace tomgang.Controllers
         public List<string> checkAchis(){
             return _GameValues.checkAchievements(User.FindFirstValue(ClaimTypes.NameIdentifier));
         }
+        [HttpGet]
         public List<Tuple<string, int>> getItemAmount(){
             return _GameValues.getItemAmounts(User.FindFirstValue(ClaimTypes.NameIdentifier));
         }
