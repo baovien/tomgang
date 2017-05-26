@@ -49,8 +49,8 @@ namespace tomgang.Controllers
             _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
             _dbContext.PlayerGains.Find(userid).currentGainsValue +=
             _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
-            _dbContext.SaveChanges();
             _dbContext.PlayerGains.Find(userid).lastPurchaseTime = DateTime.Now;
+            _dbContext.SaveChanges();
 
             //Getter Gains/s til brukeren
             //Adder Gains/s på current Gains utifra hvor lang tid som har gått siden sist
