@@ -1,13 +1,3 @@
-
-function update() { //Kjøres i timer funksjon i index.
-	//Oppdaterer current gains
-	getEligibleUpgrades();
-	getCurrentGains();
-	updateUpgradesStatus();
-	updateItemsStatus();
-	updateGainsCounter();
-}
-
 function updateUpgradesStatus() {
 	/*
 	Itererer gjennom alle upgrades som brukeren kan kjøpe og viser de. 
@@ -53,7 +43,7 @@ function getCurrentGains() {
 		url: 'Game/getCurrentGains',
 		async: false,
 		success: function (data) {
-			window.gains = data;
+			window.gains = Math.floor(data);
 		},
 		error: function (xhr) {
 			console.log("Could not request getCurrentGains");
