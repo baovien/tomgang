@@ -34,6 +34,7 @@ function itemBtnsPost() {
 			if (gains >= itemPrice) {
 
 				//Increment item amount
+
 				$.ajax({
 					url: '/Game/itemClick',
 					type: 'POST',
@@ -73,6 +74,8 @@ function updateItemsCost() {
 		var itemPrice = Math.floor(this.dataset.cost * Math.exp(0.14 * window.itemAmount[$(this).attr("id")]));
 		console.log("updateItemsCost: " + itemPrice);
 		
+		this.dataset.cost = itemPrice;
+		this.dataset.content = "Cost: " + itemPrice + ", Income: " + this.dataset.income;
 	});
 }
 
