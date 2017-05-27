@@ -35,3 +35,13 @@ $(document).ready(function () {
   		$("#testlols").load("Manage/ChangePassword", $('#testlols').serialize()); 
 	});
 });
+
+function update() { //Kjøres i timer funksjon i index.
+	//Oppdaterer current gains
+	getEligibleUpgrades();
+	getCurrentGains();
+	getItemAmount();
+	updateUpgradesStatus();
+	updateItemsStatus();
+	updateGainsCounter();
+}
