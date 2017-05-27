@@ -34,4 +34,8 @@ $(document).ready(function () {
 	$("#letsgoleft").click(function(){
   		$("#testlols").load("Manage/ChangePassword", $('#testlols').serialize()); 
 	});
+
+	$("#goback").click(function(){
+  		$("#testlols").load("Index", $('#testlols').serialize()); 
+	});
 });
