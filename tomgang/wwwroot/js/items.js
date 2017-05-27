@@ -26,15 +26,14 @@ function itemBtnsPost() {
 			getItemAmount();
 			getCurrentGains();
 
-			var temp = window.gains;
-			
+			var gains = window.gains;
 			//startverdi*(e^0.14x)
-			var itemPrice = Math.floor(this.dataset.cost * Math.exp(0.14 * window.itemAmount[$(this).attr("id")]));
+			var itemPrice = this.dataset.cost * Math.exp(0.14 * window.itemAmount[$(this).attr("id")]);
 
-			console.log("Onclick gains: " + temp + " - Itemprice: " + itemPrice);
 			
-			if (temp >= itemPrice) {
+			if (gains >= itemPrice) {
 
+				//Increment item amount
 				$.ajax({
 					url: '/Game/itemClick',
 					type: 'POST',
@@ -43,14 +42,27 @@ function itemBtnsPost() {
 					},
 					dataType: "json"
 				});
+				
+				//Update gains i view
+				$('#gainNumber').text(gains - itemPrice);
 
-				//Smoothere update på client
-				$('#gainNumber').text(temp - itemPrice);
-				updateItemsCost();
-				console.log("inside if: " + itemPrice);
+				//Regn ut neste cost for item
+				getItemAmount();
+				itemPrice = this.dataset.cost * Math.exp(0.14 * window.itemAmount[$(this).attr("id")]);
+
+				//Update cost i view
+				this.dataset.cost = itemPrice;
+				this.dataset.content = "Cost: " + itemPrice + ", Income: " + this.dataset.income;
+				$(this).popover("show");
+
+				console.log("Onclick gains: " + gains + " - Next Itemprice: " + itemPrice);
+
 				console.log(window.itemAmount);
 
 			}
+			
+			
+
 		});
 	});
 }
@@ -60,8 +72,7 @@ function updateItemsCost() {
 		getItemAmount();
 		var itemPrice = Math.floor(this.dataset.cost * Math.exp(0.14 * window.itemAmount[$(this).attr("id")]));
 		console.log("updateItemsCost: " + itemPrice);
-		this.dataset.cost = itemPrice;
-		this.dataset.content = "Cost: " + itemPrice + ", Income: " + this.dataset.income;
+		
 	});
 }
 
