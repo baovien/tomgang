@@ -9,16 +9,18 @@ namespace tomgang.Models
 
         public Item () {}
 
-        public Item(string id, int inc, int Cost, string ImgPath){
+        public Item(string id, int inc, int Cost, string ImgPath, int typ){
             Id = id;
             income = inc;
             cost = Cost;
             imgPath = ImgPath;
+            type = typ;
         }
         [Key]
         public string Id{get; set;}
         public int income{get; set;}
         public int cost{get; set;}
+        public int type{get; set;}
         public string imgPath{get; set;}
     }
     public class Items{

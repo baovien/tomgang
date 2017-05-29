@@ -35,22 +35,51 @@ namespace tomgang.Controllers
         }
         public void increaseGains(string userid)
         {
-         /*   Console.WriteLine("NÅ");
-            Console.WriteLine(_dbContext.PlayerGains.Find(userid).lastPurchaseTime);
-            Console.WriteLine("MINUS:");
-            Console.WriteLine(DateTime.Now);
-            Console.WriteLine("DIFF:");
-             */
+            //Loopen regner ut totale gains/s utifra alle items og deres upgrademultipliers
+            var cumulative = 1.0;
+            var increaseGains = 0.0;
+            //For hvert item i item
+            foreach (var item in _dbContext.Item)
+            {   //For hver upgrade til spilleren
+                foreach (var thing in _dbContext.PlayerUpgrades.Where(m => m.Id == userid))
+                {   //Hvis typen matcher itemtypen er det riktig type, da betyr det at player har en upgrade
+                    //som påvirker itemet vi sjekker for nå. Altså må multiplieren tas med.
+                    if (item.type == _dbContext.Upgrade.Find(thing.type).type)
+                    {
+                        cumulative += _dbContext.Upgrade.Find(thing.type).multi;
+                    }
+                }
+                //Når det er regnet ut legger man til incomen til det ene itemet.
+                increaseGains +=
+                (_dbContext.PlayerItems
+                .Where(m => m.userid == userid && m.itemID == item.Id)
+                .Select(m => m.ID).Count() * item.income * cumulative);
+                cumulative = 1.0;
+            }
+            //Til slutt sitter man igjen med incomen til alle items, altså total gains/s
+            _dbContext.PlayerGains.Find(userid).incomeValue = increaseGains;
+
             var diff = DateTime.Now.Subtract(_dbContext.PlayerGains.Find(userid).lastPurchaseTime);
             var secondsSinceLastCall = diff.TotalSeconds;
-            //Console.WriteLine(diff);
-            //Console.WriteLine(secondsSinceLastCall);
+            _dbContext.PlayerGains.Find(userid).lastPurchaseTime = DateTime.Now;
+            
+            //Tar tiden siden den var kalt sist i betraktning når jeg øker verdiene gitt gains/s
             _dbContext.PlayerGains.Find(userid).totalGains +=
             _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
             _dbContext.PlayerGains.Find(userid).currentGainsValue +=
             _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
             _dbContext.PlayerGains.Find(userid).lastPurchaseTime = DateTime.Now;
             _dbContext.SaveChanges();
+
+            /*var diff = DateTime.Now.Subtract(_dbContext.PlayerGains.Find(userid).lastPurchaseTime);
+            var secondsSinceLastCall = diff.TotalSeconds;
+            _dbContext.PlayerGains.Find(userid).totalGains +=
+            _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
+            _dbContext.PlayerGains.Find(userid).currentGainsValue +=
+            _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
+            _dbContext.PlayerGains.Find(userid).lastPurchaseTime = DateTime.Now;
+            _dbContext.SaveChanges();*/
+
 
             //Getter Gains/s til brukeren
             //Adder Gains/s på current Gains utifra hvor lang tid som har gått siden sist
@@ -96,7 +125,7 @@ namespace tomgang.Controllers
         }
         public List<string> checkAchievements(string userid)
         {
-            var earnedAchievements = _dbContext.PlayerAchievments.Where(m => m.Id == userid).Select(m => m.type).ToList();
+            //var earnedAchievements = _dbContext.PlayerAchievments.Where(m => m.Id == userid).Select(m => m.type).ToList();
             //Loope igjennom alle achievement reqs og sjekke om brukeren har fått noen
             //Adde achievements brukeren har fått
 
@@ -236,13 +265,13 @@ namespace tomgang.Controllers
             .Select(m => m.ID).Count();
             var startingPrice = _dbContext.Item.Find(itemid).cost;
             double price = (startingPrice * Math.Pow(Math.E, amount));
-            Console.WriteLine(amount);
+            /*Console.WriteLine(amount);
             Console.WriteLine(startingPrice);
-            Console.WriteLine(price);
+            Console.WriteLine(price);*/
 
             if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= price)
             {
-                increaseGains(userid);   
+                increaseGains(userid);
                 _dbContext.PlayerGains.Find(userid).currentGainsValue -= price;
                 _dbContext.PlayerItems.Add(new Models.PlayerItems(userid, itemid));
                 _dbContext.SaveChanges();
