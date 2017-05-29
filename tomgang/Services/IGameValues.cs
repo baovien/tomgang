@@ -8,10 +8,11 @@ namespace tomgang.Services
         void onLiftClick(string userid);
         void increaseGains(string userid);
         void buyUpgrade(string userid, string id);
-        void buyItem(string userid, string itemid);
+        bool buyItem(string userid, string itemid);
         List<string> checkAchievements(string userid);
         List<Tuple<string, int>> checkEligibleUpgrades(string userid);
         List<Tuple<string, int>> getItemAmounts(string userid);
+        int getItemAmount(string userid, string itemid);
     }
     
 }

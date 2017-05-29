@@ -5,7 +5,7 @@ function updateUpgradesStatus() {
 	*/
 
 	window.upgrades.forEach(function (element) {
-		if (window.gains < element.item2) { //Cost er større enn playergains.
+		if (window.gains <= element.item2) { //Cost er større enn playergains.
 			$('[id="' + element.item1 + '"]').addClass("upgradeGreyed");
 			$('[id="' + element.item1 + '"]').css({
 				"background-color": ""
@@ -43,7 +43,7 @@ function getCurrentGains() {
 		url: 'Game/getCurrentGains',
 		async: false,
 		success: function (data) {
-			window.gains = Math.floor(data);
+			window.gains = data;
 		},
 		error: function (xhr) {
 			console.log("Could not request getCurrentGains");
