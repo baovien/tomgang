@@ -3,7 +3,7 @@ function updateItemsStatus() {
 	De som brukeren ikke har råd til blir gråfarga. Ellers får de som er affordable grønn bakgrunn,
 	*/
 	$(".itemImg").each(function (element) {
-		if (window.gains < this.dataset.cost) { //Cost er større enn playergains.
+		if (window.gains < getItemPrice(this)) { //Cost er større enn playergains.
 			$(this).addClass("upgradeGreyed");
 			$(this).css({
 				"background-color": ""
@@ -14,79 +14,88 @@ function updateItemsStatus() {
 				"background-color": "green"
 			});
 		}
-
 		$(this).show();
+	});
+}
+
+// Viser alle data
+function updateItemsCost() {
+	$(".itemImg").each(function () {
+		var itemAmountList = getItemAmountList();
+		this.dataset.content = "Price: " + getItemPrice(this) + ", Amount:" + itemAmountList[$(this).attr("id")];
 	});
 }
 
 function itemBtnsPost() {
 	$(".itemImg").each(function () {
 		$(this).on("click", function () {
-			//Oppdaterer gains i tilfelle client ikke har polla fra server
-			getItemAmount();
-			getCurrentGains();
-
-			var gains = window.gains;
 			//startverdi*(e^0.14x)
-			var itemPrice = this.dataset.cost * Math.exp(0.14 * window.itemAmount[$(this).attr("id")]);
-
 			
-			if (gains >= itemPrice) {
+			var bought;
 
-				//Increment item amount
+			$.ajax({
+				url: '/Game/itemClick',
+				type: 'GET',
+				data: {
+					'itemid': $(this).attr("id")
+				},
+				success: function (data) {
+					bought = data;
+					console.log("success");
+				},
+				error: function () {
+					console.log("Could not request itemClick");
+				}
+			});
 
-				$.ajax({
-					url: '/Game/itemClick',
-					type: 'POST',
-					data: {
-						'itemid': $(this).attr("id")
-					},
-					dataType: "json"
-				});
-				
-				//Update gains i view
-				$('#gainNumber').text(gains - itemPrice);
-
-				//Regn ut neste cost for item
-				getItemAmount();
-				itemPrice = this.dataset.cost * Math.exp(0.14 * window.itemAmount[$(this).attr("id")]);
-
-				//Update cost i view
-				this.dataset.cost = itemPrice;
-				this.dataset.content = "Cost: " + itemPrice + ", Income: " + this.dataset.income;
-				$(this).popover("show");
-
-				console.log("Onclick gains: " + gains + " - Next Itemprice: " + itemPrice);
-
-				console.log(window.itemAmount);
-
+			if (bought) {
+				var itemPrice = getItemPrice(this);
+				var gains = window.gains;
+				$('#gainNumber').text(gains-itemPrice); ///????????????
+				console.log(gains-itemPrice);
 			}
 			
-			
-
+			this.dataset.content = "Price: " + itemPrice + ", Amount:" + getSingleItemAmount($(this).attr("id"));
+			$(this).popover('hide');
 		});
 	});
 }
- // TODO FIKS ITEM COST
-function updateItemsCost() {
-	$(".itemImg").each(function () {
-		getItemAmount();
-		var itemPrice = Math.floor(this.dataset.cost * Math.exp(0.14 * window.itemAmount[$(this).attr("id")]));
-		console.log("updateItemsCost: " + itemPrice);
-		
-		this.dataset.cost = itemPrice;
-		this.dataset.content = "Cost: " + itemPrice + ", Income: " + this.dataset.income;
-	});
+
+function getItemPrice(item){
+	var amount = getSingleItemAmount($(item).attr("id"));
+	//console.log($(item).attr("id") + ": " + amount);
+	var itemPrice = item.dataset.cost * Math.exp(0.14 * amount); 
+	return itemPrice;
 }
 
-function getItemAmount() {
+function getSingleItemAmount(id) {
+	var result = 0;
+	$.ajax({
+		type: "GET",
+		url: 'Game/getSingleItemAmount',
+		async: false,
+		data: {
+			'itemid': id
+		},
+		success: function (data) {
+			result = data;
+		},
+		error: function (xhr) {
+			console.log("Could not request getSingleItemAmount");
+		}
+	});
+	return result;
+}
+
+function getItemAmountList() {
+	var list = 0;
 	$.ajax({
 		type: "GET",
 		url: 'Game/getItemAmount',
 		async: false,
 		success: function (data) {
 			//Gjor om slik at key er id, val er amount
-			window.itemAmount = data.reduce(function (result, item) {
+			list = data.reduce(function (result, item) {
 				result[item.item1] = item.item2;
 				return result;
 			}, {});
@@ -95,4 +104,5 @@ function getItemAmount() {
 			console.log("Could not request getCurrentGains");
 		}
 	});
+	return list;
 }

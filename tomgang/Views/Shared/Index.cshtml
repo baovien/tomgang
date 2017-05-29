@@ -28,11 +28,10 @@
                     <h4 class="noselect">Information</h4>
                 </div>
                 <div class="panel-body">
-                    <p id="gainspersecond">0 Gains/s</p>
-                    <p id="amountCarb"> You Own 0 Carb snack(s)</p>
-                    <p id="amountProtein"> You Own 0 Protein shakes(s)</p>
-                    <p id="amountStringlet"> You Own 0 Stringlet(s)</p>
-                    <p id="amountGrunt"> You Own 0 Grunt(s)</p>
+                    <p class="info1">0 Gains/s</p>
+                    <p id="info2"> You Own 0 Carb snack(s)</p>
+                    <p id="info3"> You Own 0 Protein shakes(s)</p>
+                    <p id="info4"> You Own 0 Stringlet(s)</p>
                 </div>
             </div>
         </div>
@@ -127,8 +126,8 @@
         //Scripten under blir lastet inn etter de nødvendige .js filene. Se _Layout sin rendersection "scripts" på bunnen
         $(window).load(function(){
             //Forste innlastning
-            update();
-            updateItemsCost();
+            initialize();   //Initialiserer chat og click funksjoner
+            update();       //Henter variabler fra server. Oppdaterer view
             setInterval(update, 1000);
         });
     </script>

@@ -30,9 +30,9 @@ namespace tomgang.Controllers
             _GameValues.buyUpgrade(User.FindFirstValue(ClaimTypes.NameIdentifier), id);
         }
 
-        [HttpPost]
-        public void itemClick(string itemid){
-            _GameValues.buyItem(User.FindFirstValue(ClaimTypes.NameIdentifier), itemid);
+        [HttpGet]
+        public bool itemClick(string itemid){
+            return _GameValues.buyItem(User.FindFirstValue(ClaimTypes.NameIdentifier), itemid);
         }
 
         [HttpPost]
@@ -57,6 +57,10 @@ namespace tomgang.Controllers
         [HttpGet]
         public List<Tuple<string, int>> getItemAmount(){
             return _GameValues.getItemAmounts(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        }
+        [HttpGet]
+        public int getSingleItemAmount(string itemid){
+            return _GameValues.getItemAmount(User.FindFirstValue(ClaimTypes.NameIdentifier), itemid);
         }
     }
 }

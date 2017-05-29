@@ -246,7 +246,7 @@ namespace tomgang.Controllers
             affordableEligibleUpgrades.Add(aflength.ToString());
             return affordableEligibleUpgrades;*/
         }
-        public void buyItem(string userid, string itemid)
+        public bool buyItem(string userid, string itemid)
         {
             //Hvis bruker har råd til upgraden
             //startverdi*(e^0.14x)
@@ -255,7 +255,7 @@ namespace tomgang.Controllers
             .Where(m => m.userid == userid && m.itemID == itemid)
             .Select(m => m.ID).Count();
             var startingPrice = _dbContext.Item.Find(itemid).cost;
-            double price = (startingPrice * Math.Pow(Math.E, amount));
+            double price = (startingPrice * Math.Exp(0.14*amount));
             /*Console.WriteLine(amount);
             Console.WriteLine(startingPrice);
             Console.WriteLine(price);*/
@@ -266,6 +266,9 @@ namespace tomgang.Controllers
                 _dbContext.PlayerGains.Find(userid).currentGainsValue -= price;
                 _dbContext.PlayerItems.Add(new Models.PlayerItems(userid, itemid));
                 _dbContext.SaveChanges();
+                return true;
+            }else{
+                return false;
             }
         }
         public List<Tuple<string, int>> getItemAmounts(string userid)
@@ -281,5 +284,11 @@ namespace tomgang.Controllers
             return list;
         }
 
+        public int getItemAmount(string userid, string itemid){
+            return(_dbContext.PlayerItems
+                .Where(m => m.userid == userid && m.itemID == itemid)
+                .Select(m => m.ID).Count());
+        }
+        
     }
 }
