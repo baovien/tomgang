@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	
+
 	//Vise popover info for upgradsa
 	$('.upgradeImg').popover();
 	$('.itemImg').popover();
@@ -19,13 +19,13 @@ $(document).ready(function () {
 		$(this).addClass('active');
 		e.preventDefault();
 	});
-	
+
 	$("#login-dp").click(function(e){
-  		e.stopPropagation(); 
+  		e.stopPropagation();
 	});
 
 	$("#letsgoleft").click(function(){
-  		$("#testlols").load("Manage/ChangePassword", $('#testlols').serialize()); 
+  		$("#testlols").load("Manage/ChangePassword", $('#testlols').serialize());
 	});
 });
 
@@ -45,6 +45,7 @@ function update() { //Kjøres i timer funksjon i index.
 	getEligibleUpgrades();
 	getCurrentGains();
 
+	increaseGains();
 	updateItemsCost();
 	updateUpgradesStatus();
 	updateItemsStatus();

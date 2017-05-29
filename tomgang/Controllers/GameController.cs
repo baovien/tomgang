@@ -62,5 +62,13 @@ namespace tomgang.Controllers
         public int getSingleItemAmount(string itemid){
             return _GameValues.getItemAmount(User.FindFirstValue(ClaimTypes.NameIdentifier), itemid);
         }
+        [HttpGet]
+        public double getIncomeValue(){
+            return _dbContext.PlayerGains.Find(User.FindFirstValue(ClaimTypes.NameIdentifier)).incomeValue;
+        }
+        [HttpGet]
+        public void increaseGains(){
+            _GameValues.increaseGains(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        }
     }
 }

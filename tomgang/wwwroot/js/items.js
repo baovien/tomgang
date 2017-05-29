@@ -22,7 +22,7 @@ function updateItemsStatus() {
 function updateItemsCost() {
 	$(".itemImg").each(function () {
 		var itemAmountList = getItemAmountList();
-		this.dataset.content = "Price: " + getItemPrice(this) + ", Amount:" + itemAmountList[$(this).attr("id")];
+		this.dataset.content = "Price: " + Math.round(getItemPrice(this)) + ", Amount:" + itemAmountList[$(this).attr("id")];
 	});
 }
 
@@ -30,12 +30,13 @@ function itemBtnsPost() {
 	$(".itemImg").each(function () {
 		$(this).on("click", function () {
 			//startverdi*(e^0.14x)
-			
+
 			var bought;
 
 			$.ajax({
 				url: '/Game/itemClick',
 				type: 'GET',
+				async: false,
 				data: {
 					'itemid': $(this).attr("id")
 				},
@@ -51,11 +52,11 @@ function itemBtnsPost() {
 			if (bought) {
 				var itemPrice = getItemPrice(this);
 				var gains = window.gains;
-				$('#gainNumber').text(gains-itemPrice); ///????????????
+				//$('#gainNumber').text(gains-itemPrice); ///????????????
 				console.log(gains-itemPrice);
 			}
-			
-			this.dataset.content = "Price: " + itemPrice + ", Amount:" + getSingleItemAmount($(this).attr("id"));
+
+			this.dataset.content = "Price: " + Math.round(itemPrice) + ", Amount:" + getSingleItemAmount($(this).attr("id"));
 			$(this).popover('hide');
 		});
 	});
@@ -64,7 +65,7 @@ function itemBtnsPost() {
 function getItemPrice(item){
 	var amount = getSingleItemAmount($(item).attr("id"));
 	//console.log($(item).attr("id") + ": " + amount);
-	var itemPrice = item.dataset.cost * Math.exp(0.14 * amount); 
+	var itemPrice = item.dataset.cost * Math.exp(0.14 * amount);
 	return itemPrice;
 }
 

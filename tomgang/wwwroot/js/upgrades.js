@@ -1,6 +1,6 @@
 function updateUpgradesStatus() {
 	/*
-	Itererer gjennom alle upgrades som brukeren kan kjøpe og viser de. 
+	Itererer gjennom alle upgrades som brukeren kan kjøpe og viser de.
 	De som brukeren ikke har råd til blir gråfarga. Ellers får de som er affordable grønn bakgrunn,
 	*/
 
@@ -31,7 +31,7 @@ function liftClickPost() {
 			cache: false,
 			success: function (data) {
 				updateUpgradesStatus();
-				$('#gainNumber').text(window.gains += 1); //Oppdaterer client før server for smoothere opplevelse.
+				$('#gainNumber').text(Math.floor(window.gains += 1)); //Oppdaterer client før server for smoothere opplevelse.
 			}
 		});
 	});
@@ -65,20 +65,34 @@ function getEligibleUpgrades() {
 	});
 }
 
+function increaseGains(){
+	$.ajax({
+		type: "GET",
+		url: 'Game/increaseGains',
+		async: false,
+		success: function (data) {
+			console.log("increaseGains success");
+		},
+		error: function (xhr) {
+			console.log("Could not request getCurrentGains");
+		}
+	});
+}
+
 function updateGainsCounter() {
-	$('#gainNumber').text(window.gains);
+	$('#gainNumber').text(Math.floor(window.gains));
 }
 
 function upgradeBtnsPost() {
 	$(".upgradeImg").each(function () {
 		$(this).on("click", function () {
-			
+
 			//Oppdaterer gains i tilfelle client ikke har polla fra server
 			getCurrentGains();
 			var temp = window.gains;
 
 			if (temp >= this.dataset.cost) {
-				
+
 				$.ajax({
 					url: '/Game/upgradeClick',
 					type: 'POST',
@@ -87,11 +101,11 @@ function upgradeBtnsPost() {
 					},
 					dataType: "json"
 				});
-				
+
 				//Smoothere update på client
 				$(this).remove();
 				$(".popover").remove();
-				$('#gainNumber').text(temp - this.dataset.cost); 
+				$('#gainNumber').text(Math.floor(temp - this.dataset.cost));
 
 			}
 		});
