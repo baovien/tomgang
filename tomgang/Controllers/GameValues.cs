@@ -113,17 +113,6 @@ namespace tomgang.Controllers
                         //Add på income
                         _dbContext.PlayerGains.Find(userid).incomeValue += _dbContext.Upgrade.Find(id).multi;
                         break;
-                    case 3:
-                        _dbContext.PlayerGains.Find(userid).clickValue *= _dbContext.Upgrade.Find(id).multi;
-                        //Multipliser med click
-                        break;
-                    case 4:
-                        _dbContext.PlayerGains.Find(userid).clickValue += _dbContext.Upgrade.Find(id).multi;
-                        //Add på click
-                        break;
-                    case 5:
-                        _dbContext.PlayerGains.Find(userid).itemMultiplier *= _dbContext.Upgrade.Find(id).multi;
-                        break;
                     default:
                         break;
                 }
