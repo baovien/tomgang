@@ -46,15 +46,24 @@ namespace tomgang.Controllers
                     //som påvirker itemet vi sjekker for nå. Altså må multiplieren tas med.
                     if (item.type == _dbContext.Upgrade.Find(thing.type).type)
                     {
-                        cumulative += _dbContext.Upgrade.Find(thing.type).multi;
+                        cumulative *= _dbContext.Upgrade.Find(thing.type).multi;
                     }
                 }
                 //Når det er regnet ut legger man til incomen til det ene itemet.
-                increaseGains +=
-                (_dbContext.PlayerItems
-                .Where(m => m.userid == userid && m.itemID == item.Id)
-                .Select(m => m.ID).Count() * item.income * cumulative);
-                cumulative = 1.0;
+                if (item.type > 3)
+                {
+                    increaseGains +=
+                    (_dbContext.PlayerItems
+                    .Where(m => m.userid == userid && m.itemID == item.Id)
+                    .Select(m => m.ID).Count() * item.income * cumulative);
+                    cumulative = 1.0;
+                }else{
+                    _dbContext.PlayerGains.Find(userid).clickValue = 1 +
+                    (_dbContext.PlayerItems
+                    .Where(m => m.userid == userid && m.itemID == item.Id)
+                    .Select(m => m.ID).Count() * item.income * cumulative);
+                    cumulative = 1.0;
+                }
             }
             //Til slutt sitter man igjen med incomen til alle items, altså total gains/s
             _dbContext.PlayerGains.Find(userid).incomeValue = increaseGains;
@@ -62,7 +71,7 @@ namespace tomgang.Controllers
             var diff = DateTime.Now.Subtract(_dbContext.PlayerGains.Find(userid).lastPurchaseTime);
             var secondsSinceLastCall = diff.TotalSeconds;
             _dbContext.PlayerGains.Find(userid).lastPurchaseTime = DateTime.Now;
-            
+
             //Tar tiden siden den var kalt sist i betraktning når jeg øker verdiene gitt gains/s
             _dbContext.PlayerGains.Find(userid).totalGains +=
             _dbContext.PlayerGains.Find(userid).incomeValue * secondsSinceLastCall;
@@ -255,7 +264,7 @@ namespace tomgang.Controllers
             .Where(m => m.userid == userid && m.itemID == itemid)
             .Select(m => m.ID).Count();
             var startingPrice = _dbContext.Item.Find(itemid).cost;
-            double price = (startingPrice * Math.Exp(0.14*amount));
+            double price = (startingPrice * Math.Exp(0.14 * amount));
             /*Console.WriteLine(amount);
             Console.WriteLine(startingPrice);
             Console.WriteLine(price);*/
@@ -267,7 +276,9 @@ namespace tomgang.Controllers
                 _dbContext.PlayerItems.Add(new Models.PlayerItems(userid, itemid));
                 _dbContext.SaveChanges();
                 return true;
-            }else{
+            }
+            else
+            {
                 return false;
             }
         }
@@ -284,11 +295,12 @@ namespace tomgang.Controllers
             return list;
         }
 
-        public int getItemAmount(string userid, string itemid){
-            return(_dbContext.PlayerItems
+        public int getItemAmount(string userid, string itemid)
+        {
+            return (_dbContext.PlayerItems
                 .Where(m => m.userid == userid && m.itemID == itemid)
                 .Select(m => m.ID).Count());
         }
-        
+
     }
 }

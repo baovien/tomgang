@@ -9,7 +9,7 @@ namespace tomgang.Models
 
         public Upgrade() {}
 
-        public Upgrade(string id, int typ, int mult, int Cost, string ImgPath, int ReqType, int ReqValue){
+        public Upgrade(string id, int typ, int mult, int Cost, string ImgPath, int ReqType, int ReqValue, string desc){
             Id = id;
             type = typ;
             multi = mult;
@@ -17,7 +17,7 @@ namespace tomgang.Models
             imgPath = ImgPath;
             reqType = ReqType;
             reqValue = ReqValue;
-
+            description = desc;
         }
         [Key]
         public string Id{get; set;}
@@ -30,6 +30,7 @@ namespace tomgang.Models
         //public string name {get; set;}
         //public string description {get; set;}
         public string imgPath {get; set;}
+        public string description{get;set;}
     }
     public class Upgrades{
         public IList<Upgrade> upgrades {get;set;}

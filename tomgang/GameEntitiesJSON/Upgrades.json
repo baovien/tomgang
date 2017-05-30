@@ -1,6 +1,16 @@
 {
     "Upgrades":[
-    { "Id":"The pump", "type":1, "multi":2, "cost":10 , "imgPath": "/images/upgrades/weight.png", "reqType":1 , "reqValue":1 },
-    { "Id":"Das pump", "type":1, "multi":2, "cost":10 , "imgPath": "/images/upgrades/weight.png", "reqType":1 , "reqValue":1 }
+    { "Id":"Do you even lift?", "type":3, "multi":2, "cost":30 , "imgPath": "/images/upgrades/weight.png", "reqType":1 , "reqValue":1, "description": "Your technique improves, doubled gains from lifts" },
+    { "Id":"Mirror practice", "type":3, "multi":2, "cost":250 , "imgPath": "/images/upgrades/weight.png", "reqType":1 , "reqValue":30, "description": "Checking yourself out in the mirror is paying off, doubled gains from lifts" },
+    { "Id":"Perfect from", "type":3, "multi":2, "cost":3000 , "imgPath": "/images/upgrades/weight.png", "reqType":1 , "reqValue":100, "description": "Form perfected, doubled gains from lifts" },
+    { "Id":"Hand callus", "type":3, "multi":2, "cost":15000 , "imgPath": "/images/upgrades/weight.png", "reqType":1 , "reqValue":250, "description": "It might hurt, but that's life, doubled gains from lifts" },
+    { "Id":"Strawberry flavor", "type":4, "multi":2, "cost":600 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":400, "description": "The easier it is to drink, the more you get from it. Doubled creatine effect" },
+    { "Id":"Large scoop", "type":4, "multi":2, "cost":4000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":4000, "description": "Scoops twice as much creatine! Doubled creatine effect" },
+    { "Id":"Mix master", "type":4, "multi":2, "cost":50000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":50000, "description": "Not having to shake your shaker yourself, more time drinking it! Doubled creatine effect" },
+    { "Id":"Funnel", "type":4, "multi":2, "cost":350000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":350000, "description": "Skip the middleman, funnel the shake right into your mouth. Doubled creatine effect" },
+    { "Id":"Scissors", "type":5, "multi":2, "cost":8000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":8000, "description": "You ain't building muscle for it to hide behind your stringlet. Doubled stringlet effect" },
+    { "Id":"Bro meme caption", "type":5, "multi":2, "cost":40000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":40000, "description": "'Come at me bro!' Outdated memes grab peoples' attention. Doubled stringlet effect" },
+    { "Id":"Massive pose", "type":5, "multi":2, "cost":400000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":400000, "description": "Arms out, take as much space as possible. Doubled stringlet effect" },
+    { "Id":"Nipple holes", "type":5, "multi":2, "cost":20000000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":20000000, "description": "Just in case they weren't popping out above. Doubled stringlet effect"}
     ]
 }
