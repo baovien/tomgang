@@ -6,23 +6,71 @@
 {
 <div class="container">
     <div class="row">
-        <!-- GAIN COUNT -->
-        <div class="col-xs-6 col-sm-4">
-            <div class="panel panel-info">
-
-                <div class="panel-body text-center">
-                    <div id="gainNumber" style="font-size: 34px;">0</div>
+        <div class="col-lg-6 col-sm-6">
+            <div class="card hovercard">
+                <div class="card-background">
+                    <img class="card-bkimg" alt="" src="images/liftbg.jpg">
+                    <!-- http://lorempixel.com/850/280/people/9/ -->
+                </div>
+                <div class="useravatar">
+                    <img id="benkmann" draggable="false" src="images/benk.png">
+                </div>
+                <div class="card-info text-center">
+                    <div id="gainNumber">0</div>
                     <h5>gains</h5>
                 </div>
             </div>
-        </div>
-        <!-- CLICK AREA -->
-        <div class="col-xs-6 col-sm-4">
-            <img id="benkmann" class="img-responsive" draggable="false" src="images/benk.png">
+            <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
+                <div class="btn-group" role="group">
+                    <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+                        <div class="hidden-xs">Upgrades</div>
+                    </button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" id="favorites" class="btn btn-default" href="#tab2" data-toggle="tab"><span class="glyphicon glyphicon-education" aria-hidden="true"></span>
+                        <div class="hidden-xs">Achievements</div>
+                    </button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                        <div class="hidden-xs">Leaderboards</div>
+                    </button>
+                </div>
+                <div class="btn-group" role="group">
+                    <button type="button" id="ascend" class="btn btn-default" href="#tab4" data-toggle="tab"><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span>
+                        <div class="hidden-xs">Ascend</div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="well">
+                <div class="tab-content">
+                    <div class="tab-pane fade in active" id="tab1">
+
+                        <h3>Upgrades</h3>
+                        @(await Component.InvokeAsync
+                        <ViewComponents.UpgradeList>())
+
+                            <h3>Items</h3>
+                            @(await Component.InvokeAsync
+                            <ViewComponents.ItemList>())
+                    </div>
+                    <div class="tab-pane fade in" id="tab2">
+                        <h3> achi</h3>
+                    </div>
+                    <div class="tab-pane fade in" id="tab3">
+                        <h3>hiscor</h3>
+                    </div>
+                    <div class="tab-pane fade in" id="tab4">
+                        <h3>asc</h3>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
         <!-- INFORMATION AREA -->
-        <div class="col-xs-6 col-sm-4">
+        <div class="col-lg-6 col-sm-6">
             <div class="panel panel-info">
                 <div class="panel-heading">
                     <h4 class="noselect">Information</h4>
@@ -32,59 +80,6 @@
                     <p id="info2"> You Own 0 Carb snack(s)</p>
                     <p id="info3"> You Own 0 Protein shakes(s)</p>
                     <p id="info4"> You Own 0 Stringlet(s)</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- TAB SELECTION -->
-    <div class="row">
-        <div class="tabselect">
-            <div class="col-md-6">
-                <div class="tab" role="tabpanel">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-tags"></i><span>Upgrades</span></a></li>
-                        <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab"><i class="	glyphicon glyphicon-education"></i><span>Achievements</span></a></li>
-                        <li role="presentation"><a href="#Section3" aria-controls="messages" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-list-alt"></i><span>Leaderboards</span></a></li>
-                        <li role="presentation"><a href="#Section4" aria-controls="messages" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-certificate"></i><span>Ascend</span></a></li>
-                    </ul>
-                    <!-- Tab panes -->
-                    <div class="tab-content tabs">
-                        <div role="tabpanel" class="tab-pane fade in active" id="Section1">
-                                <div>
-                                    <h3>Upgrades</h3>
-                                    @(await Component.InvokeAsync<ViewComponents.UpgradeList>())
-                                </div>
-                                    <h3>Items</h3>
-                                    @(await Component.InvokeAsync<ViewComponents.ItemList>())
-
-
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="Section2">
-                            <h3>Section 2</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nec urna aliquam, ornare eros vel,
-                                malesuada lorem. Nullam faucibus lorem at eros consectetur lobortis. Maecenas nec nibh congue,
-                                placerat sem id, rutrum velit. Phasellus porta enim at facilisis condimentum. Maecenas pharetra
-                                dolor vel elit tempor pellentesque sed sed eros. Aenean vitae mauris tincidunt, imperdiet
-                                orci semper, rhoncus ligula. Vivamus scelerisque.</p>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="Section3">
-                            <h3>Section 3</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nec urna aliquam, ornare eros vel,
-                                malesuada lorem. Nullam faucibus lorem at eros consectetur lobortis. Maecenas nec nibh congue,
-                                placerat sem id, rutrum velit. Phasellus porta enim at facilisis condimentum. Maecenas pharetra
-                                dolor vel elit tempor pellentesque sed sed eros. Aenean vitae mauris tincidunt, imperdiet
-                                orci semper, rhoncus ligula. Vivamus scelerisque.</p>
-                        </div>
-                        <div role="tabpanel" class="tab-pane fade" id="Section4">
-                            <h3>Section 4</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras nec urna aliquam, ornare eros vel,
-                                malesuada lorem. Nullam faucibus lorem at eros consectetur lobortis. Maecenas nec nibh congue,
-                                placerat sem id, rutrum velit. Phasellus porta enim at facilisis condimentum. Maecenas pharetra
-                                dolor vel elit tempor pellentesque sed sed eros. Aenean vitae mauris tincidunt, imperdiet
-                                orci semper, rhoncus ligula. Vivamus scelerisque.</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
