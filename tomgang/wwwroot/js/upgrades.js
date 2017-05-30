@@ -2,8 +2,8 @@
 function liftClickPost() {
 	$('#benkmann').click(function () {
 		window.hub.server.liftClick();
-		console.log("click");
-		//$('#gainNumber').text(Math.floor(window.gains)); //Oppdaterer client før server for smoothere opplevelse.
+		getCurrentGains();
+		$('#gainNumber').text(Math.floor(window.gains +1 )); //Oppdaterer client før server for smoothere opplevelse.
 	});
 }
 
@@ -55,16 +55,20 @@ function upgradeBtnsPost() {
 	$(".upgradeImg").each(function () {
 		$(this).on("click", function () {
 
+			getCurrentGains();
 			var temp = window.gains;
 
 			if (temp >= this.dataset.cost) {
 
-				window.hub.server.upgradeClick($(this).attr('id')).done(function () {
-					//Smoothere update på client
-					$(this).remove();
-					$(".popover").remove();
-					$('#gainNumber').text(Math.floor(temp - this.dataset.cost));
-				});
+				window.hub.server.upgradeClick($(this).attr('id'));
+
+				//Fjern upgrade fra html
+				$(this).remove();
+				$(".popover").remove();
+
+				//Smoothere update
+				$('#gainNumber').text(Math.floor(temp - this.dataset.cost));
+				updateUpgradesStatus();
 			}
 		});
 	});

@@ -26,7 +26,8 @@ function signalr() {
 		window.hub.server.checkUpgrades().done(function (value) {
 			window.upgrades = value;
 			updateUpgradesStatus();
-
+			//updateItemsCost();
+  			//updateItemsStatus();
 			initialize();
 		});
 

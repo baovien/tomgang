@@ -275,7 +275,7 @@ namespace tomgang.Controllers
             .Where(m => m.userid == userid && m.itemID == itemid)
             .Select(m => m.ID).Count();
             var startingPrice = _dbContext.Item.Find(itemid).cost;
-            double price = (startingPrice * Math.Exp(0.14 * amount));
+            double price = (startingPrice * Math.Pow(Math.E, 0.14 * amount));
             /*Console.WriteLine(amount);
             Console.WriteLine(startingPrice);
             Console.WriteLine(price);*/

@@ -44,9 +44,6 @@ function initialize() {
   liftClickPost();
   upgradeBtnsPost();
   itemBtnsPost();
-
-  updateItemsCost();
-  updateItemsStatus();
 }
 
 
