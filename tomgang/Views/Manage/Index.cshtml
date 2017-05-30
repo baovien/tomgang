@@ -7,9 +7,7 @@
 
 <h4>@ViewData["Title"].</h4>
 <p class="text-success">@ViewData["StatusMessage"]</p>
-<hr />
 <p> Logged in as: @UserManager.GetUserName(User) </p>
-<button type="submit" class="btn btn-info" id="letsgoleft">Change Password</button>
 <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm">
     <button type="submit" class="btn btn-info" id="letsgoright">Log out</button>
 </form>

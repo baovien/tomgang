@@ -33,9 +33,11 @@ $(document).ready(function() {
 
   $("#letsgoleft").click(function() {
     $("#testlols").load("Manage/ChangePassword", $('#testlols').serialize());
+    $("#goback").show();
   });
   $("#goback").click(function() {
     $("#testlols").load("Manage/Index", $('#testlols').serialize());
+    $("#goback").hide();
   });
 });
 

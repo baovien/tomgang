@@ -503,7 +503,7 @@ textarea {
 #testlols{
     position: relative;
     width: 800px;
-    height: 220px;
+    height: 270px;
 }
 #letsgoright{
     position: absolute;
@@ -528,4 +528,15 @@ textarea {
     left: 0;
     bottom: 0;
     margin: 5px;
+}
+#goback{
+    position: absolute;
+    right: 65%;
+    bottom: 0;
+    margin: 5px;
+}
+#minform{
+    position: absolute;
+    top: 20%;
+    width: 40%;
 }

@@ -50,10 +50,12 @@
     <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b> @UserManager.GetUserName(User) </b> <span class="caret"></span></a>
         <div id="login-dp" class="dropdown-menu">
-            <div class="col-lg-12" id="divContent">
+            <div class="col-lg-11" id="divContent">
                 <div class="row" id="testlols">
                     @await Html.PartialAsync("~/Views/Manage/index.cshtml")
                 </div>
+                <button type="submit" form="minform" class="btn btn-info" id="letsgoleft">Change password</button>
+                <button type="button" class="btn btn-info" id="goback" style="display: none;">Back</button>
             </div>
         </div>
     </li>
