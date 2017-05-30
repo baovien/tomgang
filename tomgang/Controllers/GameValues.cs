@@ -102,7 +102,7 @@ namespace tomgang.Controllers
             //Setter den som kjøpt
             if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= _dbContext.Upgrade.Find(id).cost)
             {
-                increaseGains(userid);
+                increaseGains(brukernavn);
                 _dbContext.PlayerGains.Find(userid).currentGainsValue -= _dbContext.Upgrade.Find(id).cost;
                 switch (_dbContext.Upgrade.Find(id).type)
                 {
@@ -282,7 +282,7 @@ namespace tomgang.Controllers
 
             if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= price)
             {
-                increaseGains(userid);
+                increaseGains(brukernavn);
                 _dbContext.PlayerGains.Find(userid).currentGainsValue -= price;
                 _dbContext.PlayerItems.Add(new Models.PlayerItems(userid, itemid));
                 _dbContext.SaveChanges();
