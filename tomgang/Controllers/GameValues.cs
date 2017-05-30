@@ -42,6 +42,7 @@ namespace tomgang.Controllers
         public void increaseGains(string brukernavn)
         {
             var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
+            
             //Loopen regner ut totale gains/s utifra alle items og deres upgrademultipliers
             var cumulative = 1.0;
             var increaseGains = 0.0;

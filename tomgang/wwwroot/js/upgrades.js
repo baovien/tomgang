@@ -28,6 +28,7 @@ function updateGainsCounter() {
 }
 
 function updateUpgradesStatus() {
+
 	/*
 	Itererer gjennom alle upgrades som brukeren kan kjøpe og viser de.
 	De som brukeren ikke har råd til blir gråfarga. Ellers får de som er affordable grønn bakgrunn,

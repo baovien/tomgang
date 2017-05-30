@@ -17,22 +17,20 @@ function signalr() {
 		// You could use this method to subscribe to a specific chatroom,
 		// listen for updates to a specific resource, or whatever you would want to "subscribe" to.
 
+		//Caller currgains og upgr først siden senere funksjoner er avhengig av verdiene. Init etter upgr
 		window.hub.server.getCurrentGains().done(function (value) {
 			window.gains = value;
-			console.log(value);
 			updateGainsCounter();
 		});
 
 		window.hub.server.checkUpgrades().done(function (value) {
 			window.upgrades = value;
-			console.log(value);
 			updateUpgradesStatus();
+
+			initialize();
 		});
 
-
 		window.hub.server.subscribe("MainChatroom");
-	}).then(function(){
-		initialize();
 	}).fail(function (error) {
 		// Just in case we fail to connect
 		console.log('Failed to start connection! Error: ', error);
