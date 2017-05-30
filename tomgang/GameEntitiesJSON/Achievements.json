@@ -1,6 +1,6 @@
 {
 "Achievements":[
-    { "Id":"The pump", "income":1, "cost":2, "imgPath": "/images/upgrades/weight.png" },
-    { "Id":"Das pump", "income":1, "cost":2, "imgPath": "/images/upgrades/weight.png" }
+    { "Id":"The pump", "type":2, "value":1, "imgPath": "/images/upgrades/weight.png", "description": "Lifted your first weight. The journey begins." },
+    { "Id":"Lazy muscles", "type":2, "value":1, "imgPath": "/images/upgrades/weight.png", "description": "Gained steady muscle growth. You're growing bigger by the second!"  }
     ]
 }

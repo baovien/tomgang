@@ -11,6 +11,18 @@
     { "Id":"Scissors", "type":5, "multi":2, "cost":8000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":8000, "description": "You ain't building muscle for it to hide behind your stringlet. Doubled stringlet effect" },
     { "Id":"Bro meme caption", "type":5, "multi":2, "cost":40000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":40000, "description": "'Come at me bro!' Outdated memes grab peoples' attention. Doubled stringlet effect" },
     { "Id":"Massive pose", "type":5, "multi":2, "cost":400000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":400000, "description": "Arms out, take as much space as possible. Doubled stringlet effect" },
-    { "Id":"Nipple holes", "type":5, "multi":2, "cost":20000000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":20000000, "description": "Just in case they weren't popping out above. Doubled stringlet effect"}
+    { "Id":"Nipple holes", "type":5, "multi":2, "cost":20000000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":20000000, "description": "Just in case they weren't popping out above. Doubled stringlet effect"},
+    { "Id":"Shaker handles", "type":6, "multi":2, "cost":80000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":80000, "description": "Allowing you to carry it with you at the gym. Doubled shaker effect" },
+    { "Id":"Roid glace", "type":6, "multi":2, "cost":400000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":400000, "description": "Glaced the inside of the shaker with roids. Doubled shaker effect" },
+    { "Id":"Shaker size", "type":6, "multi":2, "cost":4000000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":4000000, "description": "Incrased the size of your shaker, room for more juice. Doubled shaker effect" },
+    { "Id":"See-thru red", "type":6, "multi":2, "cost":25000000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":25000000, "description": "Classic shaker color grants motivation. Doubled shaker effect" },
+    { "Id":"Tape", "type":7, "multi":2, "cost":1000000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":1000000, "description": "Don't want your gloves to be falling off. Doubled glove effect" },
+    { "Id":"Flour", "type":7, "multi":2, "cost":4500000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":4500000, "description": "Flour on the inside of your gloves for extra extra grip. Doubled glove effect" },
+    { "Id":"Fingerless", "type":7, "multi":2, "cost":45000000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":45000000, "description": "Upgrade to fingerless gloves. Doubled glove effect" },
+    { "Id":"Glue", "type":7, "multi":2, "cost":450000000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":450000000, "description": "No one will notice if you glue the outside of your gloves for that grip. Doubled glove effect" },
+    { "Id":"Lighting", "type":8, "multi":2, "cost":10000000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":10000000, "description": "In the right lightning your muscles look just right. Doubled spray tan effect" },
+    { "Id":"Spray gun", "type":8, "multi":2, "cost":40000000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":40000000, "description": "Spraytan your full body in just 37.4 minutes. Doubled spray tan effect" },
+    { "Id":"Spray chamber", "type":8, "multi":2, "cost":400000000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":400000000, "description": "'Is that your shower?' 'Nah, it's my spray tan chamber'. Doubled spray tan effect" },
+    { "Id":"Beta carotene", "type":8, "multi":2, "cost":400000000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":400000000, "description": "For that natural orange look. Doubled spray tan effect" }
     ]
 }

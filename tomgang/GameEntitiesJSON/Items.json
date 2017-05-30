@@ -2,9 +2,9 @@
 "Items":[
     { "Id":"Weights", "income":0.2, "cost":10, "imgPath": "/images/upgrades/weight.png", "Type": 3 , "decription": "Weights for your bench."},
     { "Id":"Creatine", "income":1, "cost":80, "imgPath": "/images/upgrades/weight.png", "Type": 4 , "decription": "Everyone knows you can't grow without."},
-    { "Id":"Stringlets", "income":10, "cost":900, "imgPath": "/images/upgrades/weight.png", "Type": 6 , "decription": "The more of your nipple is shown, the bigger you are."},
-    { "Id":"Shakers", "income":60, "cost":10000, "imgPath": "/images/upgrades/weight.png", "Type": 7 , "decription": "To hold all your protein. And you can never have too much protein."},
-    { "Id":"Lifting gloves", "income":300, "cost":120000, "imgPath": "/images/upgrades/weight.png", "Type": 8 , "decription": "If you're able to lift your weights without gloves, you ain't lifting enough."},
-    { "Id":"Spray tan boxes", "income":1500, "cost":1200000, "imgPath": "/images/upgrades/weight.png", "Type": 9 , "decription": "Your muscles don't show if you're pale as snow"}
+    { "Id":"Stringlets", "income":10, "cost":900, "imgPath": "/images/upgrades/weight.png", "Type": 5 , "decription": "The more of your nipple is shown, the bigger you are."},
+    { "Id":"Shakers", "income":60, "cost":10000, "imgPath": "/images/upgrades/weight.png", "Type": 6 , "decription": "To hold all your protein. And you can never have too much protein."},
+    { "Id":"Lifting gloves", "income":300, "cost":120000, "imgPath": "/images/upgrades/weight.png", "Type": 7 , "decription": "If you're able to lift your weights without gloves, you ain't lifting enough."},
+    { "Id":"Spray tan boxes", "income":1500, "cost":1200000, "imgPath": "/images/upgrades/weight.png", "Type": 8 , "decription": "Your muscles don't show if you're pale as snow"}
     ]
 }
