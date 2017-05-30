@@ -101,7 +101,7 @@ namespace tomgang.Controllers
             //Setter den som kjøpt
             if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= _dbContext.Upgrade.Find(id).cost)
             {
-                increaseGains(userid);
+                increaseGains(brukernavn);
                 _dbContext.PlayerGains.Find(userid).currentGainsValue -= _dbContext.Upgrade.Find(id).cost;
                 switch (_dbContext.Upgrade.Find(id).type)
                 {
@@ -112,17 +112,6 @@ namespace tomgang.Controllers
                     case 2:
                         //Add på income
                         _dbContext.PlayerGains.Find(userid).incomeValue += _dbContext.Upgrade.Find(id).multi;
-                        break;
-                    case 3:
-                        _dbContext.PlayerGains.Find(userid).clickValue *= _dbContext.Upgrade.Find(id).multi;
-                        //Multipliser med click
-                        break;
-                    case 4:
-                        _dbContext.PlayerGains.Find(userid).clickValue += _dbContext.Upgrade.Find(id).multi;
-                        //Add på click
-                        break;
-                    case 5:
-                        _dbContext.PlayerGains.Find(userid).itemMultiplier *= _dbContext.Upgrade.Find(id).multi;
                         break;
                     default:
                         break;
@@ -281,7 +270,7 @@ namespace tomgang.Controllers
 
             if (_dbContext.PlayerGains.Find(userid).currentGainsValue >= price)
             {
-                increaseGains(userid);
+                increaseGains(brukernavn);
                 _dbContext.PlayerGains.Find(userid).currentGainsValue -= price;
                 _dbContext.PlayerItems.Add(new Models.PlayerItems(userid, itemid));
                 _dbContext.SaveChanges();

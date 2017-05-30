@@ -3,7 +3,7 @@ function updateItemsStatus() {
 	De som brukeren ikke har råd til blir gråfarga. Ellers får de som er affordable grønn bakgrunn,
 	*/
 	$(".itemImg").each(function (element) {
-		if (window.gains < getItemPrice(this)) { //Cost er større enn playergains.
+		if (window.gains < this.dataset.cost) { //Cost er større enn playergains.
 			$(this).addClass("upgradeGreyed");
 			$(this).css({
 				"background-color": ""
@@ -18,13 +18,31 @@ function updateItemsStatus() {
 	});
 }
 
-// Viser alle data
+// Oppdater ved siteload
 function updateItemsCost() {
 	$(".itemImg").each(function () {
-		var itemAmountList = getItemAmountList();
-		this.dataset.content = "Price: " + Math.round(getItemPrice(this)) + ", Amount:" + itemAmountList[$(this).attr("id")];
+		var amount = getSingleItemAmount($(this).attr("id"));
+		this.dataset.cost = this.dataset.cost * Math.exp(0.14 * amount);
+		this.dataset.content = "Amount: " + getSingleItemAmount($(this).attr("id"));
+
 	});
 }
+// Oppdater ved itemclick
+function updateSingleItemCost(item) {
+	var amount = getSingleItemAmount($(item).attr("id"));
+	item.dataset.cost = item.dataset.cost * Math.exp(0.14 * amount);
+	item.dataset.content = "Cost: " + item.dataset.cost + ", Amount: " + getSingleItemAmount($(item).attr("id"));
+	$(item).popover('hide');
+}
+
+function getSingleItemAmount(id) {
+	var result = 0;
+	window.hub.server.getSingleItemAmount(id).done(function (data) {
+		result = data;
+	});
+	return result;
+}
+
 
 function itemBtnsPost() {
 	$(".itemImg").each(function () {
@@ -33,77 +51,26 @@ function itemBtnsPost() {
 
 			var bought;
 
-			$.ajax({
-				url: '/Game/itemClick',
-				type: 'GET',
-				async: false,
-				data: {
-					'itemid': $(this).attr("id")
-				},
-				success: function (data) {
-					bought = data;
-					console.log("success");
-				},
-				error: function () {
-					console.log("Could not request itemClick");
-				}
+			window.hub.server.itemClick().done(function (value) {
+				bought = value;
 			});
 
 			if (bought) {
-				var itemPrice = getItemPrice(this);
-				var gains = window.gains;
-				//$('#gainNumber').text(gains-itemPrice); ///????????????
-				console.log(gains-itemPrice);
+				updateSingleItemCost($(item).attr("id"));
+				console.log("h");
 			}
 
-			this.dataset.content = "Price: " + Math.round(itemPrice) + ", Amount:" + getSingleItemAmount($(this).attr("id"));
-			$(this).popover('hide');
 		});
 	});
 }
 
-function getItemPrice(item){
-	var amount = getSingleItemAmount($(item).attr("id"));
-	//console.log($(item).attr("id") + ": " + amount);
-	var itemPrice = item.dataset.cost * Math.exp(0.14 * amount);
-	return itemPrice;
-}
-
-function getSingleItemAmount(id) {
-	var result = 0;
-	$.ajax({
-		type: "GET",
-		url: 'Game/getSingleItemAmount',
-		async: false,
-		data: {
-			'itemid': id
-		},
-		success: function (data) {
-			result = data;
-		},
-		error: function (xhr) {
-			console.log("Could not request getSingleItemAmount");
-		}
-	});
-	return result;
-}
-
 function getItemAmountList() {
 	var list = 0;
-	$.ajax({
-		type: "GET",
-		url: 'Game/getItemAmount',
-		async: false,
-		success: function (data) {
-			//Gjor om slik at key er id, val er amount
-			list = data.reduce(function (result, item) {
-				result[item.item1] = item.item2;
-				return result;
-			}, {});
-		},
-		error: function (xhr) {
-			console.log("Could not request getCurrentGains");
-		}
+	window.hub.server.getItemAmount().done(function (data) {
+		list = data.reduce(function (result, item) {
+			result[item.item1] = item.item2;
+			return result;
+		}, {});
 	});
 	return list;
 }
