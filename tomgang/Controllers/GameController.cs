@@ -7,18 +7,20 @@ using Microsoft.AspNetCore.Identity;
 using tomgang.Models;
 using tomgang.Data;
 using System.Security.Claims;
+using Microsoft.AspNetCore.SignalR.Infrastructure;
+using Microsoft.AspNetCore.SignalR.Server;
+using tomgang.Hubs;
 
 namespace tomgang.Controllers
 {
-    public class GameController : Controller
+    public class GameController : ApiHubController<Broadcaster>
     {
         private readonly Services.IGameValues _GameValues;
         private readonly ApplicationDbContext _dbContext;
         private readonly UserManager<ApplicationUser> _userManager;
-        public GameController(
-        Services.IGameValues gameValues, 
-        ApplicationDbContext dbContext, 
-        UserManager<ApplicationUser> userManager){
+        public GameController(Services.IGameValues gameValues, ApplicationDbContext dbContext, UserManager<ApplicationUser> userManager, IConnectionManager connectionManager)
+        : base(connectionManager)
+        {
             _GameValues = gameValues;
             _dbContext = dbContext;
             _userManager = userManager;
