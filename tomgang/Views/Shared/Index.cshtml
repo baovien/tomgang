@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+@model PlayerGains
 @if (SignInManager.IsSignedIn(User))
 {
 <div class="container">
@@ -73,7 +74,8 @@
                             <h3>TOP PLAYERS PLAYA</h3>
                             <div class="col-md-12">
                                 <p> HALOHALO </p>
-                                @(await Component.InvokeAsync<ViewComponents.ItemList>())
+                                 <!-- LEADERBOARDS -->
+                                 @(await Component.InvokeAsync<ViewComponents.Leaderboard>())
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane fade" id="Section4">

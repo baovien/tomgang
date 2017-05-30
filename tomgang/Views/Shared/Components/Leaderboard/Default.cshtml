@@ -1,0 +1,6 @@
+@model IEnumerable<PlayerGains>
+
+@foreach (var a in Model)
+{
+    Html.RenderPartial("_PlayerGains", a);
+}
