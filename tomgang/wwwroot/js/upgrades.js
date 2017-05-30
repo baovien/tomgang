@@ -3,7 +3,7 @@ function liftClickPost() {
 	$('#benkmann').click(function () {
 		window.hub.server.liftClick();
 		getCurrentGains();
-		$('#gainNumber').text(Math.floor(window.gains +1 )); //Oppdaterer client før server for smoothere opplevelse.
+		$('#gainNumber').text(Math.floor(window.gains)); //Oppdaterer client før server for smoothere opplevelse.
 	});
 }
 
@@ -16,6 +16,12 @@ function getCurrentGains() {
 function getEligibleUpgrades() {
 	window.hub.server.checkUpgrades().done(function (value) {
 		window.upgrades = value;
+	});
+}
+
+function getIncomeValue(){
+	window.hub.server.getIncomeValue().done(function (value){
+		window.incomevalue = value;
 	});
 }
 

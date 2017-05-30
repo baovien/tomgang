@@ -23,11 +23,15 @@ function signalr() {
 			updateGainsCounter();
 		});
 
+		window.hub.server.getIncomeValue().done(function (value){
+			window.incomevalue = value;
+		});
+
 		window.hub.server.checkUpgrades().done(function (value) {
 			window.upgrades = value;
 			updateUpgradesStatus();
-			//updateItemsCost();
-  			//updateItemsStatus();
+			updateItemsCost();
+  			updateItemsStatus();
 			initialize();
 		});
 
