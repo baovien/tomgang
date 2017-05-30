@@ -13,13 +13,13 @@ using tomgang.Hubs;
 
 namespace tomgang.Controllers
 {
-    public class GameController : ApiHubController<Broadcaster>
+    public class GameController : Controller
+
     {
         private readonly Services.IGameValues _GameValues;
         private readonly ApplicationDbContext _dbContext;
         private readonly UserManager<ApplicationUser> _userManager;
-        public GameController(Services.IGameValues gameValues, ApplicationDbContext dbContext, UserManager<ApplicationUser> userManager, IConnectionManager connectionManager)
-        : base(connectionManager)
+        public GameController(Services.IGameValues gameValues, ApplicationDbContext dbContext, UserManager<ApplicationUser> userManager)
         {
             _GameValues = gameValues;
             _dbContext = dbContext;
@@ -35,32 +35,6 @@ namespace tomgang.Controllers
         [HttpGet]
         public bool itemClick(string itemid){
             return _GameValues.buyItem(User.FindFirstValue(ClaimTypes.NameIdentifier), itemid);
-        }
-        
-        [HttpGet]
-        public List<Tuple<string, int>> checkUpgrades(){
-            return _GameValues.checkEligibleUpgrades(User.FindFirstValue(ClaimTypes.NameIdentifier));
-        }
-        
-        [HttpGet]
-        public List<string> checkAchis(){
-            return _GameValues.checkAchievements(User.FindFirstValue(ClaimTypes.NameIdentifier));
-        }
-        [HttpGet]
-        public List<Tuple<string, int>> getItemAmount(){
-            return _GameValues.getItemAmounts(User.FindFirstValue(ClaimTypes.NameIdentifier));
-        }
-        [HttpGet]
-        public int getSingleItemAmount(string itemid){
-            return _GameValues.getItemAmount(User.FindFirstValue(ClaimTypes.NameIdentifier), itemid);
-        }
-        [HttpGet]
-        public double getIncomeValue(){
-            return _dbContext.PlayerGains.Find(User.FindFirstValue(ClaimTypes.NameIdentifier)).incomeValue;
-        }
-        [HttpGet]
-        public void increaseGains(){
-            _GameValues.increaseGains(User.FindFirstValue(ClaimTypes.NameIdentifier));
         }
     }
 }

@@ -22,13 +22,13 @@ namespace tomgang.Controllers
             _dbContext.SaveChanges();
             //Setter alle verdiene til ny bruker til startverdier
         }
-        public double getGains(string username){
-            var userid =_dbContext.Users.Where(m => m.UserName == username).Select(m => m.Id).SingleOrDefault();
+        public double getGains(string brukernavn){
+            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             return _dbContext.PlayerGains.Find(userid).currentGainsValue;
         }
-        public void onLiftClick(string username)
+        public void onLiftClick(string brukernavn)
         {
-            var userid =_dbContext.Users.Where(m => m.UserName == username).Select(m => m.Id).SingleOrDefault();
+            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
              Console.Write(userid);
             _dbContext.PlayerGains.Find(userid).totalGains +=
             _dbContext.PlayerGains.Find(userid).clickValue;
@@ -39,8 +39,9 @@ namespace tomgang.Controllers
             //getter mouse click value til brukeren
             //adder mouse click value til playerGains
         }
-        public void increaseGains(string userid)
+        public void increaseGains(string brukernavn)
         {
+            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             //Loopen regner ut totale gains/s utifra alle items og deres upgrademultipliers
             var cumulative = 1.0;
             var increaseGains = 0.0;
@@ -90,8 +91,9 @@ namespace tomgang.Controllers
             //Getter Gains/s til brukeren
             //Adder Gains/s på current Gains utifra hvor lang tid som har gått siden sist
         }
-        public void buyUpgrade(string userid, string id)
+        public void buyUpgrade(string brukernavn, string id)
         {
+            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             //IDen bestemmer hva upgraden vil påvirke. Om flere typer
             //upgrades er ønsket er det bare å adde en case for typen.
 
@@ -129,8 +131,9 @@ namespace tomgang.Controllers
                 _dbContext.SaveChanges();
             }
         }
-        public List<string> checkAchievements(string userid)
+        public List<string> checkAchievements(string brukernavn)
         {
+            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             //var earnedAchievements = _dbContext.PlayerAchievments.Where(m => m.Id == userid).Select(m => m.type).ToList();
             //Loope igjennom alle achievement reqs og sjekke om brukeren har fått noen
             //Adde achievements brukeren har fått
@@ -176,8 +179,9 @@ namespace tomgang.Controllers
             var list = _dbContext.PlayerAchievments.Where(m => m.Id == userid).Select(m => m.type).ToList();
             return (list);
         }
-        public List<Tuple<string, int>> checkEligibleUpgrades(string userid)
+        public List<Tuple<string, int>> checkEligibleUpgrades(string brukernavn)
         {
+            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             var time = new Stopwatch();
             time.Start();
             time.Restart();
@@ -261,11 +265,11 @@ namespace tomgang.Controllers
             affordableEligibleUpgrades.Add(aflength.ToString());
             return affordableEligibleUpgrades;*/
         }
-        public bool buyItem(string userid, string itemid)
+        public bool buyItem(string brukernavn, string itemid)
         {
+            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             //Hvis bruker har råd til upgraden
             //startverdi*(e^0.14x)
-
             var amount = _dbContext.PlayerItems
             .Where(m => m.userid == userid && m.itemID == itemid)
             .Select(m => m.ID).Count();
@@ -288,8 +292,9 @@ namespace tomgang.Controllers
                 return false;
             }
         }
-        public List<Tuple<string, int>> getItemAmounts(string userid)
+        public List<Tuple<string, int>> getItemAmounts(string brukernavn)
         {
+            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             var list = new List<Tuple<string, int>>();
             foreach (var item in _dbContext.Item)
             {
@@ -301,8 +306,9 @@ namespace tomgang.Controllers
             return list;
         }
 
-        public int getItemAmount(string userid, string itemid)
+        public int getItemAmount(string brukernavn, string itemid)
         {
+            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             return (_dbContext.PlayerItems
                 .Where(m => m.userid == userid && m.itemID == itemid)
                 .Select(m => m.ID).Count());
