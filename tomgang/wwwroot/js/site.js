@@ -1,5 +1,5 @@
 $(document).ready(function() {
-
+  
   //Vise popover info for upgradsa
   $('.upgradeImg').popover();
   $('.itemImg').popover();
@@ -38,23 +38,23 @@ $(document).ready(function() {
 
 function initialize() {
   //Connecter til chathub
+  
   chatHub();
 
   //Spillfunksjoner
-  liftClickPost();
+  //liftClickPost();
   upgradeBtnsPost();
   itemBtnsPost();
-
 }
 
 function update() { //Kjøres i timer funksjon i index.
   //Oppdaterer current gains
-  getEligibleUpgrades();
-  getCurrentGains();
+  //getEligibleUpgrades();
+  //getCurrentGains();
 
-  increaseGains();
-  updateItemsCost();
-  updateUpgradesStatus();
-  updateItemsStatus();
+  //increaseGains();
+  //updateItemsCost();
+  //updateUpgradesStatus();
+  //updateItemsStatus();
   updateGainsCounter();
 }

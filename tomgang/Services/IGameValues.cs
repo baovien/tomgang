@@ -13,6 +13,8 @@ namespace tomgang.Services
         List<Tuple<string, int>> checkEligibleUpgrades(string userid);
         List<Tuple<string, int>> getItemAmounts(string userid);
         int getItemAmount(string userid, string itemid);
+        
+        double getGains(string username);
     }
     
 }

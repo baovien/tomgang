@@ -1,6 +1,6 @@
 function chatHub() {
 	// Connect to the broadcaster on the server
-	hub = $.connection.broadcaster;
+	var hub = $.connection.broadcaster;
 	// A function we will call from the server
 	$.connection.broadcaster.client.addChatMessage = addPost;
 	// log for debug
@@ -18,6 +18,11 @@ function chatHub() {
 	}).fail(function (error) {
 		// Just in case we fail to connect
 		console.log('Failed to start connection! Error: ', error);
+	});
+
+	$('#benkmann').click(function () {
+		hub.server.liftClick();
+		$('#gainNumber').text(Math.floor(window.gains)); //Oppdaterer client før server for smoothere opplevelse.
 	});
 
 	// If the User wants to send the message with the "Return" button

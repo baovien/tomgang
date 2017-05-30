@@ -22,8 +22,14 @@ namespace tomgang.Controllers
             _dbContext.SaveChanges();
             //Setter alle verdiene til ny bruker til startverdier
         }
-        public void onLiftClick(string userid)
+        public double getGains(string username){
+            var userid =_dbContext.Users.Where(m => m.UserName == username).Select(m => m.Id).SingleOrDefault();
+            return _dbContext.PlayerGains.Find(userid).currentGainsValue;
+        }
+        public void onLiftClick(string username)
         {
+            var userid =_dbContext.Users.Where(m => m.UserName == username).Select(m => m.Id).SingleOrDefault();
+             Console.Write(userid);
             _dbContext.PlayerGains.Find(userid).totalGains +=
             _dbContext.PlayerGains.Find(userid).clickValue;
             _dbContext.PlayerGains.Find(userid).currentGainsValue +=

@@ -36,16 +36,6 @@ namespace tomgang.Controllers
         public bool itemClick(string itemid){
             return _GameValues.buyItem(User.FindFirstValue(ClaimTypes.NameIdentifier), itemid);
         }
-
-        [HttpPost]
-        public void liftClick(){
-            _GameValues.onLiftClick(User.FindFirstValue(ClaimTypes.NameIdentifier));
-        }
-
-        [HttpGet]
-        public double getCurrentGains(){
-            return _dbContext.PlayerGains.Find(User.FindFirstValue(ClaimTypes.NameIdentifier)).currentGainsValue;
-        }
         
         [HttpGet]
         public List<Tuple<string, int>> checkUpgrades(){
