@@ -37,36 +37,29 @@ namespace tomgang.Hubs
             
         }
         public double getCurrentGains(){
-        var brukernavn = Context.User.Identity.Name;
+            var brukernavn = Context.User.Identity.Name;
             return _GameValues.getGains(brukernavn);
         }
-        [HttpGet]
         public List<Tuple<string, int>> checkUpgrades(){
             var brukernavn = Context.User.Identity.Name;
             return _GameValues.checkEligibleUpgrades(brukernavn);
         }
-        
-        [HttpGet]
         public List<string> checkAchis(){
             var brukernavn = Context.User.Identity.Name;
             return _GameValues.checkAchievements(brukernavn);
         }
-        [HttpGet]
         public List<Tuple<string, int>> getItemAmount(){
             var brukernavn = Context.User.Identity.Name;
             return _GameValues.getItemAmounts(brukernavn);
         }
-        [HttpGet]
         public int getSingleItemAmount(string itemid){
             var brukernavn = Context.User.Identity.Name;
             return _GameValues.getItemAmount(brukernavn, itemid);
         }
-        [HttpGet]
         public double getIncomeValue(){
             var brukernavn = Context.User.Identity.Name;
             return _dbContext.PlayerGains.Find(brukernavn).incomeValue;
         }
-        [HttpGet]
         public void increaseGains(){
             var brukernavn = Context.User.Identity.Name;
             _GameValues.increaseGains(brukernavn);
@@ -74,6 +67,16 @@ namespace tomgang.Hubs
         public Task Unsubscribe(string chatroom)
         {
             return Groups.Remove(Context.ConnectionId, chatroom.ToString());
+        }
+
+        public void upgradeClick(string id){
+            var brukernavn = Context.User.Identity.Name;
+            _GameValues.buyUpgrade(brukernavn, id);
+        }
+
+        public bool itemClick(string itemid){
+            var brukernavn = Context.User.Identity.Name;
+            return _GameValues.buyItem(brukernavn, itemid);
         }
     }
 

@@ -1,10 +1,13 @@
-function chatHub() {
-	// Connect to the broadcaster on the server
-	var hub = $.connection.broadcaster;
+function signalr() {
+	// Connect to the broadcaster on the server. 
+	window.hub = $.connection.broadcaster;
+
 	// A function we will call from the server
 	$.connection.broadcaster.client.addChatMessage = addPost;
+
 	// log for debug
 	$.connection.hub.logging = true;
+
 	// Connecting to SignalR Hub
 	$.connection.hub.start().done(function (signalr) {
 		console.log('Connected!');
@@ -14,16 +17,27 @@ function chatHub() {
 		// You could use this method to subscribe to a specific chatroom,
 		// listen for updates to a specific resource, or whatever you would want to "subscribe" to.
 
-		hub.server.subscribe("MainChatroom");
+		window.hub.server.getCurrentGains().done(function (value) {
+			window.gains = value;
+			console.log(value);
+			updateGainsCounter();
+		});
+
+		window.hub.server.checkUpgrades().done(function (value) {
+			window.upgrades = value;
+			console.log(value);
+			updateUpgradesStatus();
+		});
+
+
+		window.hub.server.subscribe("MainChatroom");
+	}).then(function(){
+		initialize();
 	}).fail(function (error) {
 		// Just in case we fail to connect
 		console.log('Failed to start connection! Error: ', error);
 	});
 
-	$('#benkmann').click(function () {
-		hub.server.liftClick();
-		$('#gainNumber').text(Math.floor(window.gains)); //Oppdaterer client før server for smoothere opplevelse.
-	});
 
 	// If the User wants to send the message with the "Return" button
 	$("#textInput").keypress(function (e) {
