@@ -57,7 +57,7 @@
                         <p id="numlift"></p>
                     </div>
                     <div class="tab-pane fade in" id="tab2">
-                        <h3> achi</h3>
+                        @(await Component.InvokeAsync<ViewComponents.AchievementList>())
                     </div>
                     <div class="tab-pane fade in" id="tab3">
                         <table class="table table-bordered table-hover " id="hstable">
@@ -92,14 +92,12 @@
                 <div class="well">
                     <div class="panel-body">
                         <h3>Upgrades</h3>
-                        @(await Component.InvokeAsync
-                        <ViewComponents.UpgradeList>())
+                        @(await Component.InvokeAsync<ViewComponents.UpgradeList>())
 
-                            <h3>Items</h3>
-                            <ul class="list-group">
-                                @(await Component.InvokeAsync
-                                <ViewComponents.ItemList>())
-                                    <ul>
+                        <h3>Items</h3>
+                        <ul class="list-group">
+                            @(await Component.InvokeAsync<ViewComponents.ItemList>())
+                        <ul>
                     </div>
                 </div>
             </div>

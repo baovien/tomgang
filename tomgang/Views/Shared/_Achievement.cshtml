@@ -1,0 +1,18 @@
+@model Achievement
+
+<img 
+    src="@Model.imgPath" 
+    id="@Model.Id" 
+    class="achiImg img-thumbnail" 
+    style="display: none" 
+    draggable="false"
+    data-name="@Model.Id"
+    data-content="@Model.description" 
+    data-placement="bottom" 
+    data-original-title="@Model.Id" 
+    rel="popover" 
+    data-trigger="hover">
+</img>
+
+
+
