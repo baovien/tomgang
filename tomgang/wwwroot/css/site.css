@@ -1,3 +1,5 @@
+
+
 /* "Cool Text Shadow Effects" by xBootstrap.com */
 h1 {
   font-family: "Avant Garde", Avantgarde, "Century Gothic", CenturyGothic, "AppleGothic", sans-serif;
@@ -151,10 +153,28 @@ h1 {
 }
 
 body {
+    overflow: hidden;
+
     padding-top: 50px;
     padding-bottom: 20px;
 }
 
+/* preloader */
+#preloader {
+    position: fixed;
+    top:0; left:0;
+    right:0; bottom:0;
+    background: #000;
+    z-index: 100;
+}
+#loader {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left:50%; top:50%;
+    background: url(../images/loading.gif) no-repeat center 0;
+    margin:-50px 0 0 -50px;
+} 
 /* Fix scrollbar bump */
 
 html {

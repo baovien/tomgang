@@ -5,6 +5,9 @@
 @model PlayerGains
 @if (SignInManager.IsSignedIn(User))
 {
+    <div id="preloader">
+    <div id="loader"> </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-xs-6">
@@ -113,9 +116,14 @@
     <script>
         //Scripten under blir lastet inn etter de nødvendige .js filene. Se _Layout sin rendersection "scripts" på bunnen
         $(window).load(function(){
+            $('#preloader').fadeOut('slow');
+            $('body').css({'overflow':'visible'});
             //Connecter til websocket
             signalr();
-            setInterval(update, 1000);
+            setTimeout(function(){
+                setInterval(update, 1000);
+            }, 1000);
+            
         });
     </script>
 }

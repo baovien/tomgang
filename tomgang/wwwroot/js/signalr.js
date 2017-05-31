@@ -18,21 +18,27 @@ function signalr() {
 		// listen for updates to a specific resource, or whatever you would want to "subscribe" to.
 
 		//Caller currgains og upgr først siden senere funksjoner er avhengig av verdiene. Init etter upgr
-		window.hub.server.getCurrentGains().done(function (value) {
-			window.gains = value;
-			updateGainsCounter();
-		});
 
-		window.hub.server.getIncomeValue().done(function (value){
-			window.incomevalue = value;
+		window.hub.server.getUserInfo().done(function(dict){
+			window.currentGains = dict["currentGains"];
+			window.incomevalue = dict["incomeValue"];
+			window.clickValue = dict["clickValue"];
+			window.totalGains = dict["totalGains"];
+			window.timesClicked = dict["timesClicked"];
+			window.timeJoined = dict["timeJoined"];
+
+			updateGainsCounter();
+			updateItemsCost();
+  			updateItemsStatus();
+
+			liftClickPost();
+  			upgradeBtnsPost();
+  			itemBtnsPost();
 		});
 
 		window.hub.server.checkUpgrades().done(function (value) {
 			window.upgrades = value;
 			updateUpgradesStatus();
-			updateItemsCost();
-  			updateItemsStatus();
-			initialize();
 		});
 
 		window.hub.server.subscribe("MainChatroom");

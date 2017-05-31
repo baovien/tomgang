@@ -36,7 +36,7 @@ namespace tomgang.Hubs
             _GameValues.onLiftClick(brukernavn);
             
         }
-        Dictionary<string, dynamic> getUserInfo(){
+        public Dictionary<string, dynamic> getUserInfo(){
             var brukernavn = Context.User.Identity.Name;
             return _GameValues.getUserInfo(brukernavn);
         }

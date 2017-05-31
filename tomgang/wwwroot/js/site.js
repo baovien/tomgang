@@ -4,7 +4,7 @@ $(document).ready(function () {
   $('.upgradeImg').popover();
   $('.itemImg').popover();
 
-  //MAIN
+  //Infopanel
   $(".btn-pref .btn").click(function () {
     $(".btn-pref .btn").removeClass("btn-primary").addClass("btn-default");
     // $(".tab").addClass("active"); // instead of this do the below
@@ -39,21 +39,38 @@ $(document).ready(function () {
   });
 });
 
-function initialize() {
-  //Spillfunksjoner
-  liftClickPost();
-  upgradeBtnsPost();
-  itemBtnsPost();
-}
-
-
 function update() { //Kjøres i timer funksjon i index.
-  //Oppdaterer current gains
   getEligibleUpgrades();
-  getCurrentGains();
-
   increaseGains();
+  updateVariables();
   updateUpgradesStatus();
   updateItemsStatus();
   updateGainsCounter();
+}
+
+function updateVariables() {
+  window.hub.server.getUserInfo().done(function (dict) {
+    window.currentGains = dict["currentGains"];
+    window.incomevalue = dict["incomeValue"];
+    window.clickValue = dict["clickValue"];
+    window.totalGains = dict["totalGains"];
+    window.timesClicked = dict["timesClicked"];
+    window.timeJoined = dict["timeJoined"];
+  });
+}
+
+function getCurrentGains() {
+	window.hub.server.getCurrentGains().done(function (value) {
+		window.currentGains = value;
+	});
+}
+
+function getEligibleUpgrades() {
+	window.hub.server.checkUpgrades().done(function (value) {
+		window.upgrades = value;
+	});
+}
+
+function increaseGains() {
+	window.hub.server.increaseGains();
 }
