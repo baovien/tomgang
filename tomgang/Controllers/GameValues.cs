@@ -26,6 +26,18 @@ namespace tomgang.Controllers
             var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             return _dbContext.PlayerGains.Find(userid).currentGainsValue;
         }
+
+        public Dictionary<string, dynamic> getUserInfo(string brukernavn){
+            var map = new Dictionary<string, dynamic>();
+            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
+            map.Add("currentGains",_dbContext.PlayerGains.Find(userid).currentGainsValue);
+            map.Add("incomeValue",_dbContext.PlayerGains.Find(userid).incomeValue);
+            map.Add("clickValue",_dbContext.PlayerGains.Find(userid).clickValue);
+            map.Add("totalGains",_dbContext.PlayerGains.Find(userid).totalGains);
+            map.Add("timesClicked",_dbContext.PlayerGains.Find(userid).timesClicked);
+            map.Add("timeJoined",_dbContext.PlayerGains.Find(userid).timeJoined);
+            return map;
+        }
         public void onLiftClick(string brukernavn)
         {
             var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
@@ -42,6 +54,7 @@ namespace tomgang.Controllers
         public void increaseGains(string brukernavn)
         {
             var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
+            
             //Loopen regner ut totale gains/s utifra alle items og deres upgrademultipliers
             var cumulative = 1.0;
             var increaseGains = 0.0;
@@ -263,7 +276,7 @@ namespace tomgang.Controllers
             .Where(m => m.userid == userid && m.itemID == itemid)
             .Select(m => m.ID).Count();
             var startingPrice = _dbContext.Item.Find(itemid).cost;
-            double price = (startingPrice * Math.Exp(0.14 * amount));
+            double price = (startingPrice * Math.Pow(Math.E, 0.14 * amount));
             /*Console.WriteLine(amount);
             Console.WriteLine(startingPrice);
             Console.WriteLine(price);*/
@@ -301,6 +314,15 @@ namespace tomgang.Controllers
             return (_dbContext.PlayerItems
                 .Where(m => m.userid == userid && m.itemID == itemid)
                 .Select(m => m.ID).Count());
+        }
+        public List<Tuple<string, double>> getHighscore(){
+            var highscore = new List<Tuple<string, double>>();
+            foreach(var player in _dbContext.PlayerGains){
+                var username = _dbContext.Users.Find(player.Id).UserName;
+                highscore.Add(Tuple.Create(username, player.totalGains));
+            }
+            
+            return highscore;
         }
 
     }

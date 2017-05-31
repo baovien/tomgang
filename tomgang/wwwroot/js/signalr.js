@@ -17,22 +17,39 @@ function signalr() {
 		// You could use this method to subscribe to a specific chatroom,
 		// listen for updates to a specific resource, or whatever you would want to "subscribe" to.
 
-		window.hub.server.getCurrentGains().done(function (value) {
-			window.gains = value;
-			console.log(value);
+		//Caller currgains og upgr først siden senere funksjoner er avhengig av verdiene. Init etter upgr
+
+		window.hub.server.getUserInfo().done(function(dict){
+			window.currentGains = dict["currentGains"];
+			window.incomevalue = dict["incomeValue"];
+			window.clickValue = dict["clickValue"];
+			window.totalGains = dict["totalGains"];
+			window.timesClicked = dict["timesClicked"];
+			window.timeJoined = dict["timeJoined"];
+			window.isInitialized = true;
+
+
 			updateGainsCounter();
+			updateItemsCost();
+  			updateItemsStatus();
+			updateInfoTab();
+
+			liftClickPost();
+  			upgradeBtnsPost();
+  			itemBtnsPost();
 		});
 
 		window.hub.server.checkUpgrades().done(function (value) {
 			window.upgrades = value;
-			console.log(value);
 			updateUpgradesStatus();
 		});
 
+		window.hub.server.getHighscore().done(function(value){
+			window.highscore = value;
+			updateHighscoreTab();
+		});
 
 		window.hub.server.subscribe("MainChatroom");
-	}).then(function(){
-		initialize();
 	}).fail(function (error) {
 		// Just in case we fail to connect
 		console.log('Failed to start connection! Error: ', error);

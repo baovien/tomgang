@@ -36,6 +36,10 @@ namespace tomgang.Hubs
             _GameValues.onLiftClick(brukernavn);
             
         }
+        public Dictionary<string, dynamic> getUserInfo(){
+            var brukernavn = Context.User.Identity.Name;
+            return _GameValues.getUserInfo(brukernavn);
+        }
         public double getCurrentGains(){
             var brukernavn = Context.User.Identity.Name;
             return _GameValues.getGains(brukernavn);
@@ -77,6 +81,9 @@ namespace tomgang.Hubs
         public bool itemClick(string itemid){
             var brukernavn = Context.User.Identity.Name;
             return _GameValues.buyItem(brukernavn, itemid);
+        }
+        public List<Tuple<string, double>> getHighscore(){
+            return _GameValues.getHighscore();
         }
     }
 

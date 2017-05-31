@@ -6,12 +6,14 @@
     class="itemImg img-thumbnail" 
     style="display: none" 
     draggable="false"
+    data-name="@Model.Id"
+    data-startingprice="@Model.cost"
     data-cost="@Model.cost"
     data-income="@Model.income"
-    data-content="Cost: @Model.cost, Income: @Model.income" 
-    rel="popover" 
+    data-content="@Model.description" 
     data-placement="bottom" 
-    data-original-title="@Model.Id" 
+    data-original-title="@Model.Id - Price: @Model.cost" 
+    rel="popover" 
     data-trigger="hover">
 </img>
 

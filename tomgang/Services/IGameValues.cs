@@ -13,8 +13,9 @@ namespace tomgang.Services
         List<Tuple<string, int>> checkEligibleUpgrades(string userid);
         List<Tuple<string, int>> getItemAmounts(string userid);
         int getItemAmount(string userid, string itemid);
-        
+        Dictionary<string, dynamic> getUserInfo(string brukernavn);
         double getGains(string username);
+        List<Tuple<string, double>> getHighscore();
     }
     
 }
