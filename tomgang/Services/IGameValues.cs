@@ -15,6 +15,7 @@ namespace tomgang.Services
         int getItemAmount(string userid, string itemid);
         Dictionary<string, dynamic> getUserInfo(string brukernavn);
         double getGains(string username);
+        Dictionary<string, double> getHighscore();
     }
     
 }

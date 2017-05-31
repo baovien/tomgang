@@ -82,6 +82,9 @@ namespace tomgang.Hubs
             var brukernavn = Context.User.Identity.Name;
             return _GameValues.buyItem(brukernavn, itemid);
         }
+        public Dictionary<string, double> getHighscore(){
+            return _GameValues.getHighscore();
+        }
     }
 
     // Client side methods to be invoked by Broadcaster Hub
