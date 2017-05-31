@@ -326,6 +326,15 @@ namespace tomgang.Controllers
                 .Where(m => m.userid == userid && m.itemID == itemid)
                 .Select(m => m.ID).Count());
         }
+        public Dictionary<string, double> getHighscore(){
+            var highscore = new Dictionary<string, double>();
+            foreach(var player in _dbContext.PlayerGains){
+                var username = _dbContext.Users.Find(player.Id).Brukernavn;
+                highscore.Add(username, player.totalGains);
+            }
+            highscore = highscore.OrderBy(m => m.Value).ToDictionary(m => m.Key, m => m.Value);
+            return highscore;
+        }
 
     }
 }
