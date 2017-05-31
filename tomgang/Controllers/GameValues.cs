@@ -22,26 +22,28 @@ namespace tomgang.Controllers
             _dbContext.SaveChanges();
             //Setter alle verdiene til ny bruker til startverdier
         }
-        public double getGains(string brukernavn){
-            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
+        public double getGains(string brukernavn)
+        {
+            var userid = _dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             return _dbContext.PlayerGains.Find(userid).currentGainsValue;
         }
 
-        public Dictionary<string, dynamic> getUserInfo(string brukernavn){
+        public Dictionary<string, dynamic> getUserInfo(string brukernavn)
+        {
             var map = new Dictionary<string, dynamic>();
-            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
-            map.Add("currentGains",_dbContext.PlayerGains.Find(userid).currentGainsValue);
-            map.Add("incomeValue",_dbContext.PlayerGains.Find(userid).incomeValue);
-            map.Add("clickValue",_dbContext.PlayerGains.Find(userid).clickValue);
-            map.Add("totalGains",_dbContext.PlayerGains.Find(userid).totalGains);
-            map.Add("timesClicked",_dbContext.PlayerGains.Find(userid).timesClicked);
-            map.Add("timeJoined",_dbContext.PlayerGains.Find(userid).timeJoined);
+            var userid = _dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
+            map.Add("currentGains", _dbContext.PlayerGains.Find(userid).currentGainsValue);
+            map.Add("incomeValue", _dbContext.PlayerGains.Find(userid).incomeValue);
+            map.Add("clickValue", _dbContext.PlayerGains.Find(userid).clickValue);
+            map.Add("totalGains", _dbContext.PlayerGains.Find(userid).totalGains);
+            map.Add("timesClicked", _dbContext.PlayerGains.Find(userid).timesClicked);
+            map.Add("timeJoined", _dbContext.PlayerGains.Find(userid).timeJoined);
             return map;
         }
         public void onLiftClick(string brukernavn)
         {
-            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
-             Console.Write(userid);
+            var userid = _dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
+            Console.Write(userid);
             _dbContext.PlayerGains.Find(userid).totalGains +=
             _dbContext.PlayerGains.Find(userid).clickValue;
             _dbContext.PlayerGains.Find(userid).currentGainsValue +=
@@ -53,8 +55,8 @@ namespace tomgang.Controllers
         }
         public void increaseGains(string brukernavn)
         {
-            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
-            
+            var userid = _dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
+
             //Loopen regner ut totale gains/s utifra alle items og deres upgrademultipliers
             var cumulative = 1.0;
             var increaseGains = 0.0;
@@ -77,7 +79,9 @@ namespace tomgang.Controllers
                     .Where(m => m.userid == userid && m.itemID == item.Id)
                     .Select(m => m.ID).Count() * item.income * cumulative);
                     cumulative = 1.0;
-                }else{
+                }
+                else
+                {
                     _dbContext.PlayerGains.Find(userid).clickValue = 1 +
                     (_dbContext.PlayerItems
                     .Where(m => m.userid == userid && m.itemID == item.Id)
@@ -106,7 +110,7 @@ namespace tomgang.Controllers
         }
         public void buyUpgrade(string brukernavn, string id)
         {
-            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
+            var userid = _dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             //IDen bestemmer hva upgraden vil påvirke. Om flere typer
             //upgrades er ønsket er det bare å adde en case for typen.
 
@@ -135,7 +139,7 @@ namespace tomgang.Controllers
         }
         public List<string> checkAchievements(string brukernavn)
         {
-            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
+            var userid = _dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             //var earnedAchievements = _dbContext.PlayerAchievments.Where(m => m.Id == userid).Select(m => m.type).ToList();
             //Loope igjennom alle achievement reqs og sjekke om brukeren har fått noen
             //Adde achievements brukeren har fått
@@ -173,6 +177,13 @@ namespace tomgang.Controllers
                             _dbContext.PlayerAchievments.Add(new PlayerAchievements(userid, item.Id));
                         }
                         break;
+                    case 4:
+                        if (_dbContext.PlayerGains.Find(userid).totalGains >=
+                        item.value && _dbContext.PlayerAchievments.Where(m => m.Id == userid && m.type == item.Id).Count() == 0)
+                        {
+                            _dbContext.PlayerAchievments.Add(new PlayerAchievements(userid, item.Id));
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -183,7 +194,7 @@ namespace tomgang.Controllers
         }
         public List<Tuple<string, int>> checkEligibleUpgrades(string brukernavn)
         {
-            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
+            var userid = _dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             var time = new Stopwatch();
             time.Start();
             time.Restart();
@@ -269,7 +280,7 @@ namespace tomgang.Controllers
         }
         public bool buyItem(string brukernavn, string itemid)
         {
-            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
+            var userid = _dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             //Hvis bruker har råd til upgraden
             //startverdi*(e^0.14x)
             var amount = _dbContext.PlayerItems
@@ -296,7 +307,7 @@ namespace tomgang.Controllers
         }
         public List<Tuple<string, int>> getItemAmounts(string brukernavn)
         {
-            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
+            var userid = _dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             var list = new List<Tuple<string, int>>();
             foreach (var item in _dbContext.Item)
             {
@@ -310,18 +321,20 @@ namespace tomgang.Controllers
 
         public int getItemAmount(string brukernavn, string itemid)
         {
-            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
+            var userid = _dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             return (_dbContext.PlayerItems
                 .Where(m => m.userid == userid && m.itemID == itemid)
                 .Select(m => m.ID).Count());
         }
-        public List<Tuple<string, double>> getHighscore(){
+        public List<Tuple<string, double>> getHighscore()
+        {
             var highscore = new List<Tuple<string, double>>();
-            foreach(var player in _dbContext.PlayerGains){
+            foreach (var player in _dbContext.PlayerGains)
+            {
                 var username = _dbContext.Users.Find(player.Id).UserName;
                 highscore.Add(Tuple.Create(username, player.totalGains));
             }
-            
+
             return highscore;
         }
 
