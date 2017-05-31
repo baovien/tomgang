@@ -40,12 +40,17 @@ $(document).ready(function () {
 });
 
 function update() { //Kjøres i timer funksjon i index.
-  getEligibleUpgrades();
-  increaseGains();
-  updateVariables();
-  updateUpgradesStatus();
-  updateItemsStatus();
-  updateGainsCounter();
+  if (window.isInitialized && window.update !== undefined) {
+    getEligibleUpgrades();
+    increaseGains();
+    updateVariables();
+    updateUpgradesStatus();
+    updateItemsStatus();
+    updateGainsCounter();
+  }else{
+    console.log(window.isInitialized);
+    console.log(window.update);
+  }
 }
 
 function updateVariables() {
@@ -60,17 +65,17 @@ function updateVariables() {
 }
 
 function getCurrentGains() {
-	window.hub.server.getCurrentGains().done(function (value) {
-		window.currentGains = value;
-	});
+  window.hub.server.getCurrentGains().done(function (value) {
+    window.currentGains = value;
+  });
 }
 
 function getEligibleUpgrades() {
-	window.hub.server.checkUpgrades().done(function (value) {
-		window.upgrades = value;
-	});
+  window.hub.server.checkUpgrades().done(function (value) {
+    window.upgrades = value;
+  });
 }
 
 function increaseGains() {
-	window.hub.server.increaseGains();
+  window.hub.server.increaseGains();
 }
