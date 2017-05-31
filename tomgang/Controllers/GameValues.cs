@@ -26,6 +26,18 @@ namespace tomgang.Controllers
             var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             return _dbContext.PlayerGains.Find(userid).currentGainsValue;
         }
+
+        public Dictionary<string, dynamic> getUserInfo(string brukernavn){
+            var map = new Dictionary<string, dynamic>();
+            var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
+            map.Add("currentGains",_dbContext.PlayerGains.Find(userid).currentGainsValue);
+            map.Add("incomeValue",_dbContext.PlayerGains.Find(userid).incomeValue);
+            map.Add("clickValue",_dbContext.PlayerGains.Find(userid).clickValue);
+            map.Add("totalGains",_dbContext.PlayerGains.Find(userid).totalGains);
+            map.Add("timesClicked",_dbContext.PlayerGains.Find(userid).timesClicked);
+            map.Add("timeJoined",_dbContext.PlayerGains.Find(userid).timeJoined);
+            return map;
+        }
         public void onLiftClick(string brukernavn)
         {
             var userid =_dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
