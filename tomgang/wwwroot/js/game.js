@@ -91,7 +91,7 @@ function updateItemsCost() {
 		var itemid = this;
 		window.hub.server.getSingleItemAmount($(itemid).attr("id")).done(function (amount) {
 			itemid.dataset.cost = itemid.dataset.startingprice * Math.exp(0.14 * amount);
-			itemid.dataset.content = "Cost: " + Math.round(itemid.dataset.cost) + ", Amount: " + amount;
+			$(itemid).attr("data-original-title", itemid.dataset.name + " - Price: " + Math.round(itemid.dataset.cost) + " - Owned: " + amount);
 		});
 	});
 }
@@ -111,7 +111,7 @@ function itemBtnsPost() {
 					//Update item info
 					window.hub.server.getSingleItemAmount($(itemid).attr("id")).done(function (amount) {
 						itemid.dataset.cost = itemid.dataset.startingprice * Math.exp(0.14 * amount);
-						itemid.dataset.content = "Cost: " + Math.round(itemid.dataset.cost) + ", Amount: " + amount;
+						$(itemid).attr("data-original-title", itemid.dataset.name + " - Price: " + Math.round(itemid.dataset.cost) + " - Owned: " + amount);
 						$(itemid).popover('hide');
 					});
 				}

@@ -27,8 +27,6 @@ namespace tomgang.Models
         public int reqType{get; set;}
         public int reqValue{get; set;}
         public int cost{get; set;}
-        //public string name {get; set;}
-        //public string description {get; set;}
         public string imgPath {get; set;}
         public string description{get;set;}
     }
