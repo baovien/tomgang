@@ -30,6 +30,7 @@ function signalr() {
 			updateGainsCounter();
 			updateItemsCost();
   			updateItemsStatus();
+			updateInfoTab();
 
 			liftClickPost();
   			upgradeBtnsPost();
@@ -39,6 +40,11 @@ function signalr() {
 		window.hub.server.checkUpgrades().done(function (value) {
 			window.upgrades = value;
 			updateUpgradesStatus();
+		});
+
+		window.hub.server.getHighscore().done(function(value){
+			window.highscore = value;
+			updateHighscoreTab();
 		});
 
 		window.hub.server.subscribe("MainChatroom");

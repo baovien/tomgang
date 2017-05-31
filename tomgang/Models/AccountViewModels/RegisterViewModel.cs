@@ -10,7 +10,7 @@ namespace tomgang.Models.AccountViewModels
     {
         [Required]
         [Display(Name = "Username")]
-        public string BrukerNavn { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         [EmailAddress]

@@ -82,7 +82,7 @@ namespace tomgang.Hubs
             var brukernavn = Context.User.Identity.Name;
             return _GameValues.buyItem(brukernavn, itemid);
         }
-        public Dictionary<string, double> getHighscore(){
+        public List<Tuple<string, double>> getHighscore(){
             return _GameValues.getHighscore();
         }
     }

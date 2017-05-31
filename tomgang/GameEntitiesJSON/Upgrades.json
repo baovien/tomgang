@@ -2,7 +2,7 @@
     "Upgrades":[
     { "Id":"Do you even lift?", "type":3, "multi":2, "cost":30 , "imgPath": "/images/upgrades/weight.png", "reqType":1 , "reqValue":1, "description": "Your technique improves, doubled gains from lifts" },
     { "Id":"Mirror practice", "type":3, "multi":2, "cost":250 , "imgPath": "/images/upgrades/weight.png", "reqType":1 , "reqValue":30, "description": "Checking yourself out in the mirror is paying off, doubled gains from lifts" },
-    { "Id":"Perfect from", "type":3, "multi":2, "cost":3000 , "imgPath": "/images/upgrades/weight.png", "reqType":1 , "reqValue":100, "description": "Form perfected, doubled gains from lifts" },
+    { "Id":"Perfect form", "type":3, "multi":2, "cost":3000 , "imgPath": "/images/upgrades/weight.png", "reqType":1 , "reqValue":100, "description": "Form perfected, doubled gains from lifts" },
     { "Id":"Hand callus", "type":3, "multi":2, "cost":15000 , "imgPath": "/images/upgrades/weight.png", "reqType":1 , "reqValue":250, "description": "It might hurt, but that's life, doubled gains from lifts" },
     { "Id":"Strawberry flavor", "type":4, "multi":2, "cost":600 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":400, "description": "The easier it is to drink, the more you get from it. Doubled creatine effect" },
     { "Id":"Large scoop", "type":4, "multi":2, "cost":4000 , "imgPath": "/images/upgrades/weight.png", "reqType":4 , "reqValue":4000, "description": "Scoops twice as much creatine! Doubled creatine effect" },

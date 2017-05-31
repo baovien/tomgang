@@ -1,4 +1,72 @@
 
+#gainNumber{
+    font-size: 44px;
+}
+
+.upgradeGreyed{
+    -webkit-filter: grayscale(100%);
+       -moz-filter: grayscale(100%);
+         -o-filter: grayscale(100%);
+        -ms-filter: grayscale(100%);
+            filter: grayscale(100%); 
+}
+
+.upgradeImg, .itemImg {
+    max-width: 10%;
+    margin-bottom: 5px;
+    height: auto;
+}
+
+.well{
+    margin-bottom: 0px;
+}
+
+.noselect {
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+body {
+    overflow: hidden;
+
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* preloader */
+#preloader {
+    position: fixed;
+    top:0; left:0;
+    right:0; bottom:0;
+    background: #000;
+    z-index: 100;
+}
+#loader {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left:50%; top:50%;
+    background: url(../images/loading.gif) no-repeat center 0;
+    margin:-50px 0 0 -50px;
+} 
+/* Fix scrollbar bump */
+
+html {
+    position: relative; 
+    min-height: 100%;
+    margin-left: calc(100vw - 100%);
+}
+
 
 /* "Cool Text Shadow Effects" by xBootstrap.com */
 h1 {
@@ -113,74 +181,6 @@ h1 {
 }
 .btn-pref .btn {
     -webkit-border-radius:0 !important;
-}
-
-#gainNumber{
-    font-size: 44px;
-}
-
-.upgradeGreyed{
-    -webkit-filter: grayscale(100%);
-       -moz-filter: grayscale(100%);
-         -o-filter: grayscale(100%);
-        -ms-filter: grayscale(100%);
-            filter: grayscale(100%); 
-}
-
-.upgradeImg, .itemImg {
-    max-width: 10%;
-    margin-bottom: 5px;
-    height: auto;
-}
-
-.well{
-    margin-bottom: 0px;
-}
-
-.noselect {
-    -webkit-touch-callout: none;
-    /* iOS Safari */
-    -webkit-user-select: none;
-    /* Safari */
-    -khtml-user-select: none;
-    /* Konqueror HTML */
-    -moz-user-select: none;
-    /* Firefox */
-    -ms-user-select: none;
-    /* Internet Explorer/Edge */
-    user-select: none;
-    /* Non-prefixed version, currently supported by Chrome and Opera */
-}
-
-body {
-    overflow: hidden;
-
-    padding-top: 50px;
-    padding-bottom: 20px;
-}
-
-/* preloader */
-#preloader {
-    position: fixed;
-    top:0; left:0;
-    right:0; bottom:0;
-    background: #000;
-    z-index: 100;
-}
-#loader {
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    left:50%; top:50%;
-    background: url(../images/loading.gif) no-repeat center 0;
-    margin:-50px 0 0 -50px;
-} 
-/* Fix scrollbar bump */
-
-html {
-    position: relative; 
-    min-height: 100%;
-    margin-left: calc(100vw - 100%);
 }
 
 
@@ -307,7 +307,11 @@ a:focus {
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
-    padding-top: 15px;
+    padding-top: 50px;
+    padding-bottom: 20px;
+
+    overflow: hidden;
+
 }
 
 

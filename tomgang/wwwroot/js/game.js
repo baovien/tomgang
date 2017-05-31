@@ -4,6 +4,7 @@ function liftClickPost() {
 		window.hub.server.liftClick();
 		getCurrentGains();
 		$('#gainNumber').text(Math.floor(window.currentGains)); //Oppdaterer client før server for smoothere opplevelse.
+		$("#timesClicked").text(window.timesClicked + 1);
 	});
 }
 
@@ -18,22 +19,24 @@ function updateUpgradesStatus() {
 	Itererer gjennom alle upgrades som brukeren kan kjøpe og viser de.
 	De som brukeren ikke har råd til blir gråfarga. Ellers får de som er affordable grønn bakgrunn,
 	*/
-	window.upgrades.forEach(function (element) {
-		if (window.currentGains <= element.item2) { //Cost er større enn playergains.
-			$('[id="' + element.item1 + '"]').addClass("upgradeGreyed");
-			$('[id="' + element.item1 + '"]').css({
-				"background-color": ""
-			});
-		} else { //Cost er mindre enn playergains.
-			$('[id="' + element.item1 + '"]').removeClass("upgradeGreyed");
-			$('[id="' + element.item1 + '"]').css({
-				"background-color": "green"
-			});
-		}
+	if (window.upgrades !== undefined) {
+		window.upgrades.forEach(function (element) {
+			if (window.currentGains <= element.item2) { //Cost er større enn playergains.
+				$('[id="' + element.item1 + '"]').addClass("upgradeGreyed");
+				$('[id="' + element.item1 + '"]').css({
+					"background-color": ""
+				});
+			} else { //Cost er mindre enn playergains.
+				$('[id="' + element.item1 + '"]').removeClass("upgradeGreyed");
+				$('[id="' + element.item1 + '"]').css({
+					"background-color": "green"
+				});
+			}
 
-		//Viser de upgradene som trengs
-		$('[id="' + element.item1 + '"]').show();
-	});
+			//Viser de upgradene som trengs
+			$('[id="' + element.item1 + '"]').show();
+		});
+	}
 }
 
 function upgradeBtnsPost() {
@@ -87,8 +90,8 @@ function updateItemsCost() {
 	$(".itemImg").each(function () {
 		var itemid = this;
 		window.hub.server.getSingleItemAmount($(itemid).attr("id")).done(function (amount) {
-		itemid.dataset.cost = itemid.dataset.startingprice * Math.exp(0.14 * amount);
-		itemid.dataset.content = "Cost: " + Math.round(itemid.dataset.cost) + ", Amount: " + amount;
+			itemid.dataset.cost = itemid.dataset.startingprice * Math.exp(0.14 * amount);
+			itemid.dataset.content = "Cost: " + Math.round(itemid.dataset.cost) + ", Amount: " + amount;
 		});
 	});
 }
@@ -100,16 +103,16 @@ function itemBtnsPost() {
 			var itemid = this;
 			window.hub.server.itemClick($(this).attr("id")).done(function (value) {
 				if (value) {
-						//Update gainnumber
-						getCurrentGains();
-						var temp = window.currentGains;
-						$('#gainNumber').text(Math.floor(temp - itemid.dataset.cost)); 
+					//Update gainnumber
+					getCurrentGains();
+					var temp = window.currentGains;
+					$('#gainNumber').text(Math.floor(temp - itemid.dataset.cost));
 
-						//Update item info
-						window.hub.server.getSingleItemAmount($(itemid).attr("id")).done(function (amount) {
+					//Update item info
+					window.hub.server.getSingleItemAmount($(itemid).attr("id")).done(function (amount) {
 						itemid.dataset.cost = itemid.dataset.startingprice * Math.exp(0.14 * amount);
 						itemid.dataset.content = "Cost: " + Math.round(itemid.dataset.cost) + ", Amount: " + amount;
-						$(itemid).popover('hide');												
+						$(itemid).popover('hide');
 					});
 				}
 			});
