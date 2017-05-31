@@ -39,16 +39,20 @@ $(document).ready(function () {
   });
 });
 
-function update() { //Kjøres i timer funksjon i index.
-  getEligibleUpgrades();
-  getHighscoreValues();
-  increaseGains();
-  updateVariables();
-  updateUpgradesStatus();
-  updateItemsStatus();
-  updateGainsCounter();
-  updateInfoTab();
-  updateHighscoreTab();
+function update() { //Kjøres i timer funksjon i index.  
+  if (window.isInitialized && window.update !== undefined) {
+    getEligibleUpgrades();
+    increaseGains();
+    updateVariables();
+    updateUpgradesStatus();
+    updateItemsStatus();
+    updateGainsCounter();
+    updateInfoTab();
+    updateHighscoreTab();
+  }else{
+    console.log(window.isInitialized);
+    console.log(window.update);
+  }
 }
 
 function updateVariables() {
@@ -114,6 +118,4 @@ function updateHighscoreTab() {
 
     i++;
   }, this);
-
-
 }

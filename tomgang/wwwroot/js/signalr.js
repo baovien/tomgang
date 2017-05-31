@@ -26,6 +26,8 @@ function signalr() {
 			window.totalGains = dict["totalGains"];
 			window.timesClicked = dict["timesClicked"];
 			window.timeJoined = dict["timeJoined"];
+			window.isInitialized = true;
+
 
 			updateGainsCounter();
 			updateItemsCost();
