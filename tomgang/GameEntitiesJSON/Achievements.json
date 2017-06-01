@@ -5,7 +5,7 @@
     { "Id":"Big boy", "type":4, "value":5000000, "imgPath": "/images/achievements/Bicepach.png", "description": "Are you juicing big boy?" },
     { "Id":"Gym life", "type":4, "value":25000000, "imgPath": "/images/achievements/Bicepach.png", "description": "Gym is life!" },
     { "Id":"Muscle monster", "type":4, "value":100000000, "imgPath": "/images/achievements/Bicepach.png", "description": "What have you become? You monster!" },
-    { "Id":"Abomination", "type":4, "value":1000000000, "imgPath": "/images/achievements/Bicepach.png", "description": "Your mom cant even recognise you anymore." },
+    { "Id":"Abomination", "type":4, "value":1000000000, "imgPath": "/images/achievements/Bicepach.png", "description": "Your mom cant even recognize you anymore." },
     { "Id":"Supplements", "type":3, "value":40, "imgPath": "/images/achievements/Bicepach.png", "description": "You taking proteins bro?" },
     { "Id":"The routine", "type":3, "value":200, "imgPath": "/images/achievements/Bicepach.png", "description": "You have your routine, acceptable bro." },
     { "Id":"Expensive hobby", "type":3, "value":2500, "imgPath": "/images/achievements/Bicepach.png", "description": "This is costly, but look at those guns!" },

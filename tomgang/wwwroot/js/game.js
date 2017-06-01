@@ -111,17 +111,19 @@ function updateHighscoreTab() {
 /****************LIFT*****************/
 function liftClickPost() {
 	$('#benchman').click(function () {
-		window.hub.server.liftClick();
-		$('#gainNumber').text(Math.floor(window.currentGains + window.clickValue)); //Oppdaterer client før server for smoothere opplevelse.
-		$("#timesClicked").text(+window.timesClicked + 1);
+		window.hub.server.liftClick().done(function() {
+			window.currentGains += (window.clickValue);
+			$('#gainNumber').text(Math.floor(window.currentGains));//Oppdaterer client før server for smoothere opplevelse.
+			$("#timesClicked").text(+window.timesClicked + 1);
 
-		$(this).on({
-			'mousedown': function () {
-				$(this).attr('src', $("#Weights").attr("data-weightimg") + 'up.png');
-			},
-			'mouseup': function () {
-				$(this).attr('src', $("#Weights").attr("data-weightimg") + 'down.png');
-			}
+			$(this).on({
+				'mousedown': function () {
+					$(this).attr('src', $("#Weights").attr("data-weightimg") + 'up.png');
+				},
+				'mouseup': function () {
+					$(this).attr('src', $("#Weights").attr("data-weightimg") + 'down.png');
+				}
+			});
 		});
 	});
 }
