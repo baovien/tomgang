@@ -99,7 +99,8 @@ function updateHighscoreTab() {
 		}
 
 		//Sorterer listen etter score
-		$('#hstable tbody > tr').sort(function (a, b) {
+		console.log($('#hstable tbody > tr'));
+		$('#hstable tbody tr').sort(function (a, b) {
 			return +$('td.score', b).text() > +$('td.score', a).text();
 		}).appendTo('tbody').find('td:first').text(function (index) {
 			return ++index;
