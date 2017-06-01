@@ -228,7 +228,7 @@ function updateItemsCost() {
 		window.hub.server.getSingleItemAmount($("img", itemid).attr("id")).done(function (amount) {
 			itemid.dataset.cost = itemid.dataset.startingprice * Math.exp(0.14 * amount);
 			$("font", itemid).text(amount);
-			$("#itemprice", itemid).text(Math.round(itemid.dataset.cost));
+			$("#itemprice", itemid).text("Price: " + Math.round(itemid.dataset.cost));
 			updateBenchWeight();
 			updateItemsStatus();
 		});
@@ -249,7 +249,7 @@ function itemBtnsPost() {
 					window.hub.server.getSingleItemAmount($("img", itemid).attr("id")).done(function (amount) {
 						itemid.dataset.cost = itemid.dataset.startingprice * Math.exp(0.14 * amount);
 						$("font", itemid).text(amount);
-						$("#itemprice", itemid).text(Math.round(itemid.dataset.cost));
+						$("#itemprice", itemid).text("Price: " + Math.round(itemid.dataset.cost));
 
 						if (itemid.dataset.name == "Weights") {
 							updateBenchWeight();
