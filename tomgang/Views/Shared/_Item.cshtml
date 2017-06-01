@@ -1,21 +1,22 @@
 @model Item
 
-<img 
-    src="@Model.imgPath" 
-    id="@Model.Id" 
-    class="itemImg img-thumbnail" 
-    style="display: none" 
-    draggable="false"
-    data-name="@Model.Id"
-    data-startingprice="@Model.cost"
-    data-cost="@Model.cost"
-    data-income="@Model.income"
-    data-content="@Model.description" 
-    data-placement="bottom" 
-    data-original-title="@Model.Id - Price: @Model.cost" 
-    rel="popover" 
-    data-trigger="hover">
-</img>
-
-
+<div class="container" id="itemholder" style="height: 70; width: 450px;">
+    <div class="col-md-3">
+        <img 
+        src="@Model.imgPath" 
+        id="@Model.Id" 
+        class="itemImg img-thumbnail" 
+        draggable="false"
+        data-startingprice="@Model.cost" 
+        rel="popover" >
+        </img>
+    </div>
+    <div class="col-md-7"> 
+        <h5 class="media-heading"><b>@Model.Id </b></h5>
+        <p>@Model.description <br> Price: @Model.cost <br> Gains per second: @Model.income</p>
+    </div>
+    <div class="col-md-1 col-md-offset-1">
+        <font size="5" style="vertical-align: middle;" >0</font>
+    </div>
+</div>
 

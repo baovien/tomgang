@@ -91,12 +91,13 @@
                 </div>
                 <div class="well">
                     <div class="panel-body">
-                        <h3>Upgrades</h3>
+                        <h4>Upgrades</h4>
                         @(await Component.InvokeAsync
                         <ViewComponents.UpgradeList>())
 
-                            <h3>Items</h3>
-                            <ul class="list-group">
+                            <h4>Items</h4>
+                            <hr />
+                            <ul class="list-group" style="overflow-y: auto; overflow-x: hidden; height: 250px" id="itemss">
                                 @(await Component.InvokeAsync
                                 <ViewComponents.ItemList>())
                                     <ul>

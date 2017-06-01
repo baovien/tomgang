@@ -29,7 +29,7 @@ function updateUpgradesStatus() {
 			} else { //Cost er mindre enn playergains.
 				$('[id="' + element.item1 + '"]').removeClass("upgradeGreyed");
 				$('[id="' + element.item1 + '"]').css({
-					"background-color": "green"
+					"background-color": "lightgreen"
 				});
 			}
 
@@ -78,7 +78,7 @@ function updateItemsStatus() {
 		} else { //Cost er mindre enn playergains.
 			$(this).removeClass("upgradeGreyed");
 			$(this).css({
-				"background-color": "green"
+				"background-color": "lightgreen"
 			});
 		}
 		$(this).show();

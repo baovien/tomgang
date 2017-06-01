@@ -11,12 +11,17 @@
             filter: grayscale(100%); 
 }
 
-.upgradeImg, .itemImg {
+.upgradeImg{
     max-width: 15%;
     margin-bottom: 5px;
     height: auto;
 }
-
+.itemImg{
+    margin-top: 10%;
+    border: 1px solid white;
+    width: 100%;
+    height: 100%;
+}
 .well{
     margin-bottom: 0px;
 }
@@ -563,4 +568,12 @@ textarea {
     position: absolute;
     top: 20%;
     width: 40%;
+}
+#upgradeholder{
+    border: 1px solid grey;
+    border-radius: 2px;
+    margin: 2px;
+}
+#itemss{
+    border: 1px solid grey;
 }
