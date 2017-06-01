@@ -19,7 +19,7 @@ function signalr() {
 
 		//Caller currgains og upgr først siden senere funksjoner er avhengig av verdiene. Init etter upgr
 
-		window.hub.server.getUserInfo().done(function(dict){
+		window.hub.server.getUserInfo().done(function (dict) {
 			window.currentGains = dict["currentGains"];
 			window.incomevalue = dict["incomeValue"];
 			window.clickValue = dict["clickValue"];
@@ -28,15 +28,19 @@ function signalr() {
 			window.timeJoined = dict["timeJoined"];
 			window.isInitialized = true;
 
+			$("#gpsec").text(window.incomeValue);
+			$("#gplift").text(Math.floor(window.clickValue));
+			$("#totgains").text(Math.floor(window.totalGains));
+			$("#timesClicked").text(window.timesClicked);
+			$("#joindate").text(window.timeJoined);
 
 			updateGainsCounter();
 			updateItemsCost();
-  			updateItemsStatus();
-			updateInfoTab();
+			updateItemsStatus();
 
 			liftClickPost();
-  			upgradeBtnsPost();
-  			itemBtnsPost();
+			upgradeBtnsPost();
+			itemBtnsPost();
 		});
 
 		window.hub.server.checkUpgrades().done(function (value) {
@@ -44,12 +48,12 @@ function signalr() {
 			updateUpgradesStatus();
 		});
 
-		window.hub.server.checkAchis().done(function (value){
+		window.hub.server.checkAchis().done(function (value) {
 			window.achis = value;
 			//updateAchievementsStatus();
 		});
 
-		window.hub.server.getHighscore().done(function(value){
+		window.hub.server.getHighscore().done(function (value) {
 			window.highscore = value;
 			updateHighscoreTab();
 		});
