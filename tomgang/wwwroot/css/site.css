@@ -51,8 +51,6 @@ ul #itemdesc {
 }
 
 body {
-    overflow: hidden;
-
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -76,6 +74,7 @@ body {
 /* Fix scrollbar bump */
 
 html {
+    overflow-y: auto;
     position: relative; 
     min-height: 100%;
     margin-left: calc(100vw - 100%);
