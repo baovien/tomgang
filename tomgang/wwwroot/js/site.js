@@ -1,6 +1,6 @@
 $(document).ready(function () {
   //Vise popover info for upgradsa
-  $('.itemImg, .upgradeImg, .achiImg').popover();
+  $('.upgradeImg, .achiImg').popover();
 
   //Infopanel
   $(".btn-pref .btn").click(function () {

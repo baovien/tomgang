@@ -165,7 +165,7 @@ function updateUpgradesStatus() {
 		} else { //Cost er mindre enn playergains.
 			$('[id="' + element.item1 + '"]').removeClass("upgradeGreyed");
 			$('[id="' + element.item1 + '"]').css({
-				"background-color": "green"
+				"background-color": "lightgreen"
 			});
 		}
 
@@ -204,16 +204,17 @@ function updateItemsStatus() {
 	/*
 	De som brukeren ikke har råd til blir gråfarga. Ellers får de som er affordable grønn bakgrunn,
 	*/
-	$(".itemImg").each(function (element) {
+
+	$(".item").each(function (element) {
 		if (window.currentGains < this.dataset.cost) { //Cost er større enn playergains.
-			$(this).addClass("upgradeGreyed");
+			$("img", this).addClass("upgradeGreyed");
 			$(this).css({
 				"background-color": ""
 			});
 		} else { //Cost er mindre enn playergains.
-			$(this).removeClass("upgradeGreyed");
+			$("img", this).removeClass("upgradeGreyed");
 			$(this).css({
-				"background-color": "green"
+				"background-color": "lightgreen"
 			});
 		}
 		$(this).show();
@@ -222,41 +223,39 @@ function updateItemsStatus() {
 
 // Oppdater ved siteload
 function updateItemsCost() {
-	$(".itemImg").each(function () {
+	$(".item").each(function () {
 		var itemid = this;
-		window.hub.server.getSingleItemAmount($(itemid).attr("id")).done(function (amount) {
-			itemid.dataset.amount = amount;
+		window.hub.server.getSingleItemAmount($("img", itemid).attr("id")).done(function (amount) {
 			itemid.dataset.cost = itemid.dataset.startingprice * Math.exp(0.14 * amount);
-			$(itemid).attr("data-original-title", itemid.dataset.name + " - Price: " + Math.round(itemid.dataset.cost) + " - Owned: " + amount);
+			$("font", itemid).text(amount);
+			$("#itemprice", itemid).text(Math.round(itemid.dataset.cost));
 			updateBenchWeight();
+			updateItemsStatus();
 		});
 	});
 }
 
 function itemBtnsPost() {
-	$(".itemImg").each(function () {
+	$(".item").each(function () {
 		$(this).on("click", function () {
 			console.log("Item click");
 			var itemid = this;
-			window.hub.server.itemClick($(this).attr("id")).done(function (value) {
+			window.hub.server.itemClick($("img", this).attr("id")).done(function (value) {
 				if (value) {
 					getPlayerInfo();
 					$('#gainNumber').text(Math.floor(window.currentGains - itemid.dataset.cost));
 
 					//Update item info
-					window.hub.server.getSingleItemAmount($(itemid).attr("id")).done(function (amount) {
-						itemid.dataset.amount = amount;
+					window.hub.server.getSingleItemAmount($("img", itemid).attr("id")).done(function (amount) {
 						itemid.dataset.cost = itemid.dataset.startingprice * Math.exp(0.14 * amount);
-						$(itemid).attr("data-original-title", itemid.dataset.name + " - Price: " + Math.round(itemid.dataset.cost) + " - Owned: " + amount);
-						$(itemid).popover('hide');
+						$("font", itemid).text(amount);
+						$("#itemprice", itemid).text(Math.round(itemid.dataset.cost));
 
 						if (itemid.dataset.name == "Weights") {
 							updateBenchWeight();
 						}
 					});
-
 					updateItemsStatus();
-
 				}
 			});
 		});

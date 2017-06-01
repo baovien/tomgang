@@ -36,7 +36,6 @@ function signalr() {
 
 			updateGainsCounter();
 			updateItemsCost();
-			updateItemsStatus();
 
 			liftClickPost();
 			upgradeBtnsPost();
