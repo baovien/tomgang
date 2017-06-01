@@ -1,5 +1,6 @@
 {
 "Achievements":[
+<<<<<<< HEAD
     { "Id":"Welcome rookie", "type":4, "value":1000, "imgPath": "/images/upgrades/weight.png", "description": "You're a rookie kid, this is just the start of greatness!" },
     { "Id":"Gym rat", "type":4, "value":100000, "imgPath": "/images/upgrades/weight.png", "description": "Dont get consumed by the gains..."  },
     { "Id":"Big boy", "type":4, "value":5000000, "imgPath": "/images/upgrades/weight.png", "description": "Are you juicing big boy?" },

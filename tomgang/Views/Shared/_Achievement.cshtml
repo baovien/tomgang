@@ -1,0 +1,18 @@
+@model Achievement
+
+<img 
+    src="images/achievements/question.png" 
+    id="@Model.Id" 
+    class="achiImg img-thumbnail" 
+    draggable="false"
+    data-name="@Model.Id"
+    data-content="@Model.description" 
+    data-imgPath="@Model.imgPath"
+    data-placement="bottom" 
+    data-original-title="@Model.Id" 
+    rel="popover" 
+    data-trigger="hover">
+</img>
+
+
+

@@ -16,7 +16,7 @@
                     <img class="card-bkimg" alt="" src="images/liftbg.jpg">
                 </div>
                 <div class="useravatar">
-                    <img id="benkmann" draggable="false" src="images/zyzz/benk.png">
+                    <img id="benchman" draggable="false" src="">
                 </div>
                 <div class="card-info text-center">
                     <div class="deepshd" id="gainNumber">0</div>
@@ -57,7 +57,7 @@
                         <p id="numlift"></p>
                     </div>
                     <div class="tab-pane fade in" id="tab2">
-                        <h3> achi</h3>
+                        @(await Component.InvokeAsync<ViewComponents.AchievementList>())
                     </div>
                     <div class="tab-pane fade in" id="tab3">
                         <table class="table table-bordered table-hover " id="hstable">
@@ -146,9 +146,11 @@
             $('body-content').css({'overflow':'visible'});
             //Connecter til websocket
             signalr();
-
+            
             setTimeout(function(){
-                setInterval(update, 1000);
+                updateIntervals();
+
+                //setInterval(update, 1000);
             }, 1000);
             
         });
