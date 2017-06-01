@@ -44,6 +44,11 @@ function signalr() {
 			updateUpgradesStatus();
 		});
 
+		window.hub.server.checkAchis().done(function (value){
+			window.achis = value;
+			//updateAchievementsStatus();
+		});
+
 		window.hub.server.getHighscore().done(function(value){
 			window.highscore = value;
 			updateHighscoreTab();

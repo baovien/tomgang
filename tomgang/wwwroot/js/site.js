@@ -1,8 +1,7 @@
 $(document).ready(function () {
 
   //Vise popover info for upgradsa
-  $('.upgradeImg').popover();
-  $('.itemImg').popover();
+  $('.itemImg, .upgradeImg, .achiImg').popover();
 
   //Infopanel
   $(".btn-pref .btn").click(function () {
@@ -44,6 +43,7 @@ $(document).ready(function () {
 function update() { //Kjøres i timer funksjon i index.  
   if (window.isInitialized && window.update !== undefined) {
     getEligibleUpgrades();
+    getUnlockedAchis();
     increaseGains();
     updateVariables();
     updateUpgradesStatus();
@@ -51,6 +51,7 @@ function update() { //Kjøres i timer funksjon i index.
     updateGainsCounter();
     updateInfoTab();
     updateHighscoreTab();
+    updateAchievementsStatus();
   }else{
     console.log(window.isInitialized);
     console.log(window.update);
@@ -80,10 +81,15 @@ function getEligibleUpgrades() {
   });
 }
 
-
 function getHighscoreValues() {
   window.hub.server.getHighscore().done(function (value) {
     window.highscore = value;
+  });
+}
+
+function getUnlockedAchis() {
+  window.hub.server.checkAchis().done(function (value) {
+    window.achis = value;
   });
 }
 
@@ -94,7 +100,7 @@ function increaseGains() {
 function updateInfoTab() {
   $("#gpsec").text(window.incomevalue);
   $("#gplift").text(window.clickValue);
-  $("#totgains").text(window.totalGains);
+  $("#totgains").text(Math.floor(window.totalGains));
   $("#timesClicked").text(window.timesClicked);
   $("#joindate").text(window.timeJoined);
 }
@@ -104,7 +110,7 @@ function updateHighscoreTab() {
   var rowCount = $('#hstable tbody tr').length;
 
   window.highscore.forEach(function (element) {
-    $('#addr' + i).html("<td class='pos'>" + (i + 1) + "</td><td class='name'>" + element.item1 + " </td><td class='score'>" + element.item2 + "</td>");
+    $('#addr' + i).html("<td class='pos'>" + (i + 1) + "</td><td class='name'>" + element.item1 + " </td><td class='score'>" + Math.floor(element.item2) + "</td>");
 
     //sjekker om ny entry. append kun hvis hsliste size har økt
     if (rowCount < window.highscore.length) {
