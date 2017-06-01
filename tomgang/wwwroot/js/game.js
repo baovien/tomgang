@@ -20,18 +20,21 @@ function updateIntervals() {
 
 		}, 100);
 
+		//Server data verification
 		setInterval(function () {
+			getPlayerInfo();
 			getUnlockedAchis();
 			getEligibleUpgrades();
 			increaseGains();
 			getHighscoreValues();
-			getPlayerInfo();
 			updateHighscoreTab();
 			updateAchievementsTab();
+			updateItemsCost();
 		}, 5000);
 	} else {
 		console.log(window.isInitialized);
 		console.log(window.upgrades);
+		setTimeout(updateIntervals, 500);
 	}
 }
 
@@ -111,19 +114,20 @@ function updateHighscoreTab() {
 /****************LIFT*****************/
 function liftClickPost() {
 	$('#benchman').click(function () {
-		window.hub.server.liftClick().done(function() {
+		window.hub.server.liftClick().done(function () {
 			window.currentGains += (window.clickValue);
-			$('#gainNumber').text(Math.floor(window.currentGains));//Oppdaterer client før server for smoothere opplevelse.
-			$("#timesClicked").text(+window.timesClicked + 1);
+		});
 
-			$(this).on({
-				'mousedown': function () {
-					$(this).attr('src', $("#Weights").attr("data-weightimg") + 'up.png');
-				},
-				'mouseup': function () {
-					$(this).attr('src', $("#Weights").attr("data-weightimg") + 'down.png');
-				}
-			});
+		$('#gainNumber').text(Math.floor(window.currentGains)); //Oppdaterer client før server for smoothere opplevelse.
+		$("#timesClicked").text(+window.timesClicked + 1);
+
+		$(this).on({
+			'mousedown': function () {
+				$(this).attr('src', $("#Weights").attr("data-weightimg") + 'up.png');
+			},
+			'mouseup': function () {
+				$(this).attr('src', $("#Weights").attr("data-weightimg") + 'down.png');
+			}
 		});
 	});
 }
@@ -134,6 +138,7 @@ function autoLift() {
 
 function updateBenchWeight() {
 	var numWeights = $("#Weights").attr("data-amount");
+	console.log(numWeights);
 	var weightsOn = (numWeights / 10) | 0;
 	if (weightsOn > 5) {
 		weightsOn = 5;
@@ -180,16 +185,22 @@ function upgradeBtnsPost() {
 			console.log("Upgrade click");
 
 			getPlayerInfo();
+			var upgradeid = this;
 			var temp = window.currentGains;
 
 			if (temp >= this.dataset.cost) {
+				$(upgradeid).hide();
+				window.hub.server.upgradeClick($(upgradeid).attr('id')).done(function (bool) {
+					//Fjern upgrade fra html
+						console.log(bool);
 
-				window.hub.server.upgradeClick($(this).attr('id'));
-
-				//Fjern upgrade fra html
-				$(this).remove();
-				$(".popover").remove();
-
+					if (bool) {
+						$(upgradeid).remove();
+						$(".popover").remove();
+					} else {
+						$(upgradeid).show();
+					}
+				});
 				//Smoothere update
 				$('#gainNumber').text(Math.floor(temp - this.dataset.cost));
 				updateUpgradesStatus();
@@ -207,12 +218,12 @@ function updateItemsStatus() {
 
 	$(".item").each(function (element) {
 		if (window.currentGains < this.dataset.cost) { //Cost er større enn playergains.
-			$("img", this).addClass("upgradeGreyed");
+			$(this).addClass("upgradeGreyed");
 			$(this).css({
 				"background-color": ""
 			});
 		} else { //Cost er mindre enn playergains.
-			$("img", this).removeClass("upgradeGreyed");
+			$(this).removeClass("upgradeGreyed");
 			$(this).css({
 				"background-color": "lightgreen"
 			});
@@ -225,8 +236,9 @@ function updateItemsStatus() {
 function updateItemsCost() {
 	$(".item").each(function () {
 		var itemid = this;
-		window.hub.server.getSingleItemAmount($("img", itemid).attr("id")).done(function (amount) {
+		window.hub.server.getSingleItemAmount($(itemid).attr("id")).done(function (amount) {
 			itemid.dataset.cost = itemid.dataset.startingprice * Math.exp(0.14 * amount);
+			itemid.dataset.amount = amount;
 			$("font", itemid).text(amount);
 			$("#itemprice", itemid).text("Price: " + Math.round(itemid.dataset.cost));
 			updateBenchWeight();
@@ -239,25 +251,31 @@ function itemBtnsPost() {
 	$(".item").each(function () {
 		$(this).on("click", function () {
 			console.log("Item click");
+			//getPlayerInfo();
 			var itemid = this;
-			window.hub.server.itemClick($("img", this).attr("id")).done(function (value) {
-				if (value) {
-					getPlayerInfo();
-					$('#gainNumber').text(Math.floor(window.currentGains - itemid.dataset.cost));
+			var temp = window.currentGains;
+			
+			//Raskere visning
+			if (temp >= this.dataset.cost) {
+				itemid.dataset.amount++;
+				window.currentGains -= itemid.dataset.cost;
+				itemid.dataset.cost = itemid.dataset.startingprice * Math.exp(0.14 * itemid.dataset.amount);
+				$("#itemprice", itemid).text("Price: " + Math.round(itemid.dataset.cost));
+				$('#gainNumber').text(Math.floor(window.currentGains));
+				$("font", itemid).text(itemid.dataset.amount);
 
-					//Update item info
-					window.hub.server.getSingleItemAmount($("img", itemid).attr("id")).done(function (amount) {
-						itemid.dataset.cost = itemid.dataset.startingprice * Math.exp(0.14 * amount);
-						$("font", itemid).text(amount);
-						$("#itemprice", itemid).text("Price: " + Math.round(itemid.dataset.cost));
-
-						if (itemid.dataset.name == "Weights") {
-							updateBenchWeight();
-						}
-					});
-					updateItemsStatus();
+				if (itemid.dataset.name == "Weights") {
+					updateBenchWeight();
 				}
-			});
+
+				//Server call
+				window.hub.server.itemClick($(this).attr("id")).done(function (value) {
+
+				});
+				//updateItemsStatus();
+				
+			}
+			
 		});
 	});
 }

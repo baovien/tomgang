@@ -1,13 +1,11 @@
 @model Item
 
-<div class="container item" id="itemholder" style="height: 70; width: 450px; display:none" data-amount="" data-cost="@Model.cost" data-startingprice="@Model.cost">
+<div class="container item" id="@Model.Id" style="height: 70; width: 450px; display:none" data-amount="" data-cost="@Model.cost" data-startingprice="@Model.cost">
     <div class="col-md-3">
         <img 
         src="@Model.imgPath" 
-        id="@Model.Id" 
         class="itemImg img-thumbnail" 
         draggable="false"
-        data-startingprice="@Model.cost" 
          >
         </img>
     </div>

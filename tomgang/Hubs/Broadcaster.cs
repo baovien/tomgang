@@ -73,9 +73,9 @@ namespace tomgang.Hubs
             return Groups.Remove(Context.ConnectionId, chatroom.ToString());
         }
 
-        public void upgradeClick(string id){
+        public bool upgradeClick(string id){
             var brukernavn = Context.User.Identity.Name;
-            _GameValues.buyUpgrade(brukernavn, id);
+            return _GameValues.buyUpgrade(brukernavn, id);
         }
 
         public bool itemClick(string itemid){

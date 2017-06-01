@@ -421,7 +421,7 @@ textarea {
     top: 20%;
     width: 40%;
 }
-#itemholder{
+.item{
     border: 1px solid grey;
     border-radius: 2px;
     margin: 2px;

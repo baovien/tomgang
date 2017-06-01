@@ -108,7 +108,7 @@ namespace tomgang.Controllers
             //Getter Gains/s til brukeren
             //Adder Gains/s på current Gains utifra hvor lang tid som har gått siden sist
         }
-        public void buyUpgrade(string brukernavn, string id)
+        public bool buyUpgrade(string brukernavn, string id)
         {
             var userid = _dbContext.Users.Where(m => m.UserName == brukernavn).Select(m => m.Id).SingleOrDefault();
             //IDen bestemmer hva upgraden vil påvirke. Om flere typer
@@ -135,6 +135,9 @@ namespace tomgang.Controllers
                 }
                 _dbContext.PlayerUpgrades.Add(new PlayerUpgrades(userid, id));
                 _dbContext.SaveChanges();
+                return true;
+            }else{
+                return false;
             }
         }
         public List<string> checkAchievements(string brukernavn)
