@@ -1,26 +1,5 @@
 @model Item
 
-<!--
-<img 
-    src="@Model.imgPath" 
-    id="@Model.Id" 
-    class="itemImg img-thumbnail" 
-    style="display: none" 
-    draggable="false"
-    data-name="@Model.Id"
-    data-startingprice="@Model.cost"
-    data-cost="@Model.cost"
-    data-income="@Model.income"
-    data-amount=""
-    data-weightimg="";
-    data-content="@Model.description" 
-    data-placement="bottom" 
-    data-original-title="@Model.Id - Price: @Model.cost" 
-    rel="popover" 
-    data-trigger="hover">
-</img>
--->
-
 <div class="container item" id="itemholder" style="height: 70; width: 450px; display:none" data-amount="" data-cost="@Model.cost" data-startingprice="@Model.cost">
     <div class="col-md-3">
         <img 
