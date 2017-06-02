@@ -36,7 +36,7 @@ namespace tomgang.Data
 
             builder.Entity<Message>()
                 .Property(m => m.DateCreated)
-                .HasDefaultValueSql("strftime('%Y-%m-%d %H:%M:%S')"); 
+                .HasDefaultValueSql("GETDATE()"); 
 
                 //Prod mode (SQL server):   GETDATE()
                 //Dev mode (SQLite):        strftime('%Y-%m-%d %H:%M:%S')

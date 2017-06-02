@@ -57,7 +57,9 @@ namespace tomgang
                 //Development mode, SQLite
                 if (_env.IsDevelopment())
                 {
-                    options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
+                    options.UseSqlServer(Configuration.GetConnectionString("AzureSQL"));
+
+                    //options.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
                 }
                 else //Staging, Production, SQL server (Azure)
                 {
@@ -130,23 +132,26 @@ namespace tomgang
 
                     db.Database.EnsureDeleted();
                     db.Database.EnsureCreated();
-                    
+
                     //Read json files containing upgrades, items and achievements and load them into database
                     string upgstring = File.ReadAllText("GameEntitiesJSON/Upgrades.json");
                     var upg = JsonConvert.DeserializeObject<Models.Upgrades>(upgstring);
-                    foreach(var hei in upg.upgrades){
+                    foreach (var hei in upg.upgrades)
+                    {
                         db.Upgrade.Add(hei);
                     }
-                    
+
                     string itstring = File.ReadAllText("GameEntitiesJSON/Items.json");
                     var it = JsonConvert.DeserializeObject<Models.Items>(itstring);
-                    foreach(var hei in it.items){
+                    foreach (var hei in it.items)
+                    {
                         db.Item.Add(hei);
                     }
-                    
+
                     string achistring = File.ReadAllText("GameEntitiesJSON/Achievements.json");
                     var achi = JsonConvert.DeserializeObject<Models.Achievements>(achistring);
-                    foreach(var hei in achi.achievements){
+                    foreach (var hei in achi.achievements)
+                    {
                         db.Achievement.Add(hei);
                     }
 
@@ -159,6 +164,37 @@ namespace tomgang
             else
             {
                 app.UseExceptionHandler("/Home/Error");
+
+                using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+                {
+                    var db = serviceScope.ServiceProvider.GetService<Data.ApplicationDbContext>();
+                    
+                    db.Database.EnsureDeleted();
+                    db.Database.EnsureCreated();
+
+                    //Read json files containing upgrades, items and achievements and load them into database
+                    string upgstring = File.ReadAllText("GameEntitiesJSON/Upgrades.json");
+                    var upg = JsonConvert.DeserializeObject<Models.Upgrades>(upgstring);
+                    foreach (var hei in upg.upgrades)
+                    {
+                        db.Upgrade.Add(hei);
+                    }
+
+                    string itstring = File.ReadAllText("GameEntitiesJSON/Items.json");
+                    var it = JsonConvert.DeserializeObject<Models.Items>(itstring);
+                    foreach (var hei in it.items)
+                    {
+                        db.Item.Add(hei);
+                    }
+
+                    string achistring = File.ReadAllText("GameEntitiesJSON/Achievements.json");
+                    var achi = JsonConvert.DeserializeObject<Models.Achievements>(achistring);
+                    foreach (var hei in achi.achievements)
+                    {
+                        db.Achievement.Add(hei);
+                    }
+
+                }
             }
 
             app.UseStaticFiles();
