@@ -99,7 +99,6 @@ function updateHighscoreTab() {
 		}
 
 		//Sorterer listen etter score
-		console.log($('#hstable tbody > tr'));
 		$('#hstable tbody tr').sort(function (a, b) {
 			return +$('td.score', b).text() > +$('td.score', a).text();
 		}).appendTo('tbody').find('td:first').text(function (index) {
@@ -139,7 +138,6 @@ function autoLift() {
 
 function updateBenchWeight() {
 	var numWeights = $("#Weights").attr("data-amount");
-	console.log(numWeights);
 	var weightsOn = (numWeights / 10) | 0;
 	if (weightsOn > 5) {
 		weightsOn = 5;
@@ -193,7 +191,6 @@ function upgradeBtnsPost() {
 				$(upgradeid).hide();
 				window.hub.server.upgradeClick($(upgradeid).attr('id')).done(function (bool) {
 					//Fjern upgrade fra html
-						console.log(bool);
 
 					if (bool) {
 						$(upgradeid).remove();
