@@ -10,7 +10,7 @@ namespace tomgang.Models
         {
             Content = message.Content;
             Author = message.User.UserName;
-            Timestamp = message.DateCreated;
+            Timestamp = message.DateCreated.AddHours(2);
         }
         [Required]
         public string Content { get; set; }

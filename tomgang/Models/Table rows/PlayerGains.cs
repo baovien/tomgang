@@ -14,7 +14,7 @@ namespace tomgang.Models
             clickValue = 1;
             itemMultiplier = 1;
             totalGains = 0;
-            timeJoined = DateTime.Now;
+            timeJoined = DateTime.Now.AddHours(2);
             lastPurchaseTime = DateTime.Now;
         }
         [Key]

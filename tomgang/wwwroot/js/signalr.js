@@ -42,10 +42,6 @@ function signalr() {
 			itemBtnsPost();
 		});
 
-		window.hub.server.checkUpgrades().done(function (value) {
-			window.upgrades = value;
-			updateUpgradesStatus();
-		});
 
 		window.hub.server.checkAchis().done(function (value) {
 			window.achis = value;
@@ -55,6 +51,16 @@ function signalr() {
 		window.hub.server.getHighscore().done(function (value) {
 			window.highscore = value;
 			updateHighscoreTab();
+		});
+		
+		window.hub.server.checkUpgrades().done(function (value) {
+			window.upgrades = value;
+			
+			updateUpgradesStatus();
+			setTimeout(function(){
+                updateIntervals();
+
+            }, 1000);    
 		});
 
 		window.hub.server.subscribe("MainChatroom");

@@ -114,21 +114,30 @@ function updateHighscoreTab() {
 /****************LIFT*****************/
 function liftClickPost() {
 	$('#benchman').click(function () {
-		window.hub.server.liftClick().done(function () {
-			window.currentGains += (window.clickValue);
-		});
-
-		$('#gainNumber').text(Math.floor(window.currentGains)); //Oppdaterer client før server for smoothere opplevelse.
-		$("#timesClicked").text(+window.timesClicked + 1);
-
-		$(this).on({
-			'mousedown': function () {
-				$(this).attr('src', $("#Weights").attr("data-weightimg") + 'up.png');
-			},
-			'mouseup': function () {
-				$(this).attr('src', $("#Weights").attr("data-weightimg") + 'down.png');
+			var now = new Date().getTime();
+			var dt = 0;
+			
+			if (window.lastLiftCall == undefined) {
+				window.lastLiftCall = 0;
 			}
-		});
+			dt = (now - window.lastLiftCall);
+
+		if (dt > 100) {
+			window.lastLiftCall = now;
+			window.currentGains += (window.clickValue);
+			$('#gainNumber').text(Math.floor(window.currentGains)); //Oppdaterer client før server for smoothere opplevelse.
+			$("#timesClicked").text(+window.timesClicked + 1);
+
+			$(this).on({
+				'mousedown': function () {
+					$(this).attr('src', $("#Weights").attr("data-weightimg") + 'up.png');
+				},
+				'mouseup': function () {
+					$(this).attr('src', $("#Weights").attr("data-weightimg") + 'down.png');
+				}
+			});
+			window.hub.server.liftClick().done(function () {});
+		}
 	});
 }
 
@@ -252,7 +261,7 @@ function itemBtnsPost() {
 			//getPlayerInfo();
 			var itemid = this;
 			var temp = window.currentGains;
-			
+
 			//Raskere visning
 			if (temp >= this.dataset.cost) {
 				itemid.dataset.amount++;
@@ -271,9 +280,9 @@ function itemBtnsPost() {
 
 				});
 				//updateItemsStatus();
-				
+
 			}
-			
+
 		});
 	});
 }
