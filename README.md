@@ -2,15 +2,6 @@
 
 A DAT219 group project
 
-## Getting Started
-
-
-### Prerequisites
-
-
-### Installing
-
-
 ## Built With
 
 * ASP.NET Core MVC
