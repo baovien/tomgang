@@ -1,6 +1,6 @@
-# Bare Koding Web App Project
+# tomgang
 
-A DAT219 group project
+A workout-themed incremental game
 
 ## Built With
 
@@ -8,6 +8,6 @@ A DAT219 group project
 
 ## Authors
 
-* **Anders Ghouchbar**
+* **Anders Ghouchbar** = https://github.com/andgho
 * **Bao Vien Ngo** - https://github.com/baovien
-* **Kristoffer André Kalseth Myhren**
+* **Kristoffer André Kalseth Myhren** 
