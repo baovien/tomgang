@@ -10,4 +10,4 @@ A workout-themed incremental game
 
 * **Anders Ghouchbar** = https://github.com/andgho
 * **Bao Vien Ngo** - https://github.com/baovien
-* **Kristoffer André Kalseth Myhren** 
+* **Kristoffer André Kalseth Myhren** - https://github.com/dozzo
