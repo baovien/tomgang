@@ -1,13 +1,13 @@
-# tomgang
+# 🏋️ tomgang
 
 A workout-themed incremental game
 
-## Built With
+## 🛠️ Built With
 
 * ASP.NET Core MVC
 
-## Authors
+## 👨🏻‍💻 Authors
 
-* **Anders Ghouchbar** = https://github.com/andgho
-* **Bao Vien Ngo** - https://github.com/baovien
-* **Kristoffer André Kalseth Myhren** - https://github.com/dozzo
+- **Bao Vien Ngo** https://github.com/baovien
+- **Anders Ghouchbar** https://github.com/andgho
+- **Kristoffer André Kalseth Myhren** https://github.com/dozzo
